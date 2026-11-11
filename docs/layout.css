@@ -11,7 +11,7 @@ html,body{width:100%;height:100%;overflow:hidden}
 .toolbar{height:52px;flex:none}
 .progress{min-width:0;position:relative;cursor:pointer;height:8px;overflow:visible;touch-action:none}
 .progress div{border-radius:10px;pointer-events:none}
-.progress span{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:#69ddd5;border:2px solid #fff;transform:translate(-50%,-50%);box-shadow:0 0 0 3px #0b9d9855;pointer-events:none}
+.progress span{position:absolute;top:50%;width:10px;height:18px;border-radius:4px;background:#69ddd5;border:none;transform:translate(-50%,-50%);box-shadow:0 1px 4px rgba(0,0,0,0.3);pointer-events:none}
 .progress:focus-visible{outline:2px solid #fff;outline-offset:5px}
 .pager{gap:8px}
 .pager button:not(.overview-trigger){width:34px;height:34px}
@@ -37,7 +37,10 @@ html,body{width:100%;height:100%;overflow:hidden}
 .lesson-control b{color:#0b8b85;font-variant-numeric:tabular-nums}
 .lesson-control[data-parameter]{border-left:3px solid var(--param-color);padding-left:10px}
 .lesson-control[data-parameter]>span{color:var(--param-color)}
-.lesson-control input[type=range]{width:100%;margin-top:8px;accent-color:var(--param-color,#0b9d98)}
+.lesson-control input[type=range],.widget input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;background:#d5e2f0;border-radius:3px;margin-top:8px;outline:none;cursor:pointer}
+.lesson-control input[type=range]::-webkit-slider-thumb,.widget input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:12px;height:20px;border-radius:4px;background:var(--param-color,#0b9d98);border:none;box-shadow:0 1px 4px rgba(0,0,0,0.25);cursor:ew-resize;transition:transform .1s,box-shadow .1s}
+.lesson-control input[type=range]::-webkit-slider-thumb:hover,.widget input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.08);box-shadow:0 2px 7px rgba(0,0,0,0.35)}
+.lesson-control input[type=range]::-moz-range-thumb,.widget input[type=range]::-moz-range-thumb{width:12px;height:20px;border-radius:4px;background:var(--param-color,#0b9d98);border:none;box-shadow:0 1px 4px rgba(0,0,0,0.25);cursor:ew-resize}
 .lesson-control select,.metric-grid input{width:100%;border:1px solid #c7d4e4;border-radius:7px;padding:8px;background:#fff;color:#101a30;margin-top:5px}
 .lesson-control input:disabled{opacity:.35}
 .lesson-note{font-size:12px;color:#697990;line-height:1.6;margin:13px 0 0!important}
