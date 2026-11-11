@@ -1,0 +1,40 @@
+# Temporary slide extraction and local preview
+_source_extract/
+site/
+
+# docs/ is the GitHub Pages site: keep its HTML, JS, CSS, slides.json,
+# .nojekyll, and image assets tracked. This PDF duplicates the root copy.
+docs/assets/paper.pdf
+
+# Python and notebooks
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local environments and secrets
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Node dependencies and build artifacts
+node_modules/
+dist/
+build/
+
+# Editor and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Colab download archive (keep the underlying results)
+results.zip

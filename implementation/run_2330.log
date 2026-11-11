@@ -1,0 +1,48 @@
+C:\Users\user\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\yfinance\scrapers\history.py:472: FutureWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
+  self._capital_gains = pd.Series()
+
+========== 2330.TW ==========
+共 1220 天；train=960  test=240  (search fit=768, eval=192 on val)
+[NAIVE   ] MSE=84.0023 MAE=7.2389 MAPE=0.0156 R2=0.9781 | DirAcc=nan Trades=0 Net=+0.00% (B&H -28.71%) (0.0s)
+[ANN     ] MSE=2282.1994 MAE=40.2888 MAPE=0.0812 R2=0.4040 | DirAcc=0.554 Trades=7 Net=+9.30% (B&H -28.71%) (1.5s)
+[LSTM1D  ] MSE=606.4281 MAE=19.4044 MAPE=0.0413 R2=0.8416 | DirAcc=0.504 Trades=13 Net=-23.40% (B&H -28.71%) (4.7s)
+[LSTM2D  ] MSE=1419.0996 MAE=29.1344 MAPE=0.0590 R2=0.6294 | DirAcc=0.554 Trades=14 Net=-12.85% (B&H -28.71%) (6.4s)
+[LSTM3D  ] MSE=1712.1826 MAE=32.4353 MAPE=0.0655 R2=0.5529 | DirAcc=0.558 Trades=11 Net=-12.11% (B&H -28.71%) (9.3s)
+[LSTM-GA] 搜尋中：pop=10, iters=10
+  GA  gen    1/10  best fitness = 125.9711
+  GA  gen    2/10  best fitness = 125.9711
+  GA  gen    3/10  best fitness = 125.9711
+  GA  gen    4/10  best fitness = 84.5662
+  GA  gen    5/10  best fitness = 84.5662
+  GA  gen    6/10  best fitness = 80.5440
+  GA  gen    7/10  best fitness = 80.5440
+  GA  gen    8/10  best fitness = 80.5440
+  GA  gen    9/10  best fitness = 80.5440
+  GA  gen   10/10  best fitness = 80.5440
+[LSTM-GA] 最佳架構 {'lstm_units': [16], 'dense_units': 20, 'dropout': 0.5, 'optimizer': 'RMSprop', 'lr': 0.01}（fitness=80.5440，實際訓練 52 個模型）
+[LSTM-GA ] MSE=320.7398 MAE=14.5572 MAPE=0.0321 R2=0.9162 | DirAcc=0.496 Trades=13 Net=-22.28% (B&H -28.71%) (376.0s)
+[LSTM-ARO] 搜尋中：pop=10, iters=10
+  ARO iter   1/10  best fitness = 125.9711
+  ARO iter   2/10  best fitness = 75.0837
+  ARO iter   3/10  best fitness = 75.0837
+  ARO iter   4/10  best fitness = 75.0837
+  ARO iter   5/10  best fitness = 75.0837
+  ARO iter   6/10  best fitness = 75.0837
+  ARO iter   7/10  best fitness = 75.0837
+  ARO iter   8/10  best fitness = 75.0837
+  ARO iter   9/10  best fitness = 75.0837
+  ARO iter  10/10  best fitness = 75.0837
+[LSTM-ARO] 最佳架構 {'lstm_units': [2, 20], 'dense_units': 20, 'dropout': 0.3, 'optimizer': 'RMSprop', 'lr': 0.01}（fitness=75.0837，實際訓練 96 個模型）
+[LSTM-ARO] MSE=913.9989 MAE=26.5786 MAPE=0.0586 R2=0.7613 | DirAcc=0.471 Trades=5 Net=-29.63% (B&H -28.71%) (940.5s)
+結果已存到 results\2330.TW
+
+========== 總表 ==========
+                        MSE      MAE    MAPE      R2  DirAcc  Trades  InMarket  GrossRet  NetRet  BuyHold  Sharpe
+ticker  model                                                                                                    
+2330.TW NAIVE       84.0023   7.2389  0.0156  0.9781     NaN     0.0    0.0000    0.0000  0.0000  -0.2871     NaN
+        ANN       2282.1994  40.2888  0.0812  0.4040  0.5542     7.0    0.0500    0.1387  0.0930  -0.2871  1.1557
+        LSTM1D     606.4281  19.4044  0.0413  0.8416  0.5042    13.0    0.4667   -0.1732 -0.2340  -0.2871 -1.0654
+        LSTM2D    1419.0996  29.1344  0.0590  0.6294  0.5542    14.0    0.2667   -0.0538 -0.1285  -0.2871 -0.6325
+        LSTM3D    1712.1826  32.4353  0.0655  0.5529  0.5583    11.0    0.2208   -0.0624 -0.1211  -0.2871 -0.6113
+        LSTM-GA    320.7398  14.5572  0.0321  0.9162  0.4958    13.0    0.7250   -0.1612 -0.2228  -0.2871 -0.7786
+        LSTM-ARO   913.9989  26.5786  0.0586  0.7613  0.4708     5.0    0.8583   -0.2754 -0.2963  -0.2871 -1.0884

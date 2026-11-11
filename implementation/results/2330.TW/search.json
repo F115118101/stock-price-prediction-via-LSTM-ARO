@@ -1,0 +1,88 @@
+{
+  "config": {
+    "tickers": [
+      "2330.TW"
+    ],
+    "csv_path": null,
+    "start": "2018-01-01",
+    "end": "2023-01-01",
+    "price_col": "Adj Close",
+    "window": 20,
+    "train_ratio": 0.8,
+    "val_ratio": 0.2,
+    "fitness_on": "val",
+    "pop_size": 10,
+    "iterations": 10,
+    "epochs": 50,
+    "batch_size": 32,
+    "patience": 10,
+    "fee_rate": 0.001425,
+    "tax_rate": 0.003,
+    "trade_threshold": 0.0,
+    "models": [
+      "NAIVE",
+      "ANN",
+      "LSTM1D",
+      "LSTM2D",
+      "LSTM3D",
+      "LSTM-GA",
+      "LSTM-ARO"
+    ],
+    "seed": 42,
+    "out_dir": "results",
+    "verbose": 1
+  },
+  "LSTM-GA": {
+    "best_arch": {
+      "lstm_units": [
+        16
+      ],
+      "dense_units": 20,
+      "dropout": 0.5,
+      "optimizer": "RMSprop",
+      "lr": 0.01
+    },
+    "best_fitness": 80.54401438610023,
+    "history": [
+      125.97105955817575,
+      125.97105955817575,
+      125.97105955817575,
+      125.97105955817575,
+      84.56621992441066,
+      84.56621992441066,
+      80.54401438610023,
+      80.54401438610023,
+      80.54401438610023,
+      80.54401438610023,
+      80.54401438610023
+    ],
+    "n_trained": 52
+  },
+  "LSTM-ARO": {
+    "best_arch": {
+      "lstm_units": [
+        2,
+        20
+      ],
+      "dense_units": 20,
+      "dropout": 0.3,
+      "optimizer": "RMSprop",
+      "lr": 0.01
+    },
+    "best_fitness": 75.08367344754997,
+    "history": [
+      125.97105955817575,
+      125.97105955817575,
+      75.08367344754997,
+      75.08367344754997,
+      75.08367344754997,
+      75.08367344754997,
+      75.08367344754997,
+      75.08367344754997,
+      75.08367344754997,
+      75.08367344754997,
+      75.08367344754997
+    ],
+    "n_trained": 96
+  }
+}
