@@ -4,7 +4,38 @@ const $=s=>document.querySelector(s);
 const slideEl=$('#slide'),drawer=$('#drawer'),body=$('#drawerBody');
 const titles={9:'LSTM Cell：一個時間步內，資訊如何流動？',10:'Gate 的內部：每個門如何計算',11:'帶入數字：一次 LSTM 更新怎麼算'};
 const category=i=>i<=4?'研究動機':i<=6?'資料與任務':i<=14?'LSTM 核心概念':i<=15?'比較方法':i<=21?'ARO 核心概念':i<=25?'方法整合':i<=35?'評估與結果':i<=38?'討論與結論':'參考文獻';
-const widgetType=i=>i===5||i===12?'window':i>=7&&i<=11?'lstm':i>=16&&i<=21?'aro':i>=22&&i<=25?'builder':i>=26&&i<=33?'metrics':i===34||i===35?'cost':'overview';
+let widgetType = i =>
+  (i === 2 || i === 3) ? 'motivation' :
+  i === 5 ? 'window' :
+  i === 6 ? 'benchmarks' :
+  (i === 7 || i === 8) ? 'ann_rnn_lstm' :
+  (i >= 9 && i <= 11) ? 'lstm' :
+  i === 12 ? 'unroll' :
+  i === 13 ? 'time_depth' :
+  i === 14 ? 'builder' :
+  i === 15 ? 'ga_simulation' :
+  i === 16 ? 'rabbit_population' :
+  i === 17 ? 'detour' :
+  i === 18 ? 'greedy_selection' :
+  i === 19 ? 'hiding' :
+  i === 20 ? 'burrow_map' :
+  i === 21 ? 'energy' :
+  (i === 22 || i === 23) ? 'builder' :
+  i === 24 ? 'optimization_loop' :
+  i === 25 ? 'builder' :
+  i === 26 ? 'metrics_compare' :
+  i === 27 ? 'stock_mse' :
+  i === 28 ? 'stock' :
+  i === 29 ? 'stock_mae' :
+  i === 30 ? 'stock_mape' :
+  i === 31 ? 'stock_r2' :
+  i === 32 ? 'exceptions' :
+  i === 33 ? 'curves' :
+  i === 34 ? 'offline_cost' :
+  i === 35 ? 'cost' :
+  (i === 36 || i === 37) ? 'limitations' :
+  i === 38 ? 'conclusion' :
+  'overview';
 const explanations={
   window:'滑動視窗把連續價格整理成監督式學習樣本：前 20 個交易日是輸入，第 21 日是目標。視窗往後移動一天，就能得到下一筆樣本。資料切分應保持時間順序。',
   lstm:'LSTM 同時傳遞 hidden state（目前輸出）與 cell state（長期記憶）。Forget gate 決定保留多少舊記憶，input gate 決定寫入多少新資訊，output gate 決定輸出多少。各 gate 的權重由訓練資料學得。',

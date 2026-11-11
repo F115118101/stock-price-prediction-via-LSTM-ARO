@@ -127,3 +127,53 @@ html,body{width:100%;height:100%;overflow:hidden}
 @media(max-width:700px){.discrete-widget .lesson-stage{position:static}.lr-candidate-table>div{grid-template-columns:1fr}}
 @media(max-width:700px){.drawer,.drawer.wide{width:100vw}.lesson-box.has-chart{display:block}.lesson-stage{position:sticky;top:-18px;padding:6px 0 10px;margin-bottom:18px;border-bottom:1px solid #e4eaf2}.lesson-box.builder-layout .lesson-stage{position:static}.lesson-stage .formula-display{font-size:14px}.lesson-chart{margin-top:5px}.lesson-chart svg{max-height:165px}}
 @media(max-width:700px){.workspace{min-height:0;padding:8px;align-items:flex-start}.presentation{width:min(100%,calc((100dvh - 61px)*16/9))}.toolbar{height:45px;gap:7px}.pager{gap:4px}.pager button:not(.overview-trigger){height:28px;width:28px;font-size:16px}.pager span{font-size:11px;min-width:50px}.pager .overview-trigger{font-size:10px;padding:6px;margin-left:2px}.learn-button{font-size:10px;padding:7px 8px}}
+/* Specialized Slide Widget Styles */
+.widget-card{background:#fff;border:1px solid #dce4ee;border-radius:10px;padding:14px;box-shadow:0 2px 6px #0000000a}
+.dual-loop-container{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.loop-box{padding:12px 14px;border-radius:10px;border:1.5px solid #dce4ee;background:#fff}
+.loop-box.outer-loop{border-color:#7c48ad;background:#faf6ff}
+.loop-box.inner-loop{border-color:#0b9d98;background:#f3faf9}
+.loop-box p{margin:5px 0 0;font-size:13px;line-height:1.5;color:#384b69}
+.loop-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.05em;padding:2px 8px;border-radius:12px;background:#fff;border:1px solid currentColor}
+.outer-loop .loop-tag{color:#7c48ad}
+.inner-loop .loop-tag{color:#0b726e}
+.loop-arrow-down{text-align:center;font-size:12px;font-weight:700;color:#7c48ad}
+.loop-arrow-up{text-align:center;font-size:12px;font-weight:700;color:#0b9d98}
+.unroll-step-display{padding:10px;background:#f8fafd;border:1px solid #e4eaf2;border-radius:10px;margin-bottom:14px}
+
+/* P2 Closed Loop Styling */
+.takeaway-box{background:#f0f8f8;border-left:4px solid #0b9d98;padding:11px 13px;border-radius:8px;margin-bottom:12px;font-size:13px;line-height:1.5;color:#17294a}
+.closed-loop-diagram{display:flex;flex-direction:column;gap:10px;margin:12px 0}
+.loop-station{background:#fff;border:1.5px solid #dce4ee;border-radius:10px;padding:12px 14px;box-shadow:0 2px 6px #00000008;transition:all .2s}
+.station-aro{border-left:5px solid #7c48ad}
+.station-lstm{border-left:5px solid #0b9d98}
+.loop-station.active-station{box-shadow:0 0 0 2px #0b9d98, 0 4px 12px #00000014}
+.station-header{display:flex;align-items:center;gap:10px}
+.station-icon{font-size:24px}
+.station-header strong{display:block;font-size:14px;color:#101a30}
+.station-header small{display:block;font-size:11px;color:#60708a}
+.station-detail{margin-top:8px;padding-top:8px;border-top:1px dashed #e4eaf2;font-size:12px;color:#384b69}
+.chip-val{display:inline-block;padding:1px 6px;background:#f0f4f9;border-radius:4px;font-size:11px;color:#0b726e}
+.loop-flow{display:flex;align-items:center;justify-content:center;padding:2px 0}
+.flow-pill{background:#faf6ff;color:#7c48ad;border:1px solid #d9c7f2;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:750;display:inline-flex;align-items:center;gap:6px}
+.flow-pill.return-pill{background:#f0f9f8;color:#0b726e;border-color:#a5dfdc}
+.flow-pill.active-pill{transform:scale(1.05);box-shadow:0 0 8px currentColor}
+
+/* P14 Architecture Presets & Table 6 */
+.preset-buttons{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.preset-btn{background:#fff;border:1px solid #c7d4e4;border-radius:6px;padding:6px 10px;font-size:12px;cursor:pointer;color:#334e68;transition:all .15s}
+.preset-btn.active{background:#0b9d98;color:#fff;border-color:#0b9d98;font-weight:750}
+
+/* P15 Chromosome Block Styling */
+.chromo-row{margin:10px 0}
+.chromo-title{font-size:12px;font-weight:750;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center}
+.chromo-strip{display:flex;gap:4px;overflow-x:auto;padding-bottom:4px}
+.gene-box{flex:1;min-width:55px;padding:6px 4px;border-radius:6px;text-align:center;font-size:11px;border:1.5px solid transparent;transition:all .18s}
+.gene-box small{display:block;font-size:9px;opacity:.8;margin-bottom:2px}
+.gene-box strong{font-size:12px;display:block}
+.gene-parent-a{background:#e9f4ff;border-color:#a5cbfa;color:#184a8a}
+.gene-parent-b{background:#f7eefe;border-color:#dfbff9;color:#5a1e8a}
+.gene-child-a{background:#e9f4ff;border-color:#367af6;color:#184a8a}
+.gene-child-b{background:#f7eefe;border-color:#9333ea;color:#5a1e8a}
+.gene-mutated{background:#fff9db;border-color:#f59f00;color:#995b00}
+.scissor-marker{text-align:center;color:#d85b61;font-weight:800;font-size:12px;padding:4px 0}
