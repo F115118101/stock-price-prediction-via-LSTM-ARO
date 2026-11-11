@@ -3,8 +3,7 @@ _source_extract/
 site/
 
 # docs/ is the GitHub Pages site: keep its HTML, JS, CSS, slides.json,
-# .nojekyll, and image assets tracked. This PDF duplicates the root copy.
-docs/assets/paper.pdf
+# .nojekyll, and image assets tracked.
 
 # Python and notebooks
 __pycache__/

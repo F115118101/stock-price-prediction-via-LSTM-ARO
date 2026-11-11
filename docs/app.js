@@ -26,7 +26,24 @@ function shapeStyle(it){const [x,y,w,h]=it.box;let s=`left:${x/W*1280}px;top:${y
   if(it.rotation)s+=`transform:rotate(${it.rotation/60000}deg);`;
   return s;
 }
-function renderConnector(it,ordinal){const [x,y,w,h]=it.box;const color=it.line||'#60708a';const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.classList.add('slide-connector');svg.setAttribute('viewBox','0 0 1280 720');svg.setAttribute('aria-hidden','true');const id=`arrow-${index}-${ordinal}`;const defs=document.createElementNS(svg.namespaceURI,'defs');const marker=document.createElementNS(svg.namespaceURI,'marker');marker.setAttribute('id',id);marker.setAttribute('viewBox','0 0 10 10');marker.setAttribute('markerWidth','7');marker.setAttribute('markerHeight','7');marker.setAttribute('refX','8');marker.setAttribute('refY','5');marker.setAttribute('orient','auto-start-reverse');const tip=document.createElementNS(svg.namespaceURI,'path');tip.setAttribute('d','M 0 0 L 10 5 L 0 10 z');tip.setAttribute('fill',color);marker.append(tip);defs.append(marker);svg.append(defs);const line=document.createElementNS(svg.namespaceURI,'line');let x1=x/W*1280,y1=y/H*720,x2=(x+w)/W*1280,y2=(y+h)/H*720;if(it.flipH==='1')[x1,x2]=[x2,x1];if(it.flipV==='1')[y1,y2]=[y2,y1];line.setAttribute('x1',x1);line.setAttribute('y1',y1);line.setAttribute('x2',x2);line.setAttribute('y2',y2);line.setAttribute('stroke',color);line.setAttribute('stroke-width',Math.max(1,it.lineWidth/9525));line.setAttribute('stroke-linecap','round');if(it.headEnd&&it.headEnd!=='none')line.setAttribute('marker-end',`url(#${id})`);if(it.tailEnd&&it.tailEnd!=='none')line.setAttribute('marker-start',`url(#${id})`);svg.append(line);return svg}
+function renderConnector(it,ordinal){
+  const [x,y,w,h]=it.box,color=it.line||'#60708a';
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.classList.add('slide-connector');svg.setAttribute('viewBox','0 0 1280 720');svg.setAttribute('aria-hidden','true');
+  const id=`arrow-${index}-${ordinal}`,defs=document.createElementNS(svg.namespaceURI,'defs'),marker=document.createElementNS(svg.namespaceURI,'marker');
+  marker.setAttribute('id',id);marker.setAttribute('viewBox','0 0 10 10');marker.setAttribute('markerWidth','7');marker.setAttribute('markerHeight','7');marker.setAttribute('refX','8');marker.setAttribute('refY','5');marker.setAttribute('orient','auto-start-reverse');
+  const tip=document.createElementNS(svg.namespaceURI,'path');tip.setAttribute('d','M 0 0 L 10 5 L 0 10 z');tip.setAttribute('fill',color);marker.append(tip);defs.append(marker);svg.append(defs);
+  const line=document.createElementNS(svg.namespaceURI,'line');
+  let x1=x/W*1280,y1=y/H*720,x2=(x+w)/W*1280,y2=(y+h)/H*720;
+  if(it.flipH==='1')[x1,x2]=[x2,x1];if(it.flipV==='1')[y1,y2]=[y2,y1];
+  const currentToHole=index===18&&ordinal===17;
+  if(currentToHole)x1+=42;
+  line.setAttribute('x1',x1);line.setAttribute('y1',y1);line.setAttribute('x2',x2);line.setAttribute('y2',y2);
+  line.setAttribute('stroke',color);line.setAttribute('stroke-width',Math.max(1,it.lineWidth/9525));line.setAttribute('stroke-linecap','round');
+  if(currentToHole||it.headEnd&&it.headEnd!=='none')line.setAttribute('marker-end',`url(#${id})`);
+  if(!currentToHole&&it.tailEnd&&it.tailEnd!=='none')line.setAttribute('marker-start',`url(#${id})`);
+  svg.append(line);return svg;
+}
 function renderItem(it,ordinal){if(it.geom==='line'||it.type==='cxnSp')return renderConnector(it,ordinal);const el=document.createElement('div');el.className='slide-item';el.style.cssText=shapeStyle(it);
   if(it.image){const img=document.createElement('img');img.src=it.image;img.alt=`原始投影片圖像，第 ${index+1} 頁`;el.append(img);el.classList.add('interactive');el.addEventListener('click',()=>openLessonFor(it));return el}
   if(it.paragraphs.length){el.classList.add('text');if(it.anchor==='ctr')el.classList.add('center');if(it.anchor==='b')el.classList.add('bottom');it.paragraphs.forEach(p=>{let line=document.createElement('div');line.className='para';line.style.textAlign=p.align==='ctr'?'center':'left';if(p.align==='r')line.style.textAlign='right';p.runs.forEach(r=>{const span=document.createElement('span');span.textContent=r.text;span.style.fontSize=`${r.size*4/3}px`;span.style.fontWeight=r.bold?'700':'400';if(r.color)span.style.color=r.color;line.append(span)});el.append(line)});const txt=textOf(it);if(txt&&txt.length>2){el.classList.add('interactive');el.tabIndex=0;el.addEventListener('click',()=>openLessonFor(it));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLessonFor(it)}})}}

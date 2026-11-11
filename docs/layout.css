@@ -112,14 +112,7 @@ html,body{width:100%;height:100%;overflow:hidden}
 .lr-candidate-table>div+div{border-top:1px solid #dce4ee}
 .lr-candidate-table strong{color:#0b726e}
 .lr-candidate-table span{font-variant-numeric:tabular-nums}
-.lr-options-inline{padding:10px 12px;border-radius:8px;background:#edf3fa;color:#235dde;font-weight:800;font-variant-numeric:tabular-nums;margin:6px 0 17px;overflow-wrap:anywhere}
 .lr-evidence{padding:12px 14px;border-left:4px solid #c66817;background:#fff4e9;border-radius:6px;color:#513f2d}
-.lr-second-formula{margin-top:0!important}
-.discrete-choice-columns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.discrete-choice-columns h4{font-size:11px;color:#52637c;margin:0 0 6px;line-height:1.3}
-.discrete-choice-columns .lr-option{padding:5px 6px;font-size:11px}
-.discrete-choice-columns .lr-option strong{font-size:11px}
-.rate-choices .lr-option.active{border-color:#c66817;background:#fff1e3;color:#a7510e}
 .lr-option-grid{display:grid;gap:6px;margin-top:10px}
 .lr-option{display:flex;justify-content:space-between;gap:8px;padding:7px 10px;border:1px solid #dce4ee;border-radius:7px;color:#52637c;font-size:12px;font-variant-numeric:tabular-nums}
 .lr-option.active{border-color:#315fd1;background:#eaf1ff;color:#214cae}
