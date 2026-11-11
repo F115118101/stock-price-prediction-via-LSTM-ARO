@@ -1,0 +1,55 @@
+.slide-top-rule{position:absolute;top:0;left:0;width:1280px;height:12px;border-radius:0 0 10px 10px;z-index:2}
+.slide-top-rule.phase-one{background:#59317b}
+.slide-top-rule.phase-two{background:#8b2d58}
+.slide-top-rule.phase-three{background:#38602a}
+.slide-section-label{position:absolute;top:31px;left:60px;margin:0;font-size:16px;font-weight:750;letter-spacing:.05em;line-height:1.2;z-index:2}
+.slide-section-label.phase-one{color:#59317b}
+.slide-section-label.phase-two{color:#8b2d58}
+.slide-section-label.phase-three{color:#38602a}
+.slide-header-title{position:absolute;top:77px;left:60px;width:1160px;margin:0;font-size:38px;line-height:1.15;font-weight:750;color:#101a30;z-index:2}
+.native-lead{position:absolute;left:60px;top:142px;width:1160px;margin:0;color:#60708a;font-size:19px;line-height:1.45}
+.native-card{background:#fff;border:1.5px solid #dfe6f0;border-radius:16px;box-shadow:0 5px 15px #14284b0a;padding:17px 20px;color:#17243a;min-width:0}
+.native-card h2{margin:0 0 8px;font-size:19px;line-height:1.2;font-weight:750;color:#20314e}
+.native-card p{margin:0;font-size:18px;line-height:1.35;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.native-card strong{display:block;margin-top:9px;font-size:25px}
+.native-card.tone-red{border-left:6px solid #d85b61;background:#fff9f9}
+.native-card.tone-green{border-left:6px solid #4c9b68;background:#f9fffa}
+.native-card.tone-blue{border-left:6px solid #4777cb;background:#f9fbff}
+.native-card.tone-purple{border-left:6px solid #8b62c6;background:#fcfaff}
+.native-card.tone-gold{border-left:6px solid #c99a27;background:#fffdf5}
+.native-search-grid{position:absolute;left:60px;top:166px;width:1160px;height:458px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.native-search-column{display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-width:0}
+.native-search-grid .native-card{flex:1;padding:12px 17px;border-left:5px solid #0b9d98}
+.native-search-grid .native-card h2{font-size:18px;margin-bottom:5px}
+.native-search-grid .native-card p{font-size:18px}
+.native-search-grid .native-search-column:last-child .native-card:last-child h2,
+.native-search-grid .native-search-column:last-child .native-card:last-child p{font-size:20px}
+.native-search-grid .native-card.interactive{cursor:pointer}
+.native-search-grid .native-card.interactive:hover{border-color:#0b9d98;box-shadow:0 8px 22px #14284b19}
+.native-search-grid .native-card.interactive:focus-visible{outline:3px solid #8b2d58;outline-offset:2px}
+.native-structure{position:absolute;left:60px;top:637px;width:1160px;margin:0;color:#52637c;font-size:16px;line-height:1.3}
+.flow-arrow{display:inline-grid;place-items:center;color:#0b9d98;font-size:27px;font-weight:800;flex:none}
+.cell-memory{position:absolute;left:60px;top:204px;width:1160px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.flow-box{display:grid;place-items:center;text-align:center;padding:12px 13px;min-height:74px;border:2px solid #cbd7e6;border-radius:13px;background:#fff;color:#20314e;font-size:23px;font-weight:650;white-space:nowrap}
+.flow-box.memory{border-color:#c99a27;background:#fff9df}
+.flow-box.operation{min-width:93px}
+.flow-box.output{border-color:#8b62c6;background:#f6efff}
+.flow-box small{display:block;font-size:12px;color:#60708a;font-weight:500}
+.cell-input{position:absolute;left:60px;top:313px;width:1160px;text-align:center;font-size:20px;color:#52637c}
+.cell-input strong{color:#20314e}
+.cell-gates{position:absolute;left:60px;top:365px;width:1160px;display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.cell-gates .native-card{height:123px;padding:18px}
+.cell-gates .native-card h2{font-size:18px}.cell-gates .native-card p{font-size:16px}
+.native-formula{position:absolute;left:60px;top:518px;width:1160px;min-height:72px;display:flex;align-items:center;justify-content:space-around;gap:20px;border:1px solid #d8e4f1;border-radius:13px;background:#f3f7fc;color:#17294a;font-size:24px;padding:10px}
+.native-note{position:absolute;left:60px;top:613px;width:1160px;margin:0;font-size:17px;line-height:1.4;color:#52637c;text-align:center}
+.gate-table{position:absolute;left:60px;top:194px;width:1160px;display:grid;gap:12px}
+.gate-row{display:grid;grid-template-columns:142px 145px 28px 76px 28px 75px 1fr;gap:11px;align-items:center;min-height:82px;padding:8px 16px;border:1.5px solid #dfe6f0;border-left:6px solid #0b9d98;border-radius:13px;background:#fff;color:#20314e}
+.gate-row.tone-red{border-left-color:#d85b61}.gate-row.tone-green{border-left-color:#4c9b68}.gate-row.tone-blue{border-left-color:#4777cb}.gate-row.tone-purple{border-left-color:#8b62c6}
+.gate-name{font-size:21px;font-weight:750}.gate-input,.gate-activation{border:1px solid #dfe6f0;border-radius:9px;background:#f5f8fc;padding:9px 7px;text-align:center;font-size:16px}.gate-activation{font-size:20px}
+.gate-row strong{font-size:26px;text-align:center}.gate-row code{font:19px/1.35 "Cambria Math",Georgia,serif;overflow-wrap:anywhere}
+.gate-footnotes{position:absolute;left:60px;top:582px;width:1160px;display:flex;gap:18px}.gate-footnotes span{flex:1;padding:16px;border-radius:12px;background:#edf3fa;color:#40516c;font-size:17px;text-align:center}
+.calculation-steps{position:absolute;left:60px;top:220px;width:1160px;display:grid;grid-template-columns:1fr 35px 1fr 35px 1fr;gap:12px;align-items:center}
+.calculation-steps .native-card{height:207px;display:flex;flex-direction:column;justify-content:center}.calculation-steps .native-card h2{font-size:23px}.calculation-steps .native-card p{font-size:22px}
+.calculation-output{position:absolute;left:60px;top:485px;width:1160px;display:flex;align-items:center;gap:11px;justify-content:space-between}.calculation-output div{padding:18px 15px;border:1.5px solid #dce4ee;border-radius:12px;background:#f5f8fc;font-size:22px;white-space:nowrap}.calculation-output .answer{border-color:#4777cb;background:#eaf1ff;font-weight:750}
+.slide[data-number="9"] .native-note{top:622px}.slide[data-number="11"] .native-note{top:620px}
+.native-source{position:absolute;left:60px;bottom:16px;margin:0;color:#60708a;font-size:12px}

@@ -13,7 +13,7 @@ function paperResultsLesson(){
   d.classList.add('paper-data-box');
   d.querySelector('#paperStock').innerHTML=paperRows.map(r=>`<option>${r.stock}</option>`).join('');
   d.querySelector('#paperStock').value=selected;
-  if(index+1===32&&lesson?.page)d.querySelector('#paperView').value='time';
+  if(slides[index]?.number===32&&lesson?.page)d.querySelector('#paperView').value='time';
   function show(){
     const view=d.querySelector('#paperView').value;
     d.querySelector('#stockPicker').hidden=view!=='stocks';

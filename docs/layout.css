@@ -20,12 +20,16 @@ html,body{width:100%;height:100%;overflow:hidden}
 .drawer-body,.overview-panel{scrollbar-width:none}
 .drawer-body::-webkit-scrollbar,.overview-panel::-webkit-scrollbar{display:none}
 .lesson-box{background:#fff;border:1px solid #dce4ee;border-radius:14px;padding:18px;margin-bottom:16px}
-.formula-display{background:#edf3fa;border-left:4px solid #0b9d98;border-radius:8px;padding:15px 16px;margin:0 0 18px;font-size:18px;line-height:1.75;color:#17294a;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
-.formula-display small{display:block;color:#60708a;font-size:11px;font-weight:700;letter-spacing:.04em;margin-top:4px}
+.formula-display{background:#edf3fa;border-left:4px solid var(--formula-accent,#315fd1);border-radius:8px;padding:15px 16px;margin:0 0 18px;font-size:18px;line-height:1.75;color:var(--formula-accent,#315fd1);overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.formula-display small{display:block;color:var(--formula-accent,#315fd1);font-size:11px;font-weight:700;letter-spacing:.04em;margin-top:4px}
 .formula-display em{color:#e0802a;font-style:normal;font-weight:700}
 .formula-display strong{color:#0b9d98}
 .formula-display b{color:#235dde;font-size:1.14em}
 .formula-display .formula-param{color:var(--param-color);font-weight:800}
+.formula-display .formula-sym{color:var(--param-color);font-weight:700;font-style:normal}
+.widget .quote{color:#315fd1}
+.learning-rate-formula,.cost-formula{color:var(--formula-accent,#315fd1);border-left-color:var(--formula-accent,#315fd1);background:#edf3ff}
+.learning-rate-formula small,.cost-formula small{color:var(--formula-accent,#315fd1)}
 .formula-flash{animation:formulaPulse .3s ease-out}
 @keyframes formulaPulse{0%{background:#d7f5ed}100%{background:#edf3fa}}
 .lesson-control{display:block;margin:15px 0;font-size:13px;color:#384b69;font-weight:700}
@@ -108,15 +112,15 @@ html,body{width:100%;height:100%;overflow:hidden}
 .formula-terms tbody tr:last-child td{border-bottom:0}
 .lr-explanation h3{margin:8px 0 12px;font-size:16px;color:#1b3051}
 .lr-candidate-table{border:1px solid #dce4ee;border-radius:9px;overflow:hidden;margin:10px 0 20px}
-.lr-candidate-table>div{display:grid;grid-template-columns:150px 1fr;gap:8px;padding:10px 12px;font-size:13px;line-height:1.5}
+.lr-candidate-table>div{display:grid;grid-template-columns:150px 1fr;gap:8px;padding:10px 12px;font-size:15px;line-height:1.5}
 .lr-candidate-table>div+div{border-top:1px solid #dce4ee}
 .lr-candidate-table strong{color:#0b726e}
 .lr-candidate-table span{font-variant-numeric:tabular-nums}
 .lr-evidence{padding:12px 14px;border-left:4px solid #c66817;background:#fff4e9;border-radius:6px;color:#513f2d}
 .lr-option-grid{display:grid;gap:6px;margin-top:10px}
-.lr-option{display:flex;justify-content:space-between;gap:8px;padding:7px 10px;border:1px solid #dce4ee;border-radius:7px;color:#52637c;font-size:12px;font-variant-numeric:tabular-nums}
+.lr-option{display:flex;justify-content:space-between;gap:8px;padding:7px 10px;border:1px solid #dce4ee;border-radius:7px;color:#52637c;font-size:15px;font-variant-numeric:tabular-nums}
 .lr-option.active{border-color:#315fd1;background:#eaf1ff;color:#214cae}
-.lr-option strong{font-size:13px}
+.lr-option strong{font-size:16px}
 @media(max-width:700px){.discrete-widget .lesson-stage{position:static}.lr-candidate-table>div{grid-template-columns:1fr}}
 @media(max-width:700px){.drawer,.drawer.wide{width:100vw}.lesson-box.has-chart{display:block}.lesson-stage{position:sticky;top:-18px;padding:6px 0 10px;margin-bottom:18px;border-bottom:1px solid #e4eaf2}.lesson-box.builder-layout .lesson-stage{position:static}.lesson-stage .formula-display{font-size:14px}.lesson-chart{margin-top:5px}.lesson-chart svg{max-height:165px}}
 @media(max-width:700px){.workspace{min-height:0;padding:8px;align-items:flex-start}.presentation{width:min(100%,calc((100dvh - 61px)*16/9))}.toolbar{height:45px;gap:7px}.pager{gap:4px}.pager button:not(.overview-trigger){height:28px;width:28px;font-size:16px}.pager span{font-size:11px;min-width:50px}.pager .overview-trigger{font-size:10px;padding:6px;margin-left:2px}.learn-button{font-size:10px;padding:7px 8px}}

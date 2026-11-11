@@ -31,10 +31,11 @@ renderLesson=function(){
   body.insertBefore(section,body.querySelector('.try-formula'));
 };
 function learningRateWidget(){
-  const d=lessonBox('<div class="lesson-stage"><div class="formula-display" id="learningRateFormula"></div><div class="lr-option-grid" id="learningRateOptions"></div></div><div class="lesson-controls" id="controls"></div><p class="lesson-note">Learning Rate 的映射是教學示例；原論文只列出候選值，沒有提供解碼規則。</p>');
+  const d=lessonBox('<div class="lesson-stage"><div class="formula-display learning-rate-formula" id="learningRateFormula"></div><div class="lr-option-grid" id="learningRateOptions"></div></div><div class="lesson-controls" id="controls"></div><p class="lesson-note">Learning Rate 的映射是教學示例；原論文只列出候選值，沒有提供解碼規則。</p>');
   d.classList.add('has-chart','discrete-widget');
   const controls=d.querySelector('#controls');
   control(controls,'lrPosition','Learning Rate 位置 x₈',0,1,.01,.36);
+  d.querySelector('#learningRateFormula').style.setProperty('--formula-accent',controls.querySelector('#lrPosition').closest('.lesson-control').style.getPropertyValue('--param-color'));
   controls.insertAdjacentHTML('beforeend','<label class="lesson-control">Learning Rate 映射示例<select id="lrMode"><option value="index">索引編碼</option><option value="log">對數空間</option></select></label>');
   const rates=['0.01','0.001','0.0001','0.00001','0.000001'];
   function update(){
@@ -42,8 +43,8 @@ function learningRateWidget(){
     const k8=mode==='index'?Math.min(4,Math.floor(5*u8)):Math.round(4*u8);
     d.querySelector('#lrPositionValue').textContent=u8.toFixed(2);
     const step=mode==='index'
-      ?`k₈ = min(4, ⌊5 × ${param('lrPosition',u8.toFixed(2))}⌋) = ${k8}`
-      :`log₁₀(η*) = −2 − 4 × ${param('lrPosition',u8.toFixed(2))} = ${(-2-4*u8).toFixed(2)}`;
+      ?`k₈ = min(4, ⌊5 × ${paramSym('lrPosition','x₈')}⌋) = min(4, ⌊5 × ${param('lrPosition',u8.toFixed(2))}⌋) = ${k8}`
+      :`log₁₀(η*) = −2 − 4 × ${paramSym('lrPosition','x₈')} = −2 − 4 × ${param('lrPosition',u8.toFixed(2))} = ${(-2-4*u8).toFixed(2)}`;
     const mapped=mode==='index'?`第 ${k8+1} 個選項：${param('lrPosition',rates[k8])}`:`最近的合法指數 −${2+k8}：${param('lrPosition',rates[k8])}`;
     d.querySelector('#learningRateFormula').innerHTML=`<small>x₈ · Learning Rate · ${mode==='index'?'索引編碼':'對數空間'}示例</small><div>${step}</div><div>${mapped}</div>`;
     d.querySelector('#learningRateOptions').innerHTML=rates.map((rate,i)=>`<div class="lr-option${i===k8?' active':''}"><span>${mode==='index'?i:`−${i+2}`}</span><strong>${rate}</strong></div>`).join('');
