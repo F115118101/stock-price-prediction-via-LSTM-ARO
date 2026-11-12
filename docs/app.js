@@ -72,10 +72,24 @@ function renderConnector(it,ordinal){
   if([it.headEnd,it.tailEnd].some(end=>end&&end!=='none'))line.setAttribute('marker-end',`url(#${id})`);
   svg.append(line);return svg;
 }
+function makeInteractive(el,action){
+  let isDown=false,downX=0,downY=0;
+  el.addEventListener('mousedown',e=>{
+    if(e.button!==0)return;
+    isDown=true;downX=e.clientX;downY=e.clientY;
+  });
+  el.addEventListener('click',e=>{
+    if(e.detail===0||(e.clientX===0&&e.clientY===0)){action(e);return;}
+    if(!isDown)return;
+    isDown=false;
+    if(Math.hypot(e.clientX-downX,e.clientY-downY)>8)return;
+    action(e);
+  });
+}
 function renderItem(it,ordinal){if(it.geom==='line'||it.type==='cxnSp')return renderConnector(it,ordinal);const el=document.createElement('div');el.className='slide-item';el.style.cssText=shapeStyle(it);
   const sNum=slides[index]?.number||(index+1);
-  if(it.image){const img=document.createElement('img');img.src=it.image;img.alt=`原始投影片圖像，第 ${sNum} 頁`;el.append(img);el.classList.add('interactive');el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label',`開啟第 ${sNum} 頁圖解教材`);el.addEventListener('click',()=>openLessonFor(it));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLessonFor(it)}});return el}
-  if(it.paragraphs.length){el.classList.add('text');if(it.anchor==='ctr')el.classList.add('center');if(it.anchor==='b')el.classList.add('bottom');it.paragraphs.forEach(p=>{let line=document.createElement('div');line.className='para';line.style.textAlign=p.align==='ctr'?'center':'left';if(p.align==='r')line.style.textAlign='right';p.runs.forEach(r=>{const span=document.createElement('span');span.textContent=r.text;span.style.fontSize=`${r.size*4/3}px`;span.style.fontWeight=r.bold?'700':'400';if(r.color)span.style.color=r.color;line.append(span)});el.append(line)});const txt=textOf(it);if(txt&&txt.length>2){el.classList.add('interactive');el.tabIndex=0;el.addEventListener('click',()=>openLessonFor(it));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLessonFor(it)}})}}
+  if(it.image){const img=document.createElement('img');img.src=it.image;img.alt=`原始投影片圖像，第 ${sNum} 頁`;el.append(img);el.classList.add('interactive');el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label',`開啟第 ${sNum} 頁圖解教材`);makeInteractive(el,()=>openLessonFor(it));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLessonFor(it)}});return el}
+  if(it.paragraphs.length){el.classList.add('text');if(it.anchor==='ctr')el.classList.add('center');if(it.anchor==='b')el.classList.add('bottom');it.paragraphs.forEach(p=>{let line=document.createElement('div');line.className='para';line.style.textAlign=p.align==='ctr'?'center':'left';if(p.align==='r')line.style.textAlign='right';p.runs.forEach(r=>{const span=document.createElement('span');span.textContent=r.text;span.style.fontSize=`${r.size*4/3}px`;span.style.fontWeight=r.bold?'700':'400';if(r.color)span.style.color=r.color;line.append(span)});el.append(line)});const txt=textOf(it);if(txt&&txt.trim().length>=1){el.classList.add('interactive');el.tabIndex=0;makeInteractive(el,()=>openLessonFor(it));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLessonFor(it)}})}}
   if(slides[index]?.number===12&&textOf(it).startsWith('註：')){el.classList.add('slide-footnote');el.style.top='654px';el.style.height='27px'}
   return el;
 }
@@ -107,7 +121,11 @@ function addSharedChrome(s){
   const phase=s.number<=14?'phase-one':s.number<=25?'phase-two':'phase-three';
   rule.className=`slide-top-rule ${phase}`;
   slideEl.append(rule);
-  const label=document.createElement('p');label.className=`slide-section-label ${phase}`;label.textContent=sharedSection(s.number);slideEl.append(label);
+  const label=document.createElement('p');label.className=`slide-section-label ${phase} interactive`;label.tabIndex=0;label.textContent=sharedSection(s.number);
+  const activate=()=>openLessonFor({paragraphs:[{runs:[{text:slideTitle(s),size:22}]}],box:[0,0,0,0],image:''});
+  makeInteractive(label,activate);
+  label.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate()}});
+  slideEl.append(label);
 }
 function render(){
   const s=slides[index];if(!s)return;
@@ -118,7 +136,9 @@ function render(){
     const text=textOf(it);
     if(/^\d{2}$/.test(text)&&it.box[0]>10000000&&it.box[1]>6300000)return;
     if(isLegacyChrome(s,it,j))return;
-    if(s.number===22&&j>=6)return;
+    if([9,10,11].includes(s.number))return;
+    if(s.number===7&&j===3)return;
+    if([3,5,7,8,22,38].includes(s.number)&&j>=6)return;
     const el=renderItem(it,j);
     if(customHeaderSlides.has(s.number)&&j===1){
       el.style.top='71px';el.style.left='60px';el.style.width='1160px';
@@ -127,12 +147,11 @@ function render(){
     if(customHeaderSlides.has(s.number)&&j===2){el.style.top='117px';el.style.left='60px';el.style.width='1160px';}
     slideEl.append(el);
   });
-  if(s.number===22){
-    renderNativeSlide(22,slideEl);
-    slideEl.querySelectorAll('.native-search-grid .native-card').forEach(card=>{
+  if(typeof renderNativeSlide==='function'&&renderNativeSlide(s.number,slideEl)){
+    slideEl.querySelectorAll('.slide-header-title, .native-lead, .native-card, .gate-row, .p03-card, .p03-arrow-box, .p03-bottom-strip, .p05-meta-card, .p05-grid-card, .p07-card, .p07-strip, .p08-lane, .p08-bottom-card, .flow-box, .native-formula, .p11-formula-card, .p11-step-card, .p11-out-box, .p38-card, .p38-strip').forEach(card=>{
       card.classList.add('interactive');card.tabIndex=0;
       const activate=()=>openLessonFor({paragraphs:[{runs:[{text:card.innerText,size:17}]}],box:[0,2000000,0,0],image:''});
-      card.addEventListener('click',activate);
+      makeInteractive(card,activate);
       card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate()}});
     });
   }
