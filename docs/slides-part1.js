@@ -231,6 +231,160 @@ window.SLIDES_PART1 = [
         "anchor": "ctr",
         "flipH": "",
         "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          7620000,
+          4438650,
+          4000500,
+          228600
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 12,
+                "text": "指導教授",
+                "color": "#7BDBD3"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          7620000,
+          4667250,
+          4000500,
+          323850
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 17,
+                "text": "歐陽振森 教授",
+                "color": "#FFFFFF"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          7620000,
+          5143500,
+          4000500,
+          228600
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 12,
+                "text": "報告成員",
+                "color": "#7BDBD3"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          7620000,
+          5372100,
+          4000500,
+          914400
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 15,
+                "text": "F115119104　楊晟楷",
+                "color": "#BDCBE0"
+              }
+            ],
+            "align": "l"
+          },
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 15,
+                "text": "F115118101　李郅陞",
+                "color": "#BDCBE0"
+              }
+            ],
+            "align": "l"
+          },
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 15,
+                "text": "F115119131　葉日杰",
+                "color": "#BDCBE0"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
       }
     ]
   },
