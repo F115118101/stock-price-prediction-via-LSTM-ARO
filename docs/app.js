@@ -5,7 +5,7 @@ const slideEl=$('#slide'),drawer=$('#drawer'),body=$('#drawerBody');
 const titles={9:'LSTM Cell：一個時間步內，資訊如何流動？',10:'Gate 的內部：每個門如何計算',11:'帶入數字：一次 LSTM 更新怎麼算'};
 const category=i=>i<=4?'研究動機':i<=6?'資料與任務':i<=14?'LSTM 核心概念':i<=15?'比較方法':i<=21?'ARO 核心概念':i<=25?'方法整合':i<=35?'評估與結果':i<=38?'討論與結論':'參考文獻';
 let widgetType = i =>
-  (i === 2 || i === 3) ? 'motivation' :
+  i === 2 ? 'motivation' :
   i === 5 ? 'window' :
   i === 6 ? 'benchmarks' :
   (i === 7 || i === 8) ? 'ann_rnn_lstm' :
@@ -47,8 +47,11 @@ const explanations={
 };
 const ref=i=>i<=3?'摘要、§1 與 Fig. 2':i===4?'§2':i===5?'§4.1':i===6?'Tables 1–6':i<=14?'§3.2–3.3、Tables 2–4':i===15?'§3.4':i<=21?'§3.5、Eqs. (6)–(20)':i<=25?'Tables 5–6、Fig. 2':i<=26?'Eqs. (21)–(24)':i<=33?'Tables 7–10、Figs. 3–4':i<=35?'§4.3、Table 11':i<=38?'§4、Conclusion':'論文書目資料';
 function textOf(item){return item.paragraphs.map(p=>p.runs.map(r=>r.text).join('')).join('\n').trim()}
-function slideTitle(s){if(titles[s.number])return titles[s.number];if(s.number===1)return '以人工兔群最佳化演算法優化深度 LSTM 的股價預測';const candidates=s.items.filter(it=>it.paragraphs.length&&it.box[1]>400000&&it.box[1]<1400000).map(it=>({text:textOf(it),size:Math.max(...it.paragraphs.flatMap(p=>p.runs.map(r=>r.size)))})).filter(x=>x.size>=24&&x.text.length>4);return candidates[0]?.text||s.items.map(textOf).find(t=>t.length>6)||`第 ${s.number} 頁`}
-function setIndex(n){const next=Math.max(0,Math.min(slides.length-1,n));if(next===index&&slideEl.childElementCount)return;index=next;selectedText='';if(drawer.classList.contains('open'))closeDrawer();const num=slides[index]?.number||(index+1);location.hash=`slide-${num}`;render()}
+function slideTitle(s){if(titles[s.number])return titles[s.number];if(s.number===1)return '以人工兔群最佳化演算法優化深度 LSTM 的股價預測';const candidates=s.items.filter(it=>it.paragraphs.length&&it.box[1]>400000&&it.box[1]<1400000).map(it=>({text:textOf(it),size:Math.max(...it.paragraphs.flatMap(p=>p.runs.map(r=>r.size)))})).filter(x=>x.size>=24&&x.text.length>4);return (candidates[0]?.text||s.items.map(textOf).find(t=>t.length>6)||`第 ${s.number} 頁`).replace(/^\d{2}｜/,"")}
+function setIndex(n){const next=Math.max(0,Math.min(slides.length-1,n));if(next===index&&slideEl.childElementCount)return;index=next;selectedText='';if(drawer.classList.contains('open'))closeDrawer();
+  // #slide-N uses the displayed page (deck position). s.number is a stable internal ID, not a page number.
+  // replaceState: keep the URL shareable without adding one history entry per slide
+  const hash=`#slide-${index+1}`;if(location.hash!==hash)history.replaceState(null,'',hash);render()}
 function shapeStyle(it){const [x,y,w,h]=it.box;let s=`left:${x/W*1280}px;top:${y/H*720}px;width:${w/W*1280}px;height:${h/H*720}px;`;
   if(it.fill)s+=`background:${it.fill};`;
   if(it.line&&it.lineWidth)s+=`border:${Math.max(.8,it.lineWidth/9525)}px solid ${it.line};`;
@@ -88,20 +91,77 @@ function makeInteractive(el,action){
 }
 function renderItem(it,ordinal){if(it.geom==='line'||it.type==='cxnSp')return renderConnector(it,ordinal);const el=document.createElement('div');el.className='slide-item';el.style.cssText=shapeStyle(it);
   const sNum=slides[index]?.number||(index+1);
-  if(it.image){const img=document.createElement('img');img.src=it.image;img.alt=`原始投影片圖像，第 ${sNum} 頁`;el.append(img);el.classList.add('interactive');el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label',`開啟第 ${sNum} 頁圖解教材`);makeInteractive(el,()=>openLessonFor(it));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLessonFor(it)}});return el}
-  if(it.paragraphs.length){el.classList.add('text');if(it.anchor==='ctr')el.classList.add('center');if(it.anchor==='b')el.classList.add('bottom');it.paragraphs.forEach(p=>{let line=document.createElement('div');line.className='para';line.style.textAlign=p.align==='ctr'?'center':'left';if(p.align==='r')line.style.textAlign='right';p.runs.forEach(r=>{const span=document.createElement('span');span.textContent=r.text;span.style.fontSize=`${r.size*4/3}px`;span.style.fontWeight=r.bold?'700':'400';if(r.color)span.style.color=r.color;line.append(span)});el.append(line)});const txt=textOf(it);if(txt&&txt.trim().length>=1){el.classList.add('interactive');el.tabIndex=0;makeInteractive(el,()=>openLessonFor(it));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLessonFor(it)}})}}
+  if(it.image){const img=document.createElement('img');img.src=it.image;img.alt=`原始投影片圖像，第 ${index+1} 頁`;el.append(img);el.classList.add('interactive');el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label',`開啟第 ${sNum} 頁圖解教材`);makeInteractive(el,()=>openLessonFor(it));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLessonFor(it)}});return el}
+  if(it.paragraphs.length){el.classList.add('text');if(it.anchor==='ctr')el.classList.add('center');if(it.anchor==='b')el.classList.add('bottom');it.paragraphs.forEach(p=>{let line=document.createElement('div');line.className='para';line.style.textAlign=p.align==='ctr'?'center':'left';if(p.align==='r')line.style.textAlign='right';p.runs.forEach(r=>{const span=document.createElement('span');span.textContent=r.text;span.style.fontSize=`${typeSize(r.size,r.bold,r.text,it,sNum)}px`;span.style.fontWeight=r.bold?'700':'400';if(r.color)span.style.color=r.color;line.append(span)});el.append(line)});const txt=textOf(it);if(txt&&txt.trim().length>=1){el.classList.add('interactive');el.tabIndex=0;makeInteractive(el,()=>openLessonFor(it));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLessonFor(it)}})}}
   if(slides[index]?.number===12&&textOf(it).startsWith('註：')){el.classList.add('slide-footnote');el.style.top='654px';el.style.height='27px'}
   return el;
 }
+// Deck-wide type scale (px on the 1280×720 canvas). Keep in sync with the
+// --fs-* variables at the top of native-slides.css.
+const TYPE={title:36,heading:24,body:20,secondary:18,label:15,footnote:13};
+// Snap a JSON run's original pt size to one of the type roles.
+// Cover/closing slides, formulas and large display text keep their own size.
+function typeSize(pt,bold,text,it,slideNum){
+  const px=pt*4/3,y=it.box[1]/H*720;
+  if(slideNum===1||slideNum===39||px>=44)return px;
+  if(y<150&&px>=30)return TYPE.title;
+  if(px>=22&&/[=Σ∈≤≥√±]/.test(text))return px;
+  if(px>=28)return px;
+  if(px>=22.5)return bold?TYPE.heading:TYPE.body;
+  if(px>=19)return TYPE.body;
+  if(px>=16.5)return TYPE.secondary;
+  if(px>=14)return TYPE.label;
+  return TYPE.footnote;
+}
+// Slides whose cards are drawn much taller than their text: shrink cards to fit
+// their content and vertically centre the card block + takeaway strip.
+const compactCardSlides=new Set([2,4,16]);
+function compactCards(s){
+  const px=it=>{const [x,y,w,h]=it.box;return {x:x/W*1280,y:y/H*720,w:w/W*1280,h:h/H*720}};
+  const elOf=j=>slideEl.querySelector(`[data-j="${j}"]`);
+  const AREA_TOP=150,AREA_BOTTOM=670,PAD=30,GAP=40,HEAD_GAP=14;
+  const entries=s.items.map((it,j)=>({it,j,b:px(it),el:elOf(j),text:textOf(it)})).filter(e=>e.el&&e.el.classList.contains('slide-item'));
+  const cards=entries.filter(e=>!e.text&&e.b.h>200&&e.b.w>200);
+  if(!cards.length)return;
+  const inside=(e,c)=>e.b.x>=c.b.x-1&&e.b.y>=c.b.y-1&&e.b.x+e.b.w<=c.b.x+c.b.w+1&&e.b.y+e.b.h<=c.b.y+c.b.h+1;
+  const cardTop=Math.min(...cards.map(c=>c.b.y)),cardBottom=Math.max(...cards.map(c=>c.b.y+c.b.h));
+  // 1) measure the height each card's heading + body really need
+  let need=0;
+  const fit=e=>{e.el.style.height='auto';const h=e.el.scrollHeight;e.el.style.height=`${h}px`;return h};
+  cards.forEach(c=>{
+    c.kids=entries.filter(e=>e!==c&&!cards.includes(e)&&inside(e,c));
+    const texts=c.kids.filter(k=>k.text).sort((a,b)=>b.b.h-a.b.h);
+    const body=texts[0],head=texts.length>1?texts.slice(1).sort((a,b)=>a.b.y-b.b.y)[0]:null;
+    if(body){
+      if(head)body.b={...body.b,y:Math.max(body.b.y,head.b.y+fit(head)+HEAD_GAP)};
+      need=Math.max(need,body.b.y-c.b.y+fit(body)+PAD);
+    }
+  });
+  if(!need||need>=cardBottom-cardTop)return;
+  // 2) things below the cards (takeaway strip etc.), excluding footer chrome
+  const below=entries.filter(e=>e.b.y>=cardBottom-1&&e.b.y<AREA_BOTTOM);
+  const belowTop=below.length?Math.min(...below.map(e=>e.b.y)):0;
+  const belowBottom=below.length?Math.max(...below.map(e=>e.b.y+e.b.h)):0;
+  const blockH=need+(below.length?GAP+(belowBottom-belowTop):0);
+  const newTop=Math.max(AREA_TOP,AREA_TOP+(AREA_BOTTOM-AREA_TOP-blockH)/2);
+  const shift=newTop-cardTop;
+  // 3) apply: resize cards + accent bars, move everything inside, move strip below
+  cards.forEach(c=>{
+    c.el.style.top=`${c.b.y+shift}px`;c.el.style.height=`${need}px`;
+    c.kids.forEach(k=>{k.el.style.top=`${k.b.y+shift}px`;if(!k.text&&k.b.h>=c.b.h-2)k.el.style.height=`${need}px`});
+  });
+  const belowShift=newTop+need+GAP-belowTop;
+  below.forEach(e=>{e.el.style.top=`${e.b.y+belowShift}px`});
+}
 function fitSlideText(){slideEl.querySelectorAll('.slide-item.text').forEach(el=>{const spans=[...el.querySelectorAll('span')].filter(span=>Number.isFinite(parseFloat(span.style.fontSize)));let factor=1;while((el.scrollHeight>el.clientHeight+1||el.scrollWidth>el.clientWidth+1)&&factor>.7){factor*=.94;spans.forEach(span=>{if(!span.dataset.baseSize)span.dataset.baseSize=span.style.fontSize;span.style.fontSize=`${parseFloat(span.dataset.baseSize)*factor}px`})}})}
 const imageHeaderSlides=new Set([9,10,11]);
-const customHeaderSlides=new Set([12,13,14,25]);
+const customHeaderSlides=new Set([12,14]);
 function sharedSection(n){
   if(n===1)return '論文簡報';
   if(n<=4)return '01｜研究動機';
   if(n<=6)return '02｜資料與任務';
-  if(n<=15)return '03｜LSTM 與比較方法';
-  if(n<=21)return '04｜ARO 公式';
+  if(n<=14)return '03｜LSTM 與比較方法';
+  if(n<=21)return '04｜GA 與 ARO';
   if(n<=25)return '05｜方法整合';
   if(n<=35)return '06｜評估與結果';
   if(n<=38)return '07｜討論與結論';
@@ -130,7 +190,7 @@ function addSharedChrome(s){
 function render(){
   const s=slides[index];if(!s)return;
   slideEl.replaceChildren();slideEl.dataset.number=String(s.number);slideEl.style.background=s.background;
-  slideEl.setAttribute('aria-label',`第 ${s.number} 頁，共 ${slides.length} 頁：${slideTitle(s)}`);
+  slideEl.setAttribute('aria-label',`第 ${index+1} 頁，共 ${slides.length} 頁：${slideTitle(s)}`);
   addSharedChrome(s);
   s.items.forEach((it,j)=>{
     const text=textOf(it);
@@ -138,24 +198,28 @@ function render(){
     if(isLegacyChrome(s,it,j))return;
     if([9,10,11].includes(s.number))return;
     if(s.number===7&&j===3)return;
-    if([3,5,7,8,22,38].includes(s.number)&&j>=6)return;
+    if(s.number===17&&j>=8)return;
+    if([3,5,7,22,27,36,38].includes(s.number)&&j>=6)return;
+    if(s.number===12&&j>=3)return;
     const el=renderItem(it,j);
     if(customHeaderSlides.has(s.number)&&j===1){
       el.style.top='71px';el.style.left='60px';el.style.width='1160px';
       const first=el.querySelector('span');if(first)first.textContent=first.textContent.replace(/^\d{2}｜/,'');
     }
     if(customHeaderSlides.has(s.number)&&j===2){el.style.top='117px';el.style.left='60px';el.style.width='1160px';}
+    el.dataset.j=String(j);
     slideEl.append(el);
   });
+  if(compactCardSlides.has(s.number))compactCards(s);
   if(typeof renderNativeSlide==='function'&&renderNativeSlide(s.number,slideEl)){
-    slideEl.querySelectorAll('.slide-header-title, .native-lead, .native-card, .gate-row, .p03-card, .p03-arrow-box, .p03-bottom-strip, .p05-meta-card, .p05-grid-card, .p07-card, .p07-strip, .p08-lane, .p08-bottom-card, .flow-box, .native-formula, .p11-formula-card, .p11-step-card, .p11-out-box, .p38-card, .p38-strip').forEach(card=>{
+    slideEl.querySelectorAll('.slide-header-title, .native-lead, .native-card, .gate-row, .p03-card, .p03-arrow-box, .p03-bottom-strip, .p05-meta-card, .p05-grid-card, .p07-card, .p07-strip, .p08-lane, .p08-bottom-card, .flow-box, .native-formula, .p11-formula-card, .p11-step-card, .p11-out-box, .p12-cell-box, .p12-input-box, .p12-pred-block, .p12-bottom-banner, .p38-card, .p38-strip, .p27-table, .p27-strip, .p17-term').forEach(card=>{
       card.classList.add('interactive');card.tabIndex=0;
       const activate=()=>openLessonFor({paragraphs:[{runs:[{text:card.innerText,size:17}]}],box:[0,2000000,0,0],image:''});
       makeInteractive(card,activate);
       card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate()}});
     });
   }
-  const page=document.createElement('div');page.className='slide-page-number';page.textContent=String(s.number).padStart(2,'0');slideEl.append(page);
+  const page=document.createElement('div');page.className='slide-page-number';page.textContent=String(index+1).padStart(2,'0');slideEl.append(page);
   if(typeof enhanceSlideFormula==='function')enhanceSlideFormula();
   $('#pageLabel').textContent = `${index + 1} / ${slides.length}`;
   const fraction = slides.length > 1 ? index / (slides.length - 1) : 0;
@@ -182,12 +246,12 @@ function builderWidget(){
 function metricWidget(){const d=widget('<strong>誤差指標試算</strong><p>調整三筆實際價格與預測值，觀察指標變化。</p><div id="metricInputs"></div><div id="metricResults"></div>');d.querySelector('#metricInputs').innerHTML=[100,104,108].map((v,i)=>`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><label>實際 ${i+1}<input type="number" class="actual" value="${v}" step="0.1"></label><label>預測 ${i+1}<input type="number" class="pred" value="${[101,102,110][i]}" step="0.1"></label></div>`).join('');function update(){let a=[...d.querySelectorAll('.actual')].map(x=>+x.value),p=[...d.querySelectorAll('.pred')].map(x=>+x.value),e=a.map((v,i)=>v-p[i]),m=a.reduce((x,y)=>x+y,0)/a.length,mse=e.reduce((x,y)=>x+y*y,0)/e.length,mae=e.reduce((x,y)=>x+Math.abs(y),0)/e.length,mape=a.every(x=>x!==0)?100*e.reduce((x,y,i)=>x+Math.abs(y/a[i]),0)/e.length:null,sst=a.reduce((x,y)=>x+(y-m)**2,0),r2=sst?1-e.reduce((x,y)=>x+y*y,0)/sst:null;d.querySelector('#metricResults').innerHTML=`<div class="metric-result"><span>MSE</span><strong>${mse.toFixed(3)}</strong></div><div class="metric-result"><span>MAE</span><strong>${mae.toFixed(3)}</strong></div><div class="metric-result"><span>MAPE</span><strong>${mape===null?'無法計算':mape.toFixed(2)+'%'}</strong></div><div class="metric-result"><span>R²</span><strong>${r2===null?'無法計算':r2.toFixed(3)}</strong></div>`}d.querySelectorAll('input').forEach(i=>i.oninput=update);update();const sNum=slides[index]?.number;if(sNum>=27&&sNum<=33){const wins=widget('<strong>投影片中的 MSE 勝出檔數</strong><div class="mini-bars"></div><p>30 檔股票中，LSTM-ARO 有 18 檔取得最低 MSE；不是每檔都勝出。</p>');wins.querySelector('.mini-bars').innerHTML=[['LSTM-ARO',18],['LSTM-GA',10],['LSTM1D',2]].map(([n,v])=>`<div class="mini-bar"><span>${n}</span><i style="width:${v/18*100}%"></i><strong>${v}</strong></div>`).join('')}}
 function costWidget(){const d=widget('<strong>搜尋與推論的時間尺度</strong><label>搜尋次數倍率：<span id="multVal" class="value"></span></label><input id="mult" type="range" min="0.1" max="2" step="0.1" value="1"><div class="quote" id="costResult"></div><p>倍率是假設每次評估耗時固定的示意估算；論文實測為 50 個候選 × 50 次迭代。</p>');function update(){let m=+d.querySelector('#mult').value;d.querySelector('#multVal').textContent=m.toFixed(1)+'×';d.querySelector('#costResult').innerHTML=`ARO 離線搜尋：約 <strong>${(8.737*m).toFixed(2)} 天</strong><br>最終模型對 30 檔股票推論：論文記錄約 <strong>302 秒</strong>`}d.querySelector('#mult').oninput=update;update()}
 $('#prevBtn').onclick=()=>setIndex(index-1);$('#nextBtn').onclick=()=>setIndex(index+1);$('#closeDrawer').onclick=closeDrawer;$('#overlay').onclick=closeDrawer;document.querySelectorAll('.drawer-tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;renderDrawer()});
-function showOverview(){const grid=$('#overviewGrid');grid.replaceChildren();slides.forEach((s,i)=>{const b=document.createElement('button');b.className=i===index?'current':'';b.innerHTML=`<small>${String(s.number).padStart(2,'0')} · ${category(s.number)}</small><span></span>`;b.querySelector('span').textContent=slideTitle(s);b.onclick=()=>{setIndex(i);hideOverview()};grid.append(b)});$('#overview').hidden=false;$('#closeOverview').focus()}
+function showOverview(){const grid=$('#overviewGrid');grid.replaceChildren();slides.forEach((s,i)=>{const b=document.createElement('button');b.className=i===index?'current':'';b.innerHTML=`<small>${String(i+1).padStart(2,'0')} · ${category(s.number)}</small><span></span>`;b.querySelector('span').textContent=slideTitle(s);b.onclick=()=>{setIndex(i);hideOverview()};grid.append(b)});$('#overview').hidden=false;$('#closeOverview').focus()}
 function hideOverview(){$('#overview').hidden=true;$('#overviewBtn').focus()}
 $('#overviewBtn').onclick=showOverview;$('#closeOverview').onclick=hideOverview;$('#overview').addEventListener('click',e=>{if(e.target.id==='overview')hideOverview()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('#overview').hidden)hideOverview();else if(drawer.classList.contains('open'))closeDrawer();return}if(drawer.classList.contains('open')||!$('#overview').hidden||/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))return;if(e.key==='ArrowLeft'){e.preventDefault();setIndex(index-1)}if(e.key==='ArrowRight'){e.preventDefault();setIndex(index+1)}});
 window.addEventListener('resize',scale);
-window.addEventListener('hashchange',()=>{const m=location.hash.match(/^#slide-(\d+)$/);if(!m)return;const num=+m[1];let target=slides.findIndex(s=>s.number===num);if(target===-1&&num>=1&&num<=slides.length)target=num-1;if(target!==-1&&target!==index)setIndex(target)});
+window.addEventListener('hashchange',()=>{const m=location.hash.match(/^#slide-(\d+)$/);if(!m)return;const num=+m[1];let target=num>=1&&num<=slides.length?num-1:-1;if(target!==-1&&target!==index)setIndex(target)});
 let touchX=0;$('#slideFrame').addEventListener('touchstart',e=>{touchX=e.changedTouches[0].screenX},{passive:true});$('#slideFrame').addEventListener('touchend',e=>{const dx=e.changedTouches[0].screenX-touchX;if(Math.abs(dx)>70)setIndex(index+(dx<0?1:-1))},{passive:true});
 let wheelSmallTotal=0,wheelLastTime=0,wheelDirection=0;
 $('.workspace').addEventListener('wheel',e=>{
@@ -221,11 +285,12 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(Array.isArray(data) && data.length > 0){
     slides = data;
     $('#loading').hidden=true;
+    document.querySelector('.overview-head h2').textContent=`全部 ${slides.length} 頁`;
+    $('#progressTrack').setAttribute('aria-valuemax',String(slides.length));
     const m=location.hash.match(/^#slide-(\d+)$/);
     if(m){
       const num=+m[1];
-      let target=slides.findIndex(s=>s.number===num);
-      if(target===-1&&num>=1&&num<=slides.length)target=num-1;
+      const target=num>=1&&num<=slides.length?num-1:-1;
       setIndex(target!==-1?target:0);
     }else{
       setIndex(0);
