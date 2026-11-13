@@ -47,8 +47,10 @@ const explanations={
 };
 const ref=i=>i<=3?'摘要、§1 與 Fig. 2':i===4?'§2':i===5?'§4.1':i===6?'Tables 1–6':i<=14?'§3.2–3.3、Tables 2–4':i===15?'§3.4':i<=21?'§3.5、Eqs. (6)–(20)':i<=25?'Tables 5–6、Fig. 2':i<=26?'Eqs. (21)–(24)':i<=33?'Tables 7–10、Figs. 3–4':i<=35?'§4.3、Table 11':i<=38?'§4、Conclusion':'論文書目資料';
 function textOf(item){return item.paragraphs.map(p=>p.runs.map(r=>r.text).join('')).join('\n').trim()}
-function slideTitle(s){if(titles[s.number])return titles[s.number];if(s.number===1)return '以人工兔群最佳化演算法優化深度 LSTM 的股價預測';const candidates=s.items.filter(it=>it.paragraphs.length&&it.box[1]>400000&&it.box[1]<1400000).map(it=>({text:textOf(it),size:Math.max(...it.paragraphs.flatMap(p=>p.runs.map(r=>r.size)))})).filter(x=>x.size>=24&&x.text.length>4);return candidates[0]?.text||s.items.map(textOf).find(t=>t.length>6)||`第 ${s.number} 頁`}
-function setIndex(n){const next=Math.max(0,Math.min(slides.length-1,n));if(next===index&&slideEl.childElementCount)return;index=next;selectedText='';if(drawer.classList.contains('open'))closeDrawer();const num=slides[index]?.number||(index+1);location.hash=`slide-${num}`;render()}
+function slideTitle(s){if(titles[s.number])return titles[s.number];if(s.number===1)return '以人工兔群最佳化演算法優化深度 LSTM 的股價預測';const candidates=s.items.filter(it=>it.paragraphs.length&&it.box[1]>400000&&it.box[1]<1400000).map(it=>({text:textOf(it),size:Math.max(...it.paragraphs.flatMap(p=>p.runs.map(r=>r.size)))})).filter(x=>x.size>=24&&x.text.length>4);return (candidates[0]?.text||s.items.map(textOf).find(t=>t.length>6)||`第 ${s.number} 頁`).replace(/^\d{2}｜/,"")}
+function setIndex(n){const next=Math.max(0,Math.min(slides.length-1,n));if(next===index&&slideEl.childElementCount)return;index=next;selectedText='';if(drawer.classList.contains('open'))closeDrawer();const num=slides[index]?.number||(index+1);
+  // replaceState: keep the URL shareable (#slide-N) without adding one history entry per slide
+  const hash=`#slide-${num}`;if(location.hash!==hash)history.replaceState(null,'',hash);render()}
 function shapeStyle(it){const [x,y,w,h]=it.box;let s=`left:${x/W*1280}px;top:${y/H*720}px;width:${w/W*1280}px;height:${h/H*720}px;`;
   if(it.fill)s+=`background:${it.fill};`;
   if(it.line&&it.lineWidth)s+=`border:${Math.max(.8,it.lineWidth/9525)}px solid ${it.line};`;
@@ -89,9 +91,66 @@ function makeInteractive(el,action){
 function renderItem(it,ordinal){if(it.geom==='line'||it.type==='cxnSp')return renderConnector(it,ordinal);const el=document.createElement('div');el.className='slide-item';el.style.cssText=shapeStyle(it);
   const sNum=slides[index]?.number||(index+1);
   if(it.image){const img=document.createElement('img');img.src=it.image;img.alt=`原始投影片圖像，第 ${sNum} 頁`;el.append(img);el.classList.add('interactive');el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label',`開啟第 ${sNum} 頁圖解教材`);makeInteractive(el,()=>openLessonFor(it));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLessonFor(it)}});return el}
-  if(it.paragraphs.length){el.classList.add('text');if(it.anchor==='ctr')el.classList.add('center');if(it.anchor==='b')el.classList.add('bottom');it.paragraphs.forEach(p=>{let line=document.createElement('div');line.className='para';line.style.textAlign=p.align==='ctr'?'center':'left';if(p.align==='r')line.style.textAlign='right';p.runs.forEach(r=>{const span=document.createElement('span');span.textContent=r.text;span.style.fontSize=`${r.size*4/3}px`;span.style.fontWeight=r.bold?'700':'400';if(r.color)span.style.color=r.color;line.append(span)});el.append(line)});const txt=textOf(it);if(txt&&txt.trim().length>=1){el.classList.add('interactive');el.tabIndex=0;makeInteractive(el,()=>openLessonFor(it));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLessonFor(it)}})}}
+  if(it.paragraphs.length){el.classList.add('text');if(it.anchor==='ctr')el.classList.add('center');if(it.anchor==='b')el.classList.add('bottom');it.paragraphs.forEach(p=>{let line=document.createElement('div');line.className='para';line.style.textAlign=p.align==='ctr'?'center':'left';if(p.align==='r')line.style.textAlign='right';p.runs.forEach(r=>{const span=document.createElement('span');span.textContent=r.text;span.style.fontSize=`${typeSize(r.size,r.bold,r.text,it,sNum)}px`;span.style.fontWeight=r.bold?'700':'400';if(r.color)span.style.color=r.color;line.append(span)});el.append(line)});const txt=textOf(it);if(txt&&txt.trim().length>=1){el.classList.add('interactive');el.tabIndex=0;makeInteractive(el,()=>openLessonFor(it));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLessonFor(it)}})}}
   if(slides[index]?.number===12&&textOf(it).startsWith('註：')){el.classList.add('slide-footnote');el.style.top='654px';el.style.height='27px'}
   return el;
+}
+// Deck-wide type scale (px on the 1280×720 canvas). Keep in sync with the
+// --fs-* variables at the top of native-slides.css.
+const TYPE={title:36,heading:24,body:20,secondary:18,label:15,footnote:13};
+// Snap a JSON run's original pt size to one of the type roles.
+// Cover/closing slides, formulas and large display text keep their own size.
+function typeSize(pt,bold,text,it,slideNum){
+  const px=pt*4/3,y=it.box[1]/H*720;
+  if(slideNum===1||slideNum===39||px>=44)return px;
+  if(y<150&&px>=30)return TYPE.title;
+  if(px>=22&&/[=Σ∈≤≥√±]/.test(text))return px;
+  if(px>=28)return px;
+  if(px>=22.5)return bold?TYPE.heading:TYPE.body;
+  if(px>=19)return TYPE.body;
+  if(px>=16.5)return TYPE.secondary;
+  if(px>=14)return TYPE.label;
+  return TYPE.footnote;
+}
+// Slides whose cards are drawn much taller than their text: shrink cards to fit
+// their content and vertically centre the card block + takeaway strip.
+const compactCardSlides=new Set([2,4,16,34,36]);
+function compactCards(s){
+  const px=it=>{const [x,y,w,h]=it.box;return {x:x/W*1280,y:y/H*720,w:w/W*1280,h:h/H*720}};
+  const elOf=j=>slideEl.querySelector(`[data-j="${j}"]`);
+  const AREA_TOP=150,AREA_BOTTOM=670,PAD=30,GAP=40,HEAD_GAP=14;
+  const entries=s.items.map((it,j)=>({it,j,b:px(it),el:elOf(j),text:textOf(it)})).filter(e=>e.el&&e.el.classList.contains('slide-item'));
+  const cards=entries.filter(e=>!e.text&&e.b.h>200&&e.b.w>200);
+  if(!cards.length)return;
+  const inside=(e,c)=>e.b.x>=c.b.x-1&&e.b.y>=c.b.y-1&&e.b.x+e.b.w<=c.b.x+c.b.w+1&&e.b.y+e.b.h<=c.b.y+c.b.h+1;
+  const cardTop=Math.min(...cards.map(c=>c.b.y)),cardBottom=Math.max(...cards.map(c=>c.b.y+c.b.h));
+  // 1) measure the height each card's heading + body really need
+  let need=0;
+  const fit=e=>{e.el.style.height='auto';const h=e.el.scrollHeight;e.el.style.height=`${h}px`;return h};
+  cards.forEach(c=>{
+    c.kids=entries.filter(e=>e!==c&&!cards.includes(e)&&inside(e,c));
+    const texts=c.kids.filter(k=>k.text).sort((a,b)=>b.b.h-a.b.h);
+    const body=texts[0],head=texts.length>1?texts.slice(1).sort((a,b)=>a.b.y-b.b.y)[0]:null;
+    if(body){
+      if(head)body.b={...body.b,y:Math.max(body.b.y,head.b.y+fit(head)+HEAD_GAP)};
+      need=Math.max(need,body.b.y-c.b.y+fit(body)+PAD);
+    }
+  });
+  if(!need||need>=cardBottom-cardTop)return;
+  // 2) things below the cards (takeaway strip etc.), excluding footer chrome
+  const below=entries.filter(e=>e.b.y>=cardBottom-1&&e.b.y<AREA_BOTTOM);
+  const belowTop=below.length?Math.min(...below.map(e=>e.b.y)):0;
+  const belowBottom=below.length?Math.max(...below.map(e=>e.b.y+e.b.h)):0;
+  const blockH=need+(below.length?GAP+(belowBottom-belowTop):0);
+  const newTop=Math.max(AREA_TOP,AREA_TOP+(AREA_BOTTOM-AREA_TOP-blockH)/2);
+  const shift=newTop-cardTop;
+  // 3) apply: resize cards + accent bars, move everything inside, move strip below
+  cards.forEach(c=>{
+    c.el.style.top=`${c.b.y+shift}px`;c.el.style.height=`${need}px`;
+    c.kids.forEach(k=>{k.el.style.top=`${k.b.y+shift}px`;if(!k.text&&k.b.h>=c.b.h-2)k.el.style.height=`${need}px`});
+  });
+  const belowShift=newTop+need+GAP-belowTop;
+  below.forEach(e=>{e.el.style.top=`${e.b.y+belowShift}px`});
 }
 function fitSlideText(){slideEl.querySelectorAll('.slide-item.text').forEach(el=>{const spans=[...el.querySelectorAll('span')].filter(span=>Number.isFinite(parseFloat(span.style.fontSize)));let factor=1;while((el.scrollHeight>el.clientHeight+1||el.scrollWidth>el.clientWidth+1)&&factor>.7){factor*=.94;spans.forEach(span=>{if(!span.dataset.baseSize)span.dataset.baseSize=span.style.fontSize;span.style.fontSize=`${parseFloat(span.dataset.baseSize)*factor}px`})}})}
 const imageHeaderSlides=new Set([9,10,11]);
@@ -139,16 +198,19 @@ function render(){
     if([9,10,11].includes(s.number))return;
     if(s.number===7&&j===3)return;
     if([3,5,7,8,22,38].includes(s.number)&&j>=6)return;
+    if(s.number===12&&j>=3)return;
     const el=renderItem(it,j);
     if(customHeaderSlides.has(s.number)&&j===1){
       el.style.top='71px';el.style.left='60px';el.style.width='1160px';
       const first=el.querySelector('span');if(first)first.textContent=first.textContent.replace(/^\d{2}｜/,'');
     }
     if(customHeaderSlides.has(s.number)&&j===2){el.style.top='117px';el.style.left='60px';el.style.width='1160px';}
+    el.dataset.j=String(j);
     slideEl.append(el);
   });
+  if(compactCardSlides.has(s.number))compactCards(s);
   if(typeof renderNativeSlide==='function'&&renderNativeSlide(s.number,slideEl)){
-    slideEl.querySelectorAll('.slide-header-title, .native-lead, .native-card, .gate-row, .p03-card, .p03-arrow-box, .p03-bottom-strip, .p05-meta-card, .p05-grid-card, .p07-card, .p07-strip, .p08-lane, .p08-bottom-card, .flow-box, .native-formula, .p11-formula-card, .p11-step-card, .p11-out-box, .p38-card, .p38-strip').forEach(card=>{
+    slideEl.querySelectorAll('.slide-header-title, .native-lead, .native-card, .gate-row, .p03-card, .p03-arrow-box, .p03-bottom-strip, .p05-meta-card, .p05-grid-card, .p07-card, .p07-strip, .p08-lane, .p08-bottom-card, .flow-box, .native-formula, .p11-formula-card, .p11-step-card, .p11-out-box, .p12-cell-box, .p12-input-box, .p12-pred-block, .p12-bottom-banner, .p38-card, .p38-strip').forEach(card=>{
       card.classList.add('interactive');card.tabIndex=0;
       const activate=()=>openLessonFor({paragraphs:[{runs:[{text:card.innerText,size:17}]}],box:[0,2000000,0,0],image:''});
       makeInteractive(card,activate);

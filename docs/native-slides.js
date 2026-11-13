@@ -39,8 +39,8 @@ function renderNativeSlide(number, slide) {
             <strong>50 代演化</strong>
           </div>
           <div class="p03-arrow-box to-left">
-            <div class="p03-arrow-title">回傳適應度 (MSE)</div>
-            <div class="p03-arrow-sub">測試集預測誤差</div>
+            <div class="p03-arrow-title">回傳適應度</div>
+            <div class="p03-arrow-sub">測試集準確度與誤差</div>
           </div>
         </div>
 
@@ -57,10 +57,9 @@ function renderNativeSlide(number, slide) {
           <div>
             <span class="p03-tag best">最終成果</span>
             <h3>最佳模型</h3>
-            <div class="p03-stat-number">18 / 30</div>
-            <div class="p03-stat-label">道瓊成分股最低 MSE 勝出</div>
+            <p class="p03-desc">保留搜尋過程中誤差最低的超參數組合，作為最終預測模型。</p>
           </div>
-          <p class="p03-sub">全域最優超參數架構，在多數標的達到最佳預測精度。</p>
+          <p class="p03-sub">以此模型預測 30 檔 DJIA 成分股的隔日收盤價。</p>
         </div>
       </div>
       <div class="p03-bottom-strip">
@@ -188,7 +187,7 @@ function renderNativeSlide(number, slide) {
                 <line x1="130" y1="50" x2="195" y2="50" stroke="#cbd5e1" stroke-width="1.5" />
                 <line x1="130" y1="75" x2="195" y2="50" stroke="#cbd5e1" stroke-width="1.5" />
                 <circle cx="205" cy="50" r="10" fill="#fff" stroke="#f39a42" stroke-width="2" />
-                <text x="205" y="54" font-size="10" font-weight="bold" text-anchor="middle" fill="#202b42">ŷ</text>
+                <text x="205" y="54" font-size="12" font-weight="bold" text-anchor="middle" fill="#202b42">ŷ</text>
               </svg>
             </div>
             <div class="p07-main-trait">各時間點獨立，無序列記憶</div>
@@ -206,15 +205,15 @@ function renderNativeSlide(number, slide) {
             <div class="p07-diagram-wrap">
               <svg viewBox="0 0 240 100" style="width:100%;height:100%">
                 <circle cx="40" cy="50" r="10" fill="#fff" stroke="#3c66b9" stroke-width="2" />
-                <text x="40" y="54" font-size="10" font-weight="bold" text-anchor="middle" fill="#202b42">xₜ</text>
+                <text x="40" y="54" font-size="12" font-weight="bold" text-anchor="middle" fill="#202b42">xₜ</text>
                 <line x1="50" y1="50" x2="105" y2="50" stroke="#cbd5e1" stroke-width="2" />
                 <rect x="105" y="32" width="40" height="36" rx="6" fill="#e0e7ff" stroke="#6366f1" stroke-width="2" />
-                <text x="125" y="55" font-size="13" font-weight="bold" text-anchor="middle" fill="#312e81">hₜ</text>
+                <text x="125" y="55" font-size="15" font-weight="bold" text-anchor="middle" fill="#312e81">hₜ</text>
                 <path d="M 115 32 C 110 8, 140 8, 135 30" fill="none" stroke="#6366f1" stroke-width="2" stroke-dasharray="3,2" />
-                <text x="125" y="10" font-size="9" font-weight="bold" text-anchor="middle" fill="#4338ca">循環 hₜ₋₁</text>
+                <text x="125" y="10" font-size="11" font-weight="bold" text-anchor="middle" fill="#4338ca">循環 hₜ₋₁</text>
                 <line x1="145" y1="50" x2="195" y2="50" stroke="#cbd5e1" stroke-width="2" />
                 <circle cx="205" cy="50" r="10" fill="#fff" stroke="#f39a42" stroke-width="2" />
-                <text x="205" y="54" font-size="10" font-weight="bold" text-anchor="middle" fill="#202b42">ŷₜ</text>
+                <text x="205" y="54" font-size="12" font-weight="bold" text-anchor="middle" fill="#202b42">ŷₜ</text>
               </svg>
             </div>
             <div class="p07-main-trait">保留隱藏狀態，但易梯度消失</div>
@@ -232,15 +231,15 @@ function renderNativeSlide(number, slide) {
             <div class="p07-diagram-wrap">
               <svg viewBox="0 0 240 100" style="width:100%;height:100%">
                 <rect x="20" y="16" width="200" height="24" rx="6" fill="#fff9df" stroke="#c99a27" stroke-width="2" />
-                <text x="120" y="33" font-size="11" font-weight="bold" text-anchor="middle" fill="#946c00">Cell State Cₜ（加法輸送帶）</text>
+                <text x="120" y="33" font-size="13" font-weight="bold" text-anchor="middle" fill="#946c00">Cell State Cₜ（加法輸送帶）</text>
                 <circle cx="60" cy="58" r="9" fill="#fff" stroke="#d85b61" stroke-width="1.8" />
-                <text x="60" y="62" font-size="9" font-weight="bold" text-anchor="middle" fill="#202b42">fₜ</text>
+                <text x="60" y="62" font-size="11" font-weight="bold" text-anchor="middle" fill="#202b42">fₜ</text>
                 <circle cx="120" cy="58" r="9" fill="#fff" stroke="#4c9b68" stroke-width="1.8" />
-                <text x="120" y="62" font-size="9" font-weight="bold" text-anchor="middle" fill="#202b42">iₜ</text>
+                <text x="120" y="62" font-size="11" font-weight="bold" text-anchor="middle" fill="#202b42">iₜ</text>
                 <circle cx="180" cy="58" r="9" fill="#fff" stroke="#8b62c6" stroke-width="1.8" />
-                <text x="180" y="62" font-size="9" font-weight="bold" text-anchor="middle" fill="#202b42">oₜ</text>
+                <text x="180" y="62" font-size="11" font-weight="bold" text-anchor="middle" fill="#202b42">oₜ</text>
                 <rect x="20" y="74" width="200" height="20" rx="5" fill="#f6efff" stroke="#8b62c6" stroke-width="1.5" />
-                <text x="120" y="88" font-size="10" font-weight="bold" text-anchor="middle" fill="#6d28d9">Hidden State hₜ（當前輸出）</text>
+                <text x="120" y="88" font-size="12" font-weight="bold" text-anchor="middle" fill="#6d28d9">Hidden State hₜ（當前輸出）</text>
               </svg>
             </div>
             <div class="p07-main-trait">雙軌加法記憶，突破長距依賴</div>
@@ -396,6 +395,51 @@ function renderNativeSlide(number, slide) {
     return true;
   }
 
+  // P12: 同一個 LSTM Cell 沿時間展開
+  if (number === 12) {
+    slide.insertAdjacentHTML('beforeend', `
+      <div class="p12-time-unrolling">
+        <div class="p12-diagram">
+          <div class="p12-shared-label">同一個 LSTM Cell · 共用同一組權重 W</div>
+          <div class="p12-chain">
+            <div class="p12-step">
+              <span class="p12-step-tag">第 1 天</span>
+              <div class="p12-input-box">輸入 x₁</div>
+              <span class="p12-input-arrow">↓</span>
+              <div class="p12-cell-box">LSTM Cell</div>
+              <span class="p12-state">記憶 C₁、輸出 h₁</span>
+            </div>
+            <div class="p12-flow-bridge"><span>→</span><small>傳遞狀態</small></div>
+            <div class="p12-step">
+              <span class="p12-step-tag">第 2 天</span>
+              <div class="p12-input-box">輸入 x₂</div>
+              <span class="p12-input-arrow">↓</span>
+              <div class="p12-cell-box">LSTM Cell</div>
+              <span class="p12-state">記憶 C₂、輸出 h₂</span>
+            </div>
+            <div class="p12-flow-bridge p12-ellipsis"><span>···</span><small>依序重複</small></div>
+            <div class="p12-step">
+              <span class="p12-step-tag">第 20 天</span>
+              <div class="p12-input-box">輸入 x₂₀</div>
+              <span class="p12-input-arrow">↓</span>
+              <div class="p12-cell-box">LSTM Cell</div>
+              <span class="p12-state">最終輸出 h₂₀</span>
+            </div>
+            <div class="p12-flow-bridge"><span>→</span><small>輸出層</small></div>
+            <div class="p12-pred-block">
+              <span>預測第 21 天</span>
+              <strong>ŷ₂₁</strong>
+            </div>
+          </div>
+        </div>
+        <div class="p12-bottom-banner">
+          每一步更新記憶並傳給下一天；最後用 h₂₀ 預測第 21 天。
+        </div>
+      </div>
+    `);
+    return true;
+  }
+
   // P22: ARO 搜尋空間全貌
   if (number === 22) {
     const left = nativeSearchOptions.slice(0, 5).map(([a, b]) => nativeCard(a, b)).join('');
@@ -430,7 +474,7 @@ function renderNativeSlide(number, slide) {
               <span class="p38-tag">量化成果</span>
               <h3>LSTM-ARO 表現最優</h3>
             </div>
-            <p>在 30 檔股票中有 18 檔取得最低 MSE（勝率 60%），MAE 與 MAPE 指標亦全面領先。</p>
+            <p>在 30 檔股票中有 18 檔取得最低 MSE，MAE 與 MAPE 也是勝出檔數最多的模型（但非每檔皆勝，見第 32 頁）。</p>
           </div>
 
           <div class="p38-card tone-purple">

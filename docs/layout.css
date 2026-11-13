@@ -98,7 +98,7 @@ html,body{width:100%;height:100%;overflow:hidden}
 .paper-fact-grid strong{font-size:13px;color:#20314e}
 .perturbation-annotation{position:absolute;left:88px;top:241px;width:1080px;text-align:center;border:0;background:transparent;color:#34557d;font-size:15px;font-weight:700;padding:3px 8px;cursor:pointer}
 .perturbation-annotation:hover,.perturbation-annotation:focus-visible{color:#0b9d98;text-decoration:underline}
-.formula-domain-note{position:absolute;min-height:24px;border:0;background:transparent;color:#34557d;text-align:center;font-size:16px;font-weight:650;line-height:1.3;padding:2px 4px;cursor:pointer}
+.formula-domain-note{position:absolute;min-height:24px;border:0;background:transparent;color:#34557d;text-align:center;font-size:var(--fs-secondary);font-weight:650;line-height:1.3;padding:2px 4px;cursor:pointer}
 .formula-domain-note:hover,.formula-domain-note:focus-visible{color:#0b9d98;text-decoration:underline}
 .equation-domain{font-size:.58em;font-weight:600;white-space:nowrap;margin-left:.35em;vertical-align:middle;letter-spacing:0}
 .math-vector{display:inline-block;position:relative;font-style:italic;line-height:1;padding-top:.15em}
@@ -126,7 +126,7 @@ html,body{width:100%;height:100%;overflow:hidden}
 .lr-option strong{font-size:16px}
 @media(max-width:700px){.discrete-widget .lesson-stage{position:static}.lr-candidate-table>div{grid-template-columns:1fr}}
 @media(max-width:700px){.drawer,.drawer.wide{width:100vw}.lesson-box.has-chart{display:block}.lesson-stage{position:sticky;top:-18px;padding:6px 0 10px;margin-bottom:18px;border-bottom:1px solid #e4eaf2}.lesson-box.builder-layout .lesson-stage{position:static}.lesson-stage .formula-display{font-size:14px}.lesson-chart{margin-top:5px}.lesson-chart svg{max-height:165px}}
-@media(max-width:700px){.workspace{min-height:0;padding:8px;align-items:flex-start}.presentation{width:min(100%,calc((100dvh - 61px)*16/9))}.toolbar{height:45px;gap:7px}.pager{gap:4px}.pager button:not(.overview-trigger){height:28px;width:28px;font-size:16px}.pager span{font-size:11px;min-width:50px}.pager .overview-trigger{font-size:10px;padding:6px;margin-left:2px}.learn-button{font-size:10px;padding:7px 8px}}
+@media(max-width:700px){.workspace{min-height:0;padding:8px;align-items:center}.presentation{width:min(100%,calc((100dvh - 61px)*16/9))}.toolbar{height:45px;gap:7px}.pager{gap:4px}.pager button:not(.overview-trigger){height:28px;width:28px;font-size:16px}.pager span{font-size:11px;min-width:50px}.pager .overview-trigger{font-size:10px;padding:6px;margin-left:2px}.learn-button{font-size:10px;padding:7px 8px}}
 /* Specialized Slide Widget Styles */
 .widget-card{background:#fff;border:1px solid #dce4ee;border-radius:10px;padding:14px;box-shadow:0 2px 6px #0000000a}
 .dual-loop-container{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
@@ -140,6 +140,20 @@ html,body{width:100%;height:100%;overflow:hidden}
 .loop-arrow-down{text-align:center;font-size:12px;font-weight:700;color:#7c48ad}
 .loop-arrow-up{text-align:center;font-size:12px;font-weight:700;color:#0b9d98}
 .unroll-step-display{padding:10px;background:#f8fafd;border:1px solid #e4eaf2;border-radius:10px;margin-bottom:14px}
+
+/* Learning Lab formula tables */
+.formula-steps{margin:18px 0 22px}
+.formula-steps h3{font-size:15px;margin:0 0 9px;color:#1b3051}
+.formula-table-scroll{overflow-x:auto;border:1px solid #dce4ee;border-radius:11px}
+.formula-steps table,.formula-terms table{width:100%;min-width:560px;border-collapse:collapse;font-size:16px;line-height:1.55}
+.formula-steps th,.formula-steps td,.formula-terms th,.formula-terms td{padding:11px 12px;border-bottom:1px solid #e4eaf2;text-align:left;vertical-align:top}
+.formula-steps thead,.formula-terms thead{background:#eaf1f8;color:#344862}
+.formula-steps tbody tr:nth-child(even){background:#f8fafc}
+.formula-steps td:first-child{min-width:100px;color:#2f59a2;font-weight:800}
+.formula-steps td:nth-child(2){min-width:180px;color:#20314e;font-weight:750;font-variant-numeric:tabular-nums}
+.formula-terms td:first-child{min-width:110px}
+.formula-terms td:nth-child(2){min-width:155px}
+.formula-steps tbody tr:last-child td,.formula-terms tbody tr:last-child td{border-bottom:0}
 
 /* P2 Closed Loop Styling */
 .takeaway-box{background:#f0f8f8;border-left:4px solid #0b9d98;padding:11px 13px;border-radius:8px;margin-bottom:12px;font-size:13px;line-height:1.5;color:#17294a}

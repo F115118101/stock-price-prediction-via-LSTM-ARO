@@ -4,41 +4,8 @@
 (function () {
   'use strict';
 
-  // Override widgetType to give individual slides their own specialized widget
-  const origWidgetType = typeof widgetType === 'function' ? widgetType : () => 'overview';
-  window.widgetType = function (num) {
-    if (num === 2 || num === 3) return 'motivation';
-    if (num === 5) return 'window';
-    if (num === 6) return 'benchmarks';
-    if (num === 7 || num === 8) return 'ann_rnn_lstm';
-    if (num >= 9 && num <= 11) return 'lstm';
-    if (num === 12) return 'unroll';
-    if (num === 13) return 'time_depth';
-    if (num === 14) return 'builder';
-    if (num === 15) return 'ga_simulation';
-    if (num === 16) return 'rabbit_population';
-    if (num === 17) return 'detour';
-    if (num === 18) return 'greedy_selection';
-    if (num === 19) return 'hiding';
-    if (num === 20) return 'burrow_map';
-    if (num === 21) return 'energy';
-    if (num === 22 || num === 23) return 'builder';
-    if (num === 24) return 'optimization_loop';
-    if (num === 25) return 'builder';
-    if (num === 26) return 'metrics_compare';
-    if (num === 27) return 'stock_mse';
-    if (num === 28) return 'stock';
-    if (num === 29) return 'stock_mae';
-    if (num === 30) return 'stock_mape';
-    if (num === 31) return 'stock_r2';
-    if (num === 32) return 'exceptions';
-    if (num === 33) return 'curves';
-    if (num === 34) return 'offline_cost';
-    if (num === 35) return 'cost';
-    if (num === 36 || num === 37) return 'limitations';
-    if (num === 38) return 'conclusion';
-    return origWidgetType(num);
-  };
+  // Slide → widget mapping lives in app.js (widgetType). It is a top-level `let`,
+  // so assigning window.widgetType here would be shadowed and never used.
 
   // Register widget titles for drawer header
   const newLessonNames = {
@@ -216,7 +183,7 @@
       { name: 'ANN', type: '全連接網路', memory: '無時間序列記憶單元', search: '手動預設 (無調參)', pros: '訓練推論速度最快 (136.5s)', cons: '忽略歷史時間依賴性，預測誤差最高' },
       { name: 'LSTM1D / 2D / 3D', type: '固定深度 LSTM', memory: '具備門控時間狀態 (Cₜ, hₜ)', search: '固定架構 (未演化搜尋)', pros: '能學到序列相依特徵', cons: '層數與神經元固定，無法適應不同股票波動特徵' },
       { name: 'LSTM-GA', type: '遺傳演算法調參 LSTM', memory: '具備門控時間狀態', search: 'GA (選擇、交配、突變)', pros: '自動搜尋超參數，誤差顯著低於固定模型', cons: '收斂速度較慢，易早熟收斂至局部最佳解' },
-      { name: 'LSTM-ARO (本文)', type: '兔群最佳化深度 LSTM', memory: '具備門控時間狀態', search: 'ARO (繞路覓食 + 隨機躲藏)', pros: '在 18/30 檔股票取得最低 MSE，收斂性能卓越', cons: '離線搜尋時間較長 (約 8.74 天)' }
+      { name: 'LSTM-ARO (本文)', type: '兔群最佳化深度 LSTM', memory: '具備門控時間狀態', search: 'ARO (繞路覓食 + 隨機躲藏)', pros: '30 檔股票中有 18 檔 MSE 最低', cons: '離線搜尋時間較長 (約 8.74 天)' }
     ];
     const d = lessonBox(`
       <label class="lesson-control"><span>選擇對照模型查看特點：</span>
@@ -652,7 +619,7 @@
       <div class="formula-display" id="greedyFormula"></div>
       <div class="decision" id="greedyBadge"></div>
       <div id="controls"></div>
-      <p class="lesson-note">貪婪選擇（Greedy Selection）確保適應度絕不倒退，只有當新位置產生的 LSTM 預測誤差更低時，兔子才會真正移動。</p>
+      <p class="lesson-note">貪婪選擇（Greedy Selection）確保適應度絕不倒退：只有候選位置的預測誤差較低時，兔子才會移動。</p>
     `);
     const c = d.querySelector('#controls');
     control(c, 'currMse', '目前兔子位置誤差 f(xᵢ)', 10, 80, 1, 35);
@@ -660,13 +627,13 @@
     function update() {
       const cur = +d.querySelector('#currMse').value;
       const cand = +d.querySelector('#candMse').value;
-      d.querySelector('#currMseValue').textContent = `${cur} MSE`;
-      d.querySelector('#candMseValue').textContent = `${cand} MSE`;
+      d.querySelector('#currMseValue').textContent = `${cur}`;
+      d.querySelector('#candMseValue').textContent = `${cand}`;
       const accept = cand < cur;
       d.querySelector('#greedyFormula').innerHTML = `
         <small>貪婪選擇公式：xᵢ(t+1) = vᵢ 若 f(vᵢ) < f(xᵢ) 否則維持 xᵢ</small>
         <div>目前誤差 f(xᵢ) = ${param('currMse', cur)} ｜ 候選誤差 f(vᵢ) = ${param('candMse', cand)}</div>
-        <div>適應度差值 Δ = ${cand - cur > 0 ? '+' : ''}${(cand - cur).toFixed(1)} MSE</div>
+        <div>誤差差值 Δ = ${cand - cur > 0 ? '+' : ''}${(cand - cur).toFixed(1)}</div>
       `;
       const badge = d.querySelector('#greedyBadge');
       if (accept) {

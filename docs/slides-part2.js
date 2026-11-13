@@ -1938,7 +1938,7 @@ window.SLIDES_PART2 = [
               {
                 "bold": true,
                 "size": 27,
-                "text": "ARO 數學細節：隨機步長、選擇維度、接受條件",
+                "text": "ARO 數學細節：步長、選擇維度、接受條件",
                 "color": "#182B4D"
               }
             ],
@@ -2199,7 +2199,7 @@ window.SLIDES_PART2 = [
               {
                 "bold": true,
                 "size": 17,
-                "text": "擾動與探索",
+                "text": "隨機步長 L",
                 "color": "#3C66B9"
               }
             ],
@@ -2232,7 +2232,7 @@ window.SLIDES_PART2 = [
               {
                 "bold": true,
                 "size": 18,
-                "text": "vᵢ = xⱼ + R·(xᵢ−xⱼ) + q·n₁",
+                "text": "L = (e − e^(((t−1)/T)²)) · sin(2πr₂)",
                 "color": "#182B4D"
               }
             ],
@@ -2265,7 +2265,7 @@ window.SLIDES_PART2 = [
               {
                 "bold": false,
                 "size": 13,
-                "text": "q = round(0.5(0.05+r₁))；n₁ ∼ N(0,1)；i,j ∈ {1,…,N}，j ≠ i。",
+                "text": "t 為目前迭代，T 為總迭代數；r₂ ∈ (0,1) 控制步長的方向與幅度。",
                 "color": "#57657A"
               }
             ],
