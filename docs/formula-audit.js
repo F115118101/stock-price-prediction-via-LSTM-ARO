@@ -73,13 +73,19 @@ function enhanceSlideFormula(){
   const note=(text,left,top,width,kind)=>{const el=document.createElement('button');el.type='button';el.className='formula-domain-note';el.textContent=text;Object.assign(el.style,{left:`${left}px`,top:`${top}px`,width:`${width}px`});el.onclick=()=>{lesson={text,kind,page:false};openDrawer('explain')};slideEl.append(el)};
   const v='<span class="math-vector">v</span>',x='<span class="math-vector">x</span>';
   const slideNum=slides[index]?.number||(index+1);
+  if(slideNum===18){
+    // Eq. (8) with a real superscript instead of "e^(...)"; all three formulas in math font
+    replaceMath('L = (e','L = (e − e<sup>((t−1)/T)²</sup>) · sin(2πr₂)')?.classList.add('slide-math');
+    replace('R = L','R = L · c')?.classList.add('slide-math');
+    replaceMath('xᵢ(t+1) = vᵢ','xᵢ(t+1) = vᵢ(t+1)　if　f(vᵢ(t+1)) &lt; f(xᵢ(t))')?.classList.add('slide-math');
+  }
   if(slideNum===17){
     const equation=replaceMath('vᵢ(t+1) = xⱼ(t)',`${v}<sub>i</sub>(t+1) = ${x}<sub>j</sub>(t) + R·(${x}<sub>i</sub>(t)−${x}<sub>j</sub>(t)) + q·n₁ <span class="equation-domain">, i,j ∈ {1,…,N}, j ≠ i, 1 ≤ t ≤ T</span>`);
     equation?.classList.add('full-eq6');
     const annotation=document.createElement('button');annotation.type='button';annotation.className='perturbation-annotation';annotation.textContent='Random Perturbation（隨機擾動）  n₁ ∼ N(0,1)';annotation.onclick=openPerturbationLesson;slideEl.append(annotation);
   }
   if(slideNum===19){
-    replaceMath('bᵢ,ⱼ(t) = xᵢ(t) + H · g · xᵢ(t)','bᵢ,ⱼ(t) = xᵢ(t) + H·gⱼ·xᵢ(t) <span class="equation-domain">, i ∈ {1,…,N}, j ∈ {1,…,D}</span>');
+    replaceMath('bᵢ,ⱼ(t) = xᵢ(t) + H','bᵢ,ⱼ(t) = xᵢ(t) + H·gⱼ·xᵢ(t) <span class="equation-domain">, i ∈ {1,…,N}, j ∈ {1,…,D}</span>');
     replaceMath('H = ((T − t + 1) / T) · r₄','H = ((T − t + 1) / T)·r₄ <span class="equation-domain">, 1 ≤ t ≤ T, r₄ ∈ (0,1)</span>');
   }
   if(slideNum===20){

@@ -815,3 +815,25 @@
   transform: none !important;
 }
 
+
+/* P27: 四項指標勝出檔數 */
+.p27-board{position:absolute;left:60px;top:160px;width:1160px;display:flex;flex-direction:column;gap:22px}
+.p27-table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1.5px solid #dfe6f0;border-radius:16px;overflow:hidden;box-shadow:0 4px 14px rgba(20,40,75,.05)}
+.p27-table th,.p27-table td{padding:14px 12px;text-align:center;border-bottom:1px solid #e8edf4}
+.p27-table tbody tr:last-child th,.p27-table tbody tr:last-child td{border-bottom:0}
+.p27-table thead th{background:#f3f6fa;color:#344862;font-size:var(--fs-secondary);font-weight:750}
+.p27-table tbody th{text-align:left;padding-left:26px;width:210px}
+.p27-table tbody th strong{display:block;font-size:var(--fs-heading);color:#101a30}
+.p27-table tbody th small{display:block;font-size:var(--fs-label);color:#60708a;font-weight:600;margin-top:2px}
+.p27-table td{font-size:var(--fs-heading);font-weight:750;color:#3c66b9;font-variant-numeric:tabular-nums}
+.p27-table td.is-zero{color:#b4bfcd;font-weight:600}
+.p27-table .is-aro{background:#e9f8f5;color:#0b8c87}
+.p27-table thead th.is-aro{background:#d4f2ec;color:#0b726e}
+.p27-note{margin:0;font-size:var(--fs-secondary);color:#60708a;text-align:center}
+.p27-strip{background:#ddf7f2;border-radius:12px;padding:14px 24px;font-size:var(--fs-body);font-weight:750;color:#0b8c87;text-align:center}
+
+/* P17: 繞路覓食符號表 */
+.p17-terms{position:absolute;left:64px;top:280px;width:1152px;display:grid;grid-template-columns:1fr 1fr;gap:8px 14px}
+.p17-term{display:flex;align-items:center;gap:14px;min-height:50px;padding:6px 16px;background:#fff;border:1.5px solid #dfe6f0;border-radius:12px}
+.p17-sym{flex:none;width:96px;font-size:var(--fs-body);font-weight:750;color:#3c66b9;font-family:"Cambria Math","Times New Roman",serif}
+.p17-text{font-size:var(--fs-secondary);line-height:1.35;color:#202b42}

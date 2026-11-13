@@ -958,4 +958,152 @@
     `);
   }
 
+  // ── Slide ID 18（第 15 頁）：隨機步長 L 隨迭代的變化 ──────────────────────
+  // L = (e − e^(((t−1)/T)²)) · sin(2πr₂)，原文 Eq. (8)
+  const STEP_T = 50; // 論文：50 次迭代
+  const stepAmp = t => Math.E - Math.exp(((t - 1) / STEP_T) ** 2);
+  let stepSamples = Array.from({ length: STEP_T }, () => Math.random());
+
+  if (typeof lessonNames === 'object') lessonNames.step_length = '隨機步長 L 隨迭代的變化';
+
+  // 第 15 頁：點「R = L·c」或「隨機步長 L」那兩列 → 步長教材；其餘維持貪婪選擇教材
+  const priorLessonKind = lessonKind;
+  lessonKind = function (text, n) {
+    if (n === 18 && /隨機步長|L =|sin|R = L|搜尋方向|移動尺度|r₂/.test(text)) return 'step_length';
+    return priorLessonKind(text, n);
+  };
+  const priorHint = lessonHint;
+  lessonHint = function () {
+    if (lesson?.kind === 'step_length') return 'L 由兩部分相乘：前半段 (e − e^((t−1)/T)²) 是「步伐上限」，隨迭代從約 1.72 縮小到 0；後半段 sin(2πr₂) 是 −1 到 1 的隨機數，決定這一步往正或負方向、用掉上限的幾成。所以前期步伐大、廣泛探索，後期步伐小、細部調整。';
+    return priorHint();
+  };
+  const priorFormulaFor = formulaFor;
+  formulaFor = function (k) {
+    if (k === 'step_length') return 'L = (e − e^((t−1)/T)²) · sin(2πr₂)；R = L · c';
+    return priorFormulaFor(k);
+  };
+  if (typeof termRows === 'object') termRows.step_length = [
+    ['t', '1,…,T', '目前迭代次數'],
+    ['T', '最大迭代次數（本文 50）', '決定步伐縮小的速度'],
+    ['e', '≈ 2.718', '自然常數'],
+    ['e − e^((t−1)/T)²', '約 1.72 → 0', '步伐上限（振幅），隨迭代遞減'],
+    ['r₂', '0 到 1 的均勻隨機數', '每次迭代重新抽樣'],
+    ['sin(2πr₂)', '−1 到 1', '決定方向（正／負）與用掉上限的比例'],
+    ['c', '0／1 遮罩向量', '只讓隨機選出的部分維度移動'],
+    ['R = L · c', '向量', '代入 Eq. (6) 的移動係數']
+  ];
+  if (typeof formulaSteps === 'object') formulaSteps.step_length = [
+    ['① 算步伐上限', 'e − e^((t−1)/T)²', 't 越大，指數越大，上限越小。'],
+    ['② 抽隨機方向', 'sin(2πr₂)', '介於 −1 與 1。'],
+    ['③ 相乘', 'L = 上限 × sin(2πr₂)', '得到這次迭代的步長。'],
+    ['④ 套用維度遮罩', 'R = L · c', '只有被選中的維度會移動。']
+  ];
+
+  // 原始文字含 "e^(...)"，抽屜標題改用教材名稱
+  const priorRenderLesson = renderLesson;
+  renderLesson = function () {
+    priorRenderLesson();
+    if (lesson?.kind === 'step_length' && !lesson.page) document.querySelector('#drawerTitle').textContent = lessonNames.step_length;
+  };
+  const priorWidget = window.renderLessonWidget;
+  renderLessonWidget = function (k) {
+    if (k === 'step_length') { stepLengthLesson(); return; }
+    priorWidget(k);
+  };
+
+  function stepLengthLesson() {
+    const d = lessonBox(`
+      <div class="lesson-stage step-stage">
+        <div class="formula-display" id="stepFormula"></div>
+        <figure class="lesson-chart step-chart"><svg viewBox="0 0 460 240" role="img" aria-label="步長 L 隨迭代 t 的變化"></svg>
+          <figcaption>青綠色區域：步伐上限 ±(e − e^((t−1)/T)²)；藍線：目前 r₂ 下的 L(t)；灰點：一次模擬（每代重新抽 r₂）；橘點：目前選的 t</figcaption>
+        </figure>
+      </div>
+      <div class="lesson-controls" id="controls"></div>
+      <p class="lesson-note">T = 50（論文的迭代次數）。上限在 t = 1 時為 e − 1 ≈ 1.72，到 t = T 時已接近 0：前期大步探索、後期小步收斂。</p>`);
+    const c = d.querySelector('#controls');
+    control(c, 't', '目前迭代 t', 1, STEP_T, 1, 10);
+    control(c, 'r2', '隨機數 r₂', 0, 1, 0.01, 0.2);
+    const resample = document.createElement('button');
+    resample.type = 'button'; resample.className = 'try-formula'; resample.textContent = '重新模擬一次（重抽每代的 r₂）';
+    resample.onclick = () => { stepSamples = Array.from({ length: STEP_T }, () => Math.random()); update(); };
+    c.append(resample);
+
+    // chart geometry
+    const X0 = 44, X1 = 446, Y0 = 18, Y1 = 206, YMAX = 1.9;
+    const sx = t => X0 + (t - 1) / (STEP_T - 1) * (X1 - X0);
+    const sy = v => Y0 + (YMAX - v) / (2 * YMAX) * (Y1 - Y0);
+    const ts = Array.from({ length: STEP_T }, (_, i) => i + 1);
+    const pathOf = f => ts.map((t, i) => `${i ? 'L' : 'M'}${sx(t).toFixed(1)},${sy(f(t)).toFixed(1)}`).join('');
+
+    function update() {
+      const t = +d.querySelector('#t').value, r2 = +d.querySelector('#r2').value;
+      const amp = stepAmp(t), s = Math.sin(2 * Math.PI * r2), L = amp * s;
+      d.querySelector('#tValue').textContent = `${t} / ${STEP_T}`;
+      d.querySelector('#r2Value').textContent = r2.toFixed(2);
+      d.querySelector('#stepFormula').innerHTML = `
+        <small>Eq. (8) · 隨機步長</small>
+        <div>L = (e − e<sup>((${paramSym('t', 't')}−1)/T)²</sup>) · sin(2π${paramSym('r2', 'r₂')})</div>
+        <div>= (2.718 − e<sup>(${param('t', t - 1)}/50)²</sup>) × sin(2π × ${param('r2', r2.toFixed(2))})</div>
+        <div>= ${amp.toFixed(3)} × ${s.toFixed(3)} = <b>${L.toFixed(3)}</b></div>`;
+      const band = `${pathOf(stepAmp)}${ts.slice().reverse().map(tt => `L${sx(tt).toFixed(1)},${sy(-stepAmp(tt)).toFixed(1)}`).join('')}Z`;
+      const ticks = [1, 10, 20, 30, 40, 50].map(tt => `<line x1="${sx(tt)}" y1="${Y1}" x2="${sx(tt)}" y2="${Y1 + 4}" stroke="#8b9db5"/><text x="${sx(tt)}" y="${Y1 + 17}" font-size="11" text-anchor="middle" fill="#60708a">${tt}</text>`).join('');
+      const yt = [-1.72, -1, 0, 1, 1.72].map(v => `<text x="${X0 - 6}" y="${sy(v) + 4}" font-size="11" text-anchor="end" fill="#60708a">${v}</text><line x1="${X0}" y1="${sy(v)}" x2="${X1}" y2="${sy(v)}" stroke="${v === 0 ? '#8b9db5' : '#e8edf4'}"/>`).join('');
+      const dots = ts.map((tt, i) => `<circle cx="${sx(tt)}" cy="${sy(stepAmp(tt) * Math.sin(2 * Math.PI * stepSamples[i]))}" r="2.6" fill="#94a3b8"/>`).join('');
+      d.querySelector('svg').innerHTML = `
+        ${yt}
+        <path d="${band}" fill="#0b9d98" fill-opacity=".12" stroke="none"/>
+        <path d="${pathOf(stepAmp)}" fill="none" stroke="#0b9d98" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <path d="${pathOf(tt => -stepAmp(tt))}" fill="none" stroke="#0b9d98" stroke-width="1.5" stroke-dasharray="4 3"/>
+        ${dots}
+        <path d="${pathOf(tt => stepAmp(tt) * s)}" fill="none" stroke="#315fd1" stroke-width="2.2"/>
+        <line x1="${sx(t)}" y1="${Y0}" x2="${sx(t)}" y2="${Y1}" stroke="#f39a42" stroke-dasharray="3 3"/>
+        <circle cx="${sx(t)}" cy="${sy(L)}" r="6" fill="#f39a42" stroke="#fff" stroke-width="2"/>
+        <line x1="${X0}" y1="${Y1}" x2="${X1}" y2="${Y1}" stroke="#8b9db5"/>
+        ${ticks}
+        <text x="${(X0 + X1) / 2}" y="${Y1 + 32}" font-size="11" text-anchor="middle" fill="#60708a">迭代 t</text>
+`;
+      animateFormula(d);
+    }
+    c.oninput = update;
+    update();
+  }
+
+  // ── Slide ID 4（第 4 頁）：相關研究的名詞解釋 ──────────────────────────────
+  const relatedTerms = [
+    ['classic', 'ARIMA', '傳統統計時間序列模型，用過去的價格與過去的預測誤差做線性組合來預測。'],
+    ['deep', 'CNN-LSTM', '先用卷積層（CNN）抓短期的局部型態，再交給 LSTM 處理時間先後關係。'],
+    ['hybrid', '超參數', '訓練前要先決定的設定，例如層數、神經元數、學習率；不是訓練學到的權重。'],
+    ['hybrid', 'GA（遺傳演算法）', '模仿生物演化，用選擇、交配、突變一代代改良一群候選解。']
+  ];
+  const termGroupOf = text => /傳統|ARIMA/.test(text) ? 'classic' : /深度時間|CNN|LSTM/.test(text) ? 'deep' : /混合|GA|演化|切入點|ARO/.test(text) ? 'hybrid' : null;
+  if (typeof lessonNames === 'object') lessonNames.related_terms = '相關研究名詞解釋';
+
+  const priorLessonKind2 = lessonKind;
+  lessonKind = function (text, n) {
+    if (n === 4) return 'related_terms';
+    return priorLessonKind2(text, n);
+  };
+  const priorRenderLesson2 = renderLesson;
+  renderLesson = function () {
+    if (lesson?.kind !== 'related_terms') { priorRenderLesson2(); return; }
+    if (tab === 'widget') tab = 'explain';
+    priorRenderLesson2();
+    document.querySelector('[data-tab="widget"]').hidden = true;
+    if (tab !== 'explain') return;
+    const group = lesson.page ? null : termGroupOf(lesson.text || '');
+    const hint = lessonHint();
+    const list = (rows, title) => `<section class="term-glossary"><h3>${title}</h3><dl>${rows.map(([, term, def]) => `<div><dt>${term}</dt><dd>${def}</dd></div>`).join('')}</dl></section>`;
+    const picked = group ? relatedTerms.filter(r => r[0] === group) : relatedTerms;
+    body.innerHTML = `${hint ? `<p>${hint}</p>` : ''}${list(picked, '名詞解釋')}`;
+  };
+
+  // 抽屜標題：卡片全文（多行）或通用的「重點」不適合當標題，改用投影片標題
+  const priorRenderLesson3 = renderLesson;
+  renderLesson = function () {
+    priorRenderLesson3();
+    const titleEl = document.querySelector('#drawerTitle');
+    if (/\n/.test(titleEl.textContent) || titleEl.textContent === '重點') titleEl.textContent = slideTitle(slides[index]);
+  };
+
 })();

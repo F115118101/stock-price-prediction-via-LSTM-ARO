@@ -144,11 +144,11 @@ function renderNativeSlide(number, slide) {
         <div class="p05-meta-grid">
           <div class="p05-meta-card">
             <h4>資料來源</h4>
-            <p>Yahoo Finance｜DJIA 30 檔股票（2018–2022，約 1,258 交易日）</p>
+            <p>Yahoo Finance｜DJIA 30 檔成分股日收盤價（2018-01-01 至 2022-12-31）</p>
           </div>
           <div class="p05-meta-card">
             <h4>資料切分</h4>
-            <p>80% 訓練集 ／ 20% 測試集（嚴格保持時間順序，杜絕資料洩漏）</p>
+            <p>前 80% 為訓練集、後 20% 為測試集</p>
           </div>
           <div class="p05-meta-card">
             <h4>樣本結構</h4>
@@ -193,7 +193,7 @@ function renderNativeSlide(number, slide) {
             <div class="p07-main-trait">各時間點獨立，無序列記憶</div>
             <p class="p07-detail">單向前饋傳播，完全忽略股價先後的連續走勢。</p>
           </div>
-          <div class="p07-badge-status bad">基準對照組：預測誤差最高</div>
+          <div class="p07-badge-status bad">論文對照組之一</div>
         </div>
 
         <div class="p07-card rnn">
@@ -242,60 +242,14 @@ function renderNativeSlide(number, slide) {
                 <text x="120" y="88" font-size="12" font-weight="bold" text-anchor="middle" fill="#6d28d9">Hidden State hₜ（當前輸出）</text>
               </svg>
             </div>
-            <div class="p07-main-trait">雙軌加法記憶，突破長距依賴</div>
-            <p class="p07-detail">三門控動態篩選，加法通道讓梯度長程流通不衰減。</p>
+            <div class="p07-main-trait">雙軌加法記憶，較能保留長距資訊</div>
+            <p class="p07-detail">三個門控制記憶的保留與寫入；加法更新讓梯度較不易消失。</p>
           </div>
-          <div class="p07-badge-status good">論文預測核心：多層性能最佳</div>
+          <div class="p07-badge-status good">論文預測核心：層數由 ARO 決定</div>
         </div>
       </div>
       <div class="p07-strip">
         演進脈絡：無時序記憶（ANN） ➔ 循環連乘衰減（RNN） ➔ <strong>門控加法長效記憶（LSTM）</strong>
-      </div>
-    `);
-    return true;
-  }
-
-  // P08: LSTM 核心概念（雙軌記憶機制與加法梯度高速公路）
-  if (number === 8) {
-    slide.insertAdjacentHTML('beforeend', `
-      <div class="p08-memory-highway">
-        <div class="p08-lane cell">
-          <div class="p08-lane-title">
-            <strong>長期記憶 Cell State Cₜ</strong>
-            <span>加法輸送帶：平穩長久保存關鍵趨勢</span>
-          </div>
-          <div class="p08-track">
-            <div class="p08-box memory">舊記憶 Cₜ₋₁</div>
-            <span class="flow-arrow">→</span>
-            <div class="p08-box op">× 忘記門 fₜ<small>決定遺忘多少舊資訊</small></div>
-            <span class="flow-arrow">→</span>
-            <div class="p08-box op">+ 輸入門 iₜ ⊙ C̃ₜ<small>加法寫入新候選資訊</small></div>
-            <span class="flow-arrow">→</span>
-            <div class="p08-box memory">新記憶 Cₜ</div>
-          </div>
-          <div class="p08-note">
-            ★ 突破關鍵：以加法（+）更新記憶，梯度反向傳播時不會指數衰減，解決梯度消失！
-          </div>
-        </div>
-
-        <div class="p08-lane hidden">
-          <div class="p08-lane-title">
-            <strong>目前輸出 Hidden State hₜ</strong>
-            <span>門控過濾：當前時間步對外的具體表現</span>
-          </div>
-          <div class="p08-track">
-            <div class="p08-box input">共同輸入 [hₜ₋₁, xₜ]</div>
-            <span class="flow-arrow">→</span>
-            <div class="p08-box op">輸出門 oₜ ⊙ tanh(Cₜ)<small>由輸出門篩選後的資訊</small></div>
-            <span class="flow-arrow">→</span>
-            <div class="p08-box output">輸出 hₜ（傳給下一步與 Dense 層）</div>
-          </div>
-        </div>
-
-        <div class="p08-bottom-card">
-          <div><strong>Cₜ（長期筆記本）</strong>：線性平穩流通，只讓經過認證的重大資訊留存。</div>
-          <div><strong>hₜ（當前發言條）</strong>：經輸出門篩選後的精煉決策，負責當前預測。</div>
-        </div>
       </div>
     `);
     return true;
@@ -326,7 +280,7 @@ function renderNativeSlide(number, slide) {
         <span class="formula-sep">｜</span>
         <div>h<sub>t</sub> = o<sub>t</sub> ⊙ tanh(C<sub>t</sub>)</div>
       </div>
-      <p class="native-note">⊙ 為逐元素相乘；σ（sigmoid）把門的輸出限制在 0–1。</p>
+      <p class="native-note">⊙ 為逐元素相乘；σ（sigmoid）把門的輸出限制在 0–1；Cₜ 以加法更新，梯度較不易消失。</p>
     `);
     return true;
   }
@@ -440,6 +394,26 @@ function renderNativeSlide(number, slide) {
     return true;
   }
 
+  // P17: 繞路覓食公式的完整符號表（取代原本的 4 列圖例與 R、q 補充列）
+  if (number === 17) {
+    const terms = [
+      ['vᵢ(t+1)', '第 i 隻兔子在下一代的候選位置（一組新的超參數）'],
+      ['xᵢ(t)', '第 i 隻兔子目前的位置'],
+      ['xⱼ(t)', '隨機選出的另一隻兔子 j 的位置'],
+      ['i, j', '兔子編號，i, j ∈ {1,…,N}，且 j ≠ i'],
+      ['N', '兔群大小（本文 N = 50）'],
+      ['t, T', '目前迭代次數／最大迭代次數（本文 T = 50）'],
+      ['R', '移動步長係數，R = L·c（下一頁說明）'],
+      ['xᵢ − xⱼ', '兩隻兔子的位置差，決定移動方向'],
+      ['q', 'round(0.5(0.05 + r₁))，為 0 或 1，決定是否擾動'],
+      ['r₁', '0 到 1 之間的均勻隨機數'],
+      ['n₁', '標準常態隨機數，n₁ ∼ N(0,1)'],
+      ['q·n₁', '隨機擾動項，幫助跳出局部最佳解']
+    ];
+    slide.insertAdjacentHTML('beforeend', `<div class="p17-terms">${terms.map(([sym, text]) => `<div class="p17-term"><span class="p17-sym">${sym}</span><span class="p17-text">${text}</span></div>`).join('')}</div>`);
+    return true;
+  }
+
   // P22: ARO 搜尋空間全貌
   if (number === 22) {
     const left = nativeSearchOptions.slice(0, 5).map(([a, b]) => nativeCard(a, b)).join('');
@@ -458,7 +432,7 @@ function renderNativeSlide(number, slide) {
               <span class="p38-tag">方法創新</span>
               <h3>ARO 自動搜尋超參數</h3>
             </div>
-            <p>全自動決定層數 (1~3)、神經元數、Dropout 與學習率，打破傳統人工調參盲目性。</p>
+            <p>以 ARO 自動決定層數 (1~3)、神經元數、Dropout、優化器與學習率，取代人工試誤。</p>
           </div>
 
           <div class="p38-card tone-blue">
@@ -474,7 +448,7 @@ function renderNativeSlide(number, slide) {
               <span class="p38-tag">量化成果</span>
               <h3>LSTM-ARO 表現最優</h3>
             </div>
-            <p>在 30 檔股票中有 18 檔取得最低 MSE，MAE 與 MAPE 也是勝出檔數最多的模型（但非每檔皆勝，見第 32 頁）。</p>
+            <p>四項指標中，LSTM-ARO 都在 18–19 檔股票表現最佳，是勝出最多的模型；其餘多由 LSTM-GA 拿下。</p>
           </div>
 
           <div class="p38-card tone-purple">
@@ -487,8 +461,48 @@ function renderNativeSlide(number, slide) {
         </div>
 
         <div class="p38-strip">
-          核心結論：群體最佳化能有效提升深度 LSTM 的預測品質，但實務落地仍需考量算力與交易成本。
+          核心結論：ARO 調參的 LSTM 在多數股票誤差最低；但適應度取自測試集，結果可能偏樂觀，仍需獨立驗證。
         </div>
+      </div>
+    `);
+    return true;
+  }
+
+  // P27: 四項指標的勝出檔數（合併原 MSE／MAE／MAPE／R² 四頁）
+  if (number === 27) {
+    const models = ['LSTM-ARO', 'LSTM-GA', 'LSTM1D', 'LSTM2D', 'LSTM3D', 'ANN'];
+    const rows = [
+      ['MSE', '越低越好', [18, 10, 2, 0, 0, 0]],
+      ['MAE', '越低越好', [18, 11, 1, 0, 0, 0]],
+      ['MAPE', '越低越好', [18, 10, 1, 0, 0, 0]],
+      ['R²', '越接近 1 越好', [19, 9, 2, 0, 0, 0]]
+    ];
+    const head = models.map((m, i) => `<th class="${i === 0 ? 'is-aro' : ''}">${m}</th>`).join('');
+    const body = rows.map(([metric, hint, counts]) => `<tr><th><strong>${metric}</strong><small>${hint}</small></th>${counts.map((c, i) => `<td class="${i === 0 ? 'is-aro' : ''}${c === 0 ? ' is-zero' : ''}">${c}</td>`).join('')}</tr>`).join('');
+    slide.insertAdjacentHTML('beforeend', `
+      <div class="p27-board">
+        <table class="p27-table"><thead><tr><th>指標</th>${head}</tr></thead><tbody>${body}</tbody></table>
+        <p class="p27-note">數字為 30 檔股票中，該模型取得最佳值的檔數；MAPE 另有 1 檔三者同分。</p>
+        <div class="p27-strip">LSTM-ARO 在四項指標都是勝出最多的模型（約六成股票），其餘大多由 LSTM-GA 拿下；固定架構與 ANN 幾乎沒有勝出。</div>
+      </div>
+    `);
+    return true;
+  }
+
+  // P36: 討論（合併原「討論」與「研究設計與再現性」兩頁）
+  if (number === 36) {
+    const cards = [
+      ['tone-purple', '資料洩漏', '適應度取自測試集', 'Fig. 2 中，ARO 的適應度直接來自測試集的預測誤差；同一份資料又用來報告最終成績，結果可能偏樂觀。'],
+      ['tone-blue', '公平性', '搜尋預算不對等', '固定架構的 LSTM1D／2D／3D 沒有調參；LSTM-ARO 經過 50 × 50 = 2,500 次訓練評估，優勢可能部分來自搜尋預算。'],
+      ['tone-gold', '資料範圍', '成分股與期間', '以現行 30 檔成分股回測 2018–2022：DOW 於 2019 年才上市，AMGN、CRM、HON 於 2020 年才納入指數，存在倖存者偏差。'],
+      ['tone-teal', '再現性', '關鍵細節未交代', '未提供 epoch、batch size、資料正規化方式、GA 參數與各股最終超參數，也未說明是否多次重跑。']
+    ];
+    slide.insertAdjacentHTML('beforeend', `
+      <div class="p38-executive-conclusions">
+        <div class="p38-grid">
+          ${cards.map(([tone, tag, title, text]) => `<div class="p38-card ${tone}"><div class="p38-header"><span class="p38-tag">${tag}</span><h3>${title}</h3></div><p>${text}</p></div>`).join('')}
+        </div>
+        <div class="p38-strip">改進方向：以獨立驗證集調參、讓基準模型享有相同搜尋預算，並加入交易成本回測。</div>
       </div>
     `);
     return true;
