@@ -93,7 +93,7 @@ function enhanceSlideFormula(){
     replaceMath('H = ((T − t + 1) / T) · r₄','H = ((T − t + 1) / T)·r₄ <span class="equation-domain">, 1 ≤ t ≤ T, r₄ ∈ (0,1)</span>');
   }
   if(slideNum===21)replaceMath('A(t) = 4 · (1 − t / T) · ln(1 / r)','A(t) = 4 · (1 − t / T) · ln(1 / r) <span class="equation-domain">, r ∈ (0,1), 1 ≤ t ≤ T</span>');
-  if(slideNum===26){replace('Σ(y − ŷ)² / n','Σₖ₌₁ⁿ(yₖ − ŷₖ)² / n');replace('Σ|y − ŷ| / n','Σₖ₌₁ⁿ|yₖ − ŷₖ| / n');replace('100 Σ|(y − ŷ)/y| / n','100 Σₖ₌₁ⁿ|(yₖ − ŷₖ)/yₖ| / n');note('k = 1,…,n；SSE = Σₖ₌₁ⁿ(yₖ−ŷₖ)²；SST = Σₖ₌₁ⁿ(yₖ−ȳ)²；MAPE 須 yₖ ≠ 0',84,648,1113,'metrics')}
+  if(slideNum===26){replace('Σ(y − ŷ)² / n','Σₖ₌₁ⁿ(yₖ − ŷₖ)² / n');replace('Σ|y − ŷ| / n','Σₖ₌₁ⁿ|yₖ − ŷₖ| / n');replace('100 Σ|(y − ŷ)/y| / n','100 Σₖ₌₁ⁿ|(yₖ − ŷₖ)/yₖ| / n');note('k = 1,…,n；SSE = Σₖ₌₁ⁿ(yₖ−ŷₖ)²；SST = Σₖ₌₁ⁿ(yₖ−ȳ)²；MAPE 須 yₖ ≠ 0',84,648,1113,'metrics_compare')}
 }
 const originalDetourLesson=detourLesson;
 detourLesson=function(){

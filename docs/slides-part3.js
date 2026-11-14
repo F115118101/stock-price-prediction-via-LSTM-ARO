@@ -283,13 +283,13 @@ window.SLIDES_PART3 = [
             "runs": [
               {
                 "bold": false,
-                "size": 17,
+                "size": 21,
                 "text": "Σ",
                 "color": "#202B42"
               },
               {
                 "bold": false,
-                "size": 17,
+                "size": 21,
                 "text": "ₖ₌₁ⁿ(yₖ − ŷₖ)² / n",
                 "color": "#202B42"
               }
@@ -463,13 +463,13 @@ window.SLIDES_PART3 = [
             "runs": [
               {
                 "bold": false,
-                "size": 17,
+                "size": 21,
                 "text": "Σ",
                 "color": "#202B42"
               },
               {
                 "bold": false,
-                "size": 17,
+                "size": 21,
                 "text": "ₖ₌₁ⁿ|yₖ − ŷₖ| / n",
                 "color": "#202B42"
               }
@@ -643,13 +643,13 @@ window.SLIDES_PART3 = [
             "runs": [
               {
                 "bold": false,
-                "size": 17,
+                "size": 21,
                 "text": "100 Σ",
                 "color": "#202B42"
               },
               {
                 "bold": false,
-                "size": 17,
+                "size": 21,
                 "text": "ₖ₌₁ⁿ|(yₖ − ŷₖ)/yₖ| / n",
                 "color": "#202B42"
               }
@@ -823,7 +823,7 @@ window.SLIDES_PART3 = [
             "runs": [
               {
                 "bold": false,
-                "size": 17,
+                "size": 21,
                 "text": "1 − SSE / SST",
                 "color": "#202B42"
               }

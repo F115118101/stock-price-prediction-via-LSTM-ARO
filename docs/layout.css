@@ -204,3 +204,36 @@ html,body{width:100%;height:100%;overflow:hidden}
 .term-glossary dl>div{border:1px solid #dce4ee;border-left:4px solid #0b9d98;border-radius:10px;padding:10px 14px;background:#fff}
 .term-glossary dt{font-weight:800;color:#1b3051;font-size:16px;margin-bottom:4px}
 .term-glossary dd{margin:0;font-size:15px;line-height:1.6;color:#344862}
+
+/* Metrics compare widget (page 20): slider inputs + charts */
+.metric-sliders{display:grid;gap:4px}
+.metric-row{display:grid;grid-template-columns:58px minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;background:#f6f9fc;border:1px solid #e4eaf2;border-radius:8px;padding:3px 10px}
+.metric-row>strong{font-size:13px;color:#384b69;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.metric-row>strong i,.share-legend i{display:inline-block;width:9px;height:9px;border-radius:2px}
+.metric-row .lesson-control{margin:0;display:flex;align-items:center;gap:8px;font-size:12px}
+.metric-row .lesson-control>span{flex:none;gap:5px;white-space:nowrap}
+.metric-row .lesson-control>span b{display:inline-block;min-width:3ch;text-align:right}
+.metric-row .lesson-control input[type=range]{flex:1;min-width:0;margin-top:0}
+.metric-actions{display:flex;gap:8px;margin:6px 0 0}
+.metric-actions .try-formula{padding:4px 10px;font-size:12px}
+.try-formula.ghost{background:#fff;color:#0b726e;box-shadow:inset 0 0 0 1px #0b9d98}
+.metric-chart{margin:8px 0}
+.metric-chart svg{max-height:34vh;margin:0 auto}
+.metric-chart figcaption{font-size:12px;margin-top:6px}
+.metric-chart figcaption b{font-weight:700}
+.metric-tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.metric-tile{padding:10px 12px}
+.metric-tile strong{font-size:13px}
+.metric-tile .metric-value{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+.metric-tile small{color:#60708a;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.share-title{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;font-weight:700;color:#384b69;margin:2px 0 8px}
+.share-legend{display:flex;gap:10px;font-weight:400;color:#60708a}
+.share-legend span{display:flex;align-items:center;gap:4px}
+.share-row{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;align-items:center;margin:5px 0;font-size:12px;font-weight:700;color:#384b69}
+.share-bar{display:flex;gap:2px;height:22px;border-radius:5px;overflow:hidden;background:#e8edf4}
+.share-bar i{min-width:0;overflow:hidden;font-style:normal;color:#fff;font-size:11px;line-height:22px;text-align:center;transition:flex-grow .15s}
+.share-bar i.empty{color:#60708a}
+.scale-bar{display:flex;align-items:center;gap:8px;height:18px}
+.scale-bar i{display:block;height:100%;min-width:2px;border-radius:4px;transition:width .15s}
+.scale-bar em{font-style:normal;font-weight:400;color:#60708a;white-space:nowrap;font-variant-numeric:tabular-nums}
+@media(max-width:700px){.metric-row{grid-template-columns:1fr 1fr}.metric-row>strong{grid-column:1/-1}}

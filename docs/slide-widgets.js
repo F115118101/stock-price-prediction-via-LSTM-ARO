@@ -726,36 +726,126 @@
 
   // 12. Slide 26: 4 Error Metrics Head-to-Head
   function metricsCompareLesson() {
+    const DEFAULTS = [[100, 102], [105, 103], [110, 118]]; // [實際 y, 預測 ŷ]
+    const MIN = 80, MAX = 130;
+    const C_ACT = '#315fd1', C_PRD = '#c66817', C_ERR = '#d85b61';
+    const C_SAMPLE = ['#0b9d98', '#7c48ad', '#64748b'];
+    const SUB = ['₁', '₂', '₃'];
+    const slider = (cls, k, sym, color, v) => `
+      <label class="lesson-control" style="--param-color:${color}">
+        <span>${sym}${SUB[k]} <b class="${cls}Value" style="color:${color}">${v}</b></span>
+        <input type="range" class="${cls}" min="${MIN}" max="${MAX}" step="1" value="${v}" aria-label="第 ${k + 1} 筆${cls === 'act' ? '實際值' : '預測值'}">
+      </label>`;
     const d = lessonBox(`
-      <div class="metric-grid" id="compInputs">
-        <label>第 1 筆實際 <input type="number" class="act" value="100"></label>
-        <label>第 1 筆預測 <input type="number" class="prd" value="102"></label>
-        <label>第 2 筆實際 <input type="number" class="act" value="105"></label>
-        <label>第 2 筆預測 <input type="number" class="prd" value="103"></label>
-        <label>第 3 筆實際 <input type="number" class="act" value="110"></label>
-        <label>第 3 筆預測 <input type="number" class="prd" value="118"></label>
+      <div class="metric-sliders" id="compInputs">
+        ${DEFAULTS.map(([a, p], k) => `
+          <div class="metric-row">
+            <strong><i style="background:${C_SAMPLE[k]}"></i>第 ${k + 1} 筆</strong>
+            ${slider('act', k, '實際 y', C_ACT, a)}
+            ${slider('prd', k, '預測 ŷ', C_PRD, p)}
+          </div>`).join('')}
       </div>
-      <div id="compResults" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px"></div>
-      <p class="lesson-note">MSE 對大誤差（如第 3 筆差 8 元）施加平方懲罰；MAE 保持線性；MAPE 換算為百分比；R² 評估擬合優度。</p>
+      <div class="metric-actions">
+        <button type="button" class="try-formula" id="compRandom">隨機產生資料</button>
+        <button type="button" class="try-formula ghost" id="compReset">重設</button>
+      </div>
+      <figure class="lesson-chart metric-chart">
+        <svg id="compLine" viewBox="0 0 460 212" role="img" aria-label="實際值與預測值折線圖，含逐筆誤差"></svg>
+        <figcaption><b style="color:${C_ACT}">● 實際值 y</b>　<b style="color:${C_PRD}">● 預測值 ŷ</b>　<b style="color:${C_ERR}">┃ 誤差 e = y − ŷ</b>　<span>┄ 實際值平均 ȳ</span></figcaption>
+      </figure>
+      <div class="metric-tiles" id="compResults"></div>
+      <figure class="lesson-chart metric-chart" id="compShare"></figure>
+      <p class="lesson-note">試著把某一筆的預測值拉遠：該筆在 MSE 的佔比會比在 MAE 更高（平方懲罰）。SSE 超過 SST 時 R² 為負，代表比「一律猜平均值」還差。</p>
     `);
-    function update() {
-      const acts = [...d.querySelectorAll('.act')].map(x => +x.value);
-      const prds = [...d.querySelectorAll('.prd')].map(x => +x.value);
-      const diffs = acts.map((y, i) => y - prds[i]);
-      const mse = diffs.reduce((a, b) => a + b * b, 0) / 3;
-      const mae = diffs.reduce((a, b) => a + Math.abs(b), 0) / 3;
-      const mape = diffs.reduce((a, b, i) => a + Math.abs(b / acts[i]), 0) * 100 / 3;
-      const mean = acts.reduce((a, b) => a + b, 0) / 3;
-      const sst = acts.reduce((a, b) => a + (b - mean) ** 2, 0);
-      const r2 = sst ? 1 - (diffs.reduce((a, b) => a + b * b, 0) / sst) : 0;
-      d.querySelector('#compResults').innerHTML = `
-        <div class="widget-card"><strong>MSE (均方誤差)</strong><div style="font-size:18px;color:#0b9d98;font-weight:800">${mse.toFixed(2)}</div><small style="color:#60708a">平方懲罰大離群值</small></div>
-        <div class="widget-card"><strong>MAE (平均絕對誤差)</strong><div style="font-size:18px;color:#315fd1;font-weight:800">${mae.toFixed(2)}</div><small style="color:#60708a">平均每筆差 $${mae.toFixed(2)}</small></div>
-        <div class="widget-card"><strong>MAPE (相對百分比)</strong><div style="font-size:18px;color:#c66817;font-weight:800">${mape.toFixed(2)}%</div><small style="color:#60708a">相對實際價差比例</small></div>
-        <div class="widget-card"><strong>R² (決定係數)</strong><div style="font-size:18px;color:#7c48ad;font-weight:800">${r2.toFixed(3)}</div><small style="color:#60708a">越接近 1 擬合越佳</small></div>
-      `;
+    const acts = () => [...d.querySelectorAll('.act')].map(x => +x.value);
+    const prds = () => [...d.querySelectorAll('.prd')].map(x => +x.value);
+    const num = (v, n = 2) => v.toFixed(n).replace('-', '−');
+    const trim = v => num(v, 2).replace(/\.?0+$/, '');
+
+    // chart geometry
+    const X0 = 40, X1 = 446, Y0 = 14, Y1 = 178, YMIN = 70, YMAX = 140;
+    const sx = k => X0 + 62 + k * (X1 - X0 - 124) / 2;
+    const sy = v => Y1 - (v - YMIN) / (YMAX - YMIN) * (Y1 - Y0);
+
+    function drawLine(a, p, e, mean) {
+      const grid = [80, 100, 120, 140].map(v => `<line x1="${X0}" y1="${sy(v)}" x2="${X1}" y2="${sy(v)}" stroke="#e8edf4"/><text x="${X0 - 6}" y="${sy(v) + 4}" font-size="11" text-anchor="end" fill="#60708a">${v}</text>`).join('');
+      const xl = a.map((_, k) => `<text x="${sx(k)}" y="${Y1 + 17}" font-size="11" text-anchor="middle" fill="#60708a">第 ${k + 1} 筆</text>`).join('');
+      const pts = arr => arr.map((v, k) => `${sx(k)},${sy(v).toFixed(1)}`).join(' ');
+      const resid = e.map((ek, k) => {
+        const mid = (sy(a[k]) + sy(p[k])) / 2;
+        return `<line x1="${sx(k)}" y1="${sy(a[k])}" x2="${sx(k)}" y2="${sy(p[k])}" stroke="${C_ERR}" stroke-width="5" stroke-linecap="round" opacity=".55"/>
+          <text x="${sx(k) + 11}" y="${mid + 4}" font-size="12" font-weight="700" fill="${C_ERR}" stroke="#fafcfe" stroke-width="3.5" paint-order="stroke">e${SUB[k]} = ${trim(ek)}</text>`;
+      }).join('');
+      const dots = (arr, color) => arr.map((v, k) => `<circle cx="${sx(k)}" cy="${sy(v)}" r="5.5" fill="${color}" stroke="#fff" stroke-width="2"/>`).join('');
+      d.querySelector('#compLine').innerHTML = `
+        ${grid}
+        <line x1="${X0}" y1="${sy(mean)}" x2="${X1}" y2="${sy(mean)}" stroke="#8b9db5" stroke-dasharray="4 4"/>
+        <text x="${X0 + 4}" y="${sy(mean) - 5}" font-size="11" fill="#60708a" stroke="#fafcfe" stroke-width="3" paint-order="stroke">ȳ = ${num(mean, 1)}</text>
+        <polyline points="${pts(a)}" fill="none" stroke="${C_ACT}" stroke-width="2.2"/>
+        <polyline points="${pts(p)}" fill="none" stroke="${C_PRD}" stroke-width="2.2" stroke-dasharray="6 4"/>
+        ${resid}
+        ${dots(a, C_ACT)}${dots(p, C_PRD)}
+        <line x1="${X0}" y1="${Y1}" x2="${X1}" y2="${Y1}" stroke="#8b9db5"/>
+        ${xl}
+        <text x="${X0 - 30}" y="${Y0 + 2}" font-size="11" fill="#60708a">價格</text>`;
     }
-    d.querySelectorAll('input').forEach(i => i.oninput = update);
+
+    function shareRow(label, terms) {
+      const total = terms.reduce((x, y) => x + y, 0);
+      const segs = total > 0
+        ? terms.map((v, k) => {
+            const s = v / total;
+            return `<i style="flex:${s} 0 0;background:${C_SAMPLE[k]}" title="第 ${k + 1} 筆：${(s * 100).toFixed(1)}%">${s >= 0.13 ? `${Math.round(s * 100)}%` : ''}</i>`;
+          }).join('')
+        : '<i class="empty" style="flex:1">沒有誤差</i>';
+      return `<div class="share-row"><span>${label}</span><div class="share-bar">${segs}</div></div>`;
+    }
+
+    function update() {
+      const a = acts(), p = prds(), n = a.length;
+      d.querySelectorAll('.actValue').forEach((el, k) => el.textContent = a[k]);
+      d.querySelectorAll('.prdValue').forEach((el, k) => el.textContent = p[k]);
+      const e = a.map((y, k) => y - p[k]);
+      const sq = e.map(x => x * x), ab = e.map(Math.abs), pc = e.map((x, k) => Math.abs(x / a[k]) * 100);
+      const sum = arr => arr.reduce((x, y) => x + y, 0);
+      const sse = sum(sq), mse = sse / n, mae = sum(ab) / n, mape = sum(pc) / n;
+      const mean = sum(a) / n, sst = sum(a.map(y => (y - mean) ** 2));
+      const r2 = sst ? 1 - sse / sst : NaN;
+
+      drawLine(a, p, e, mean);
+
+      const tile = (name, value, color, calc) => `<div class="widget-card metric-tile"><strong>${name}</strong><div class="metric-value" style="color:${color}">${value}</div><small>${calc}</small></div>`;
+      d.querySelector('#compResults').innerHTML =
+        tile('MSE（均方誤差）', num(mse), '#0b9d98', `(${sq.map(trim).join(' + ')}) / ${n}`) +
+        tile('MAE（平均絕對誤差）', num(mae), C_ACT, `(${ab.map(trim).join(' + ')}) / ${n}`) +
+        tile('MAPE（平均絕對百分比誤差）', `${num(mape)}%`, C_PRD, `(${pc.map(v => `${num(v)}%`).join(' + ')}) / ${n}`) +
+        tile('R²（決定係數）', Number.isFinite(r2) ? num(r2, 3) : '未定義', '#7c48ad', sst ? `1 − SSE/SST = 1 − ${trim(sse)} / ${trim(sst)}` : '實際值全相同，SST = 0');
+
+      const top = Math.max(sse, sst, 1e-9);
+      const bar = (label, v, color, hint) => `<div class="share-row"><span>${label}</span><div class="scale-bar"><i style="width:${(v / top * 100).toFixed(1)}%;background:${color}"></i><em>${trim(v)}　${hint}</em></div></div>`;
+      d.querySelector('#compShare').innerHTML = `
+        <div class="share-title">各筆資料佔指標總和的比例
+          <span class="share-legend">${C_SAMPLE.map((c, k) => `<span><i style="background:${c}"></i>第 ${k + 1} 筆</span>`).join('')}</span>
+        </div>
+        ${shareRow('MSE', sq)}${shareRow('MAE', ab)}${shareRow('MAPE', pc)}
+        <div class="share-title" style="margin-top:12px">R² 的兩個平方和</div>
+        ${bar('SST', sst, '#8b9db5', '實際值與平均 ȳ 的差距')}
+        ${bar('SSE', sse, C_ERR, '實際值與預測 ŷ 的差距')}
+        <figcaption>${!sst ? 'SST = 0 時 R² 無法計算。' : sse <= sst ? `SSE 比 SST 小，R² = ${num(r2, 3)}：預測優於「一律猜平均值」。` : `SSE 比 SST 大，R² = ${num(r2, 3)}（負值）：預測比「一律猜平均值」還差。`}</figcaption>`;
+    }
+
+    const setAll = rows => {
+      d.querySelectorAll('.act').forEach((el, k) => el.value = rows[k][0]);
+      d.querySelectorAll('.prd').forEach((el, k) => el.value = rows[k][1]);
+      update();
+    };
+    d.querySelector('#compReset').onclick = () => setAll(DEFAULTS);
+    d.querySelector('#compRandom').onclick = () => setAll(DEFAULTS.map(() => {
+      const y = 88 + Math.round(Math.random() * 34);
+      const yhat = Math.max(MIN, Math.min(MAX, y + Math.round((Math.random() - 0.5) * 20)));
+      return [y, yhat];
+    }));
+    d.querySelector('#compInputs').oninput = update;
     update();
   }
 
