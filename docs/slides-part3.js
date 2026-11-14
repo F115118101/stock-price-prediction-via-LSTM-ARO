@@ -343,7 +343,7 @@ window.SLIDES_PART3 = [
             "runs": [
               {
                 "bold": true,
-                "size": 12,
+                "size": 16,
                 "text": "越低越好",
                 "color": "#0B9D98"
               }
@@ -523,7 +523,7 @@ window.SLIDES_PART3 = [
             "runs": [
               {
                 "bold": true,
-                "size": 12,
+                "size": 16,
                 "text": "越低越好",
                 "color": "#0B9D98"
               }
@@ -703,7 +703,7 @@ window.SLIDES_PART3 = [
             "runs": [
               {
                 "bold": true,
-                "size": 12,
+                "size": 16,
                 "text": "越低越好",
                 "color": "#0B9D98"
               }
@@ -877,7 +877,7 @@ window.SLIDES_PART3 = [
             "runs": [
               {
                 "bold": true,
-                "size": 12,
+                "size": 16,
                 "text": "越接近 1 越好",
                 "color": "#B66B24"
               }

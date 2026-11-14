@@ -102,6 +102,51 @@ detourLesson=function(){
   function update(){const v={};for(const id of ['xi','xj','R','r1','n1']){v[id]=+d.querySelector('#'+id).value;d.querySelector('#'+id+'Value').textContent=v[id].toFixed(id==='r1'?2:1)}const q=Math.round(.5*(.05+v.r1)),epsilon=q*v.n1,result=v.xj+v.R*(v.xi-v.xj)+epsilon;d.querySelector('#eps').value=epsilon;d.querySelector('.formula-display').innerHTML=`<small>Eq. (6) · 繞路覓食</small><div>vᵢ(t+1) = ${paramSym('xj','xⱼ(t)')} + ${paramSym('R','R')}·(${paramSym('xi','xᵢ(t)')} − ${paramSym('xj','xⱼ(t)')}) + ${paramSym('r1','q')}·${paramSym('n1','n₁')}</div><div>= ${param('xj',v.xj.toFixed(1))} + ${param('R',v.R.toFixed(1))}(${param('xi',v.xi.toFixed(1))} − ${param('xj',v.xj.toFixed(1))}) + ${param('r1',q)}×${param('n1',v.n1.toFixed(1))}</div><div>= <b>${result.toFixed(2)}</b></div>`;animateFormula(d)}c.oninput=update;update();
 };
 function perturbationLesson(){
-  const d=lessonBox('<div class="lesson-stage"><div class="formula-display"></div><figure class="lesson-chart"><svg viewBox="0 0 460 130"></svg><figcaption>r₁ 接近 1 時，round(·) 才會從 0 變成 1</figcaption></figure></div><div class="lesson-controls" id="controls"></div><p class="lesson-note">n₁ 為示例抽樣值；按按鈕可從 N(0,1) 再抽一次。</p>');d.classList.add('has-chart');const c=d.querySelector('#controls');[['r1','均勻隨機數 r₁',0,1,.01,.4],['n1','標準常態抽樣值 n₁',-3,3,.1,1.2]].forEach(a=>control(c,...a));const sample=document.createElement('button');sample.type='button';sample.className='try-formula';sample.textContent='重新抽樣 n₁';c.append(sample);sample.onclick=()=>{const u=Math.max(1e-12,Math.random()),v=Math.random(),n=Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);d.querySelector('#n1').value=Math.max(-3,Math.min(3,n)).toFixed(1);update()};
-  function update(){const r=+d.querySelector('#r1').value,n=+d.querySelector('#n1').value,q=Math.round(.5*(.05+r)),eps=q*n;d.querySelector('#r1Value').textContent=r.toFixed(2);d.querySelector('#n1Value').textContent=n.toFixed(1);d.querySelector('.formula-display').innerHTML=`<small>Random Perturbation · Eq. (6)</small><div>${paramSym('n1','n₁')} ∼ N(0,1)</div><div>q = round(0.5(0.05 + ${paramSym('r1','r₁')})) = round(0.5(0.05 + ${param('r1',r.toFixed(2))})) = ${param('r1',q)}</div><div>${paramSym('r1','q')}·${paramSym('n1','n₁')} = ${param('r1',q)} × ${param('n1',n.toFixed(1))} = <b>${eps.toFixed(2)}</b></div>`;const x=30+r*400,cut=30+.95*400;d.querySelector('svg').innerHTML=`<line x1="30" y1="75" x2="430" y2="75" stroke="#8b9db5" stroke-width="2"/><rect x="${cut}" y="48" width="${430-cut}" height="54" fill="#dcf5ed"/><line x1="${cut}" y1="40" x2="${cut}" y2="103" stroke="#0b9d98" stroke-dasharray="5 4"/><circle cx="${x}" cy="75" r="7" fill="#f39a42"/><text x="30" y="120" fill="#60708a" font-size="12">r₁ = 0</text><text x="${cut-20}" y="30" fill="#0b726e" font-size="12">0.95</text><text x="390" y="120" fill="#60708a" font-size="12">r₁ = 1</text>`;animateFormula(d)}c.oninput=update;update();
+  const d=lessonBox(`<div class="lesson-stage"><div class="formula-display"></div>
+    <figure class="lesson-chart"><svg id="qChart" viewBox="0 0 460 130" role="img" aria-label="r₁ 與擾動開關 q"></svg><figcaption>r₁ 接近 1 時，round(·) 才會從 0 變成 1</figcaption></figure>
+    <figure class="lesson-chart"><svg id="bellChart" viewBox="0 0 460 196" role="img" aria-label="標準常態分布 N(0,1) 的鐘形曲線與目前的 n₁"></svg><figcaption id="bellCaption"></figcaption></figure></div>
+    <div class="lesson-controls" id="controls"></div>
+    <p class="lesson-note">n₁ 從鐘形曲線 N(0,1) 抽樣：越靠近 0 越常抽到，超過 ±2 很少見。按按鈕可從 N(0,1) 再抽一次。</p>`);
+  d.classList.add('has-chart');
+  const c=d.querySelector('#controls');
+  [['r1','均勻隨機數 r₁',0,1,.01,.4],['n1','標準常態抽樣值 n₁',-3,3,.1,1.2]].forEach(a=>control(c,...a));
+  const gauss=()=>{const u=Math.max(1e-12,Math.random()),v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)};
+  const sample=document.createElement('button');sample.type='button';sample.className='try-formula';sample.textContent='重新抽樣 n₁';c.append(sample);
+  sample.onclick=()=>{d.querySelector('#n1').value=Math.max(-3,Math.min(3,gauss())).toFixed(1);update()};
+
+  // bell-curve geometry: n ∈ [−3, 3], density ∈ [0, 0.42]
+  const BX0=30,BX1=430,BY0=22,BY1=152;
+  const pdf=x=>Math.exp(-x*x/2)/Math.sqrt(2*Math.PI);
+  const bx=x=>BX0+(x+3)/6*(BX1-BX0),by=p=>BY1-p/.42*(BY1-BY0);
+  const curve=(a,b)=>{let s='';for(let i=0;i<=60;i++){const x=a+(b-a)*i/60;s+=`${i?'L':'M'}${bx(x).toFixed(1)},${by(pdf(x)).toFixed(1)}`}return s};
+  const nColor=d.querySelector('[data-parameter="n1"]').style.getPropertyValue('--param-color')||'#f39a42';
+
+  function drawBell(n,q){
+    const ticks=[-3,-2,-1,0,1,2,3].map(v=>`<line x1="${bx(v)}" y1="${BY1}" x2="${bx(v)}" y2="${BY1+4}" stroke="#8b9db5"/><text x="${bx(v)}" y="${BY1+24}" font-size="11" text-anchor="middle" fill="#60708a">${String(v).replace('-','−')}</text>`).join('');
+    const py=by(pdf(n)),anchor=n>1.6?'end':n<-1.6?'start':'middle';
+    d.querySelector('#bellChart').innerHTML=`
+      <path d="${curve(-1,1)}L${bx(1)},${BY1}L${bx(-1)},${BY1}Z" fill="#315fd1" fill-opacity=".1"/>
+      <path d="${curve(-3,3)}" fill="none" stroke="#315fd1" stroke-width="2.2"/>
+      <line x1="${bx(0)}" y1="${by(pdf(0))}" x2="${bx(0)}" y2="${BY1}" stroke="#8b9db5" stroke-dasharray="3 4"/>
+      <text x="${bx(0)}" y="${BY1-10}" font-size="11" text-anchor="middle" fill="#214cae" stroke="#fafcfe" stroke-width="3" paint-order="stroke">±1 內約 68%</text>
+      <line x1="${BX0}" y1="${BY1}" x2="${BX1}" y2="${BY1}" stroke="#8b9db5"/>
+      ${ticks}
+      <line x1="${bx(n)}" y1="${py}" x2="${bx(n)}" y2="${BY1}" stroke="${nColor}" stroke-width="2" ${q?'':'stroke-dasharray="4 3"'}/>
+      <circle cx="${bx(n)}" cy="${py}" r="6.5" fill="${q?nColor:'#fff'}" stroke="${q?'#fff':nColor}" stroke-width="2"/>
+      <text x="${bx(n)}" y="${py-11}" font-size="12" font-weight="700" text-anchor="${anchor}" fill="${nColor}" stroke="#fafcfe" stroke-width="3.5" paint-order="stroke">n₁ = ${n.toFixed(1).replace('-','−')}</text>
+      <text x="${(BX0+BX1)/2}" y="${BY1+40}" font-size="11" text-anchor="middle" fill="#60708a">n₁ 的值（曲線越高，越容易抽到）</text>`;
+    d.querySelector('#bellCaption').textContent=`N(0,1) 鐘形曲線：平均 0、標準差 1；約 68% 的抽樣落在 ±1 內，約 95% 落在 ±2 內。${q?'q = 1，這次把 n₁ 加進候選位置。':'q = 0，這次不加入擾動（空心點）。'}`;
+  }
+
+  function update(){
+    const r=+d.querySelector('#r1').value,n=+d.querySelector('#n1').value,q=Math.round(.5*(.05+r)),eps=q*n;
+    d.querySelector('#r1Value').textContent=r.toFixed(2);
+    d.querySelector('#n1Value').textContent=n.toFixed(1);
+    d.querySelector('.formula-display').innerHTML=`<small>Random Perturbation · Eq. (6)</small><div>${paramSym('n1','n₁')} ∼ N(0,1)</div><div>q = round(0.5(0.05 + ${paramSym('r1','r₁')})) = round(0.5(0.05 + ${param('r1',r.toFixed(2))})) = ${param('r1',q)}</div><div>${paramSym('r1','q')}·${paramSym('n1','n₁')} = ${param('r1',q)} × ${param('n1',n.toFixed(1))} = <b>${eps.toFixed(2)}</b></div>`;
+    drawBell(n,q);
+    const x=30+r*400,cut=30+.95*400;
+    d.querySelector('#qChart').innerHTML=`<line x1="30" y1="75" x2="430" y2="75" stroke="#8b9db5" stroke-width="2"/><rect x="${cut}" y="48" width="${430-cut}" height="54" fill="#dcf5ed"/><line x1="${cut}" y1="40" x2="${cut}" y2="103" stroke="#0b9d98" stroke-dasharray="5 4"/><circle cx="${x}" cy="75" r="7" fill="#f39a42"/><text x="30" y="120" fill="#60708a" font-size="12">r₁ = 0</text><text x="${cut-20}" y="30" fill="#0b726e" font-size="12">0.95</text><text x="390" y="120" fill="#60708a" font-size="12">r₁ = 1</text>`;
+    animateFormula(d);
+  }
+  c.oninput=update;update();
 }
