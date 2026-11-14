@@ -44,6 +44,12 @@
 .flow-box.memory{border-color:#c99a27;background:#fff9df}
 .flow-box.operation{min-width:93px}
 .flow-box.output{border-color:#8b62c6;background:#f6efff}
+/* P09：流程方塊與下方四張門卡片使用同一組顏色（紅 fₜ／綠 iₜ／藍 C̃ₜ／紫 oₜ） */
+.flow-box.gate-forget{border-color:#d85b61;background:#fff9f9}
+.flow-box.gate-write{border-color:transparent;background:linear-gradient(90deg,#f9fffa,#f9fbff) padding-box,linear-gradient(90deg,#4c9b68,#4777cb) border-box}
+.flow-box.gate-output{border-color:#8b62c6;background:#fff}
+.g-forget,.g-input,.g-cand,.g-output{font-style:normal}
+.g-forget{color:#c2434a}.g-input{color:#2f7d4c}.g-cand{color:#2f5fb5}.g-output{color:#7448b4}
 .flow-box small{display:block;font-size: var(--fs-label);color:#60708a;font-weight:500}
 .cell-input{position:absolute;left:60px;top:313px;width:1160px;text-align:center;font-size: var(--fs-body);color:#52637c}
 .cell-input strong{color:#20314e}
@@ -57,7 +63,7 @@
 .gate-row{display:grid;grid-template-columns:142px 145px 28px 76px 28px 75px 1fr;gap:11px;align-items:center;min-height:82px;padding:8px 16px;border:1.5px solid #dfe6f0;border-left:6px solid #0b9d98;border-radius:13px;background:#fff;color:#20314e}
 .gate-row.tone-red{border-left-color:#d85b61}.gate-row.tone-green{border-left-color:#4c9b68}.gate-row.tone-blue{border-left-color:#4777cb}.gate-row.tone-purple{border-left-color:#8b62c6}
 .gate-name{font-size: var(--fs-heading);font-weight:750}.gate-input,.gate-activation{border:1px solid #dfe6f0;border-radius:9px;background:#f5f8fc;padding:9px 7px;text-align:center;font-size: var(--fs-secondary)}.gate-activation{font-size: var(--fs-body)}
-.gate-row strong{font-size:26px;text-align:center}.gate-row code{font:19px/1.35 "Cambria Math",Georgia,serif;overflow-wrap:anywhere}
+.gate-row strong{font-size:26px;text-align:center}.gate-row code{font:28px/1.35"Cambria Math",Georgia,serif;overflow-wrap:anywhere}
 .gate-footnotes{position:absolute;left:60px;top:582px;width:1160px;display:flex;gap:18px}.gate-footnotes span{flex:1;padding:16px;border-radius:12px;background:#edf3fa;color:#40516c;font-size: var(--fs-secondary);text-align:center}
 .calculation-steps{position:absolute;left:60px;top:220px;width:1160px;display:grid;grid-template-columns:1fr 35px 1fr 35px 1fr;gap:12px;align-items:center}
 .calculation-steps .native-card{height:207px;display:flex;flex-direction:column;justify-content:center}.calculation-steps .native-card h2{font-size: var(--fs-heading)}.calculation-steps .native-card p{font-size:22px}

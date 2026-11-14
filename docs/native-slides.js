@@ -261,12 +261,12 @@ function renderNativeSlide(number, slide) {
       <h1 class="slide-header-title">LSTM Cell：一個時間步內，資訊如何流動？</h1>
       <p class="native-lead">上方是記憶傳遞路徑；下方的門決定保留、寫入與輸出多少資訊。</p>
       <div class="cell-memory">
-        <div class="flow-box memory">舊記憶 C<sub>t−1</sub></div><span class="flow-arrow">→</span>
-        <div class="flow-box operation">×<small>forget gate</small></div><span class="flow-arrow">→</span>
-        <div class="flow-box operation">+<small>新資訊</small></div><span class="flow-arrow">→</span>
-        <div class="flow-box memory">新記憶 C<sub>t</sub></div><span class="flow-arrow">→</span>
-        <div class="flow-box operation">tanh × o<sub>t</sub></div><span class="flow-arrow">→</span>
-        <div class="flow-box output">輸出 h<sub>t</sub></div>
+        <div class="flow-box memory"><span>舊記憶 C<sub>t−1</sub></span></div><span class="flow-arrow">→</span>
+        <div class="flow-box operation gate-forget"><span>× <i class="g-forget">f<sub>t</sub></i></span><small>forget gate</small></div><span class="flow-arrow">→</span>
+        <div class="flow-box operation gate-write"><span>+ <i class="g-input">i<sub>t</sub></i> ⊙ <i class="g-cand">C̃<sub>t</sub></i></span><small>新資訊</small></div><span class="flow-arrow">→</span>
+        <div class="flow-box memory"><span>新記憶 C<sub>t</sub></span></div><span class="flow-arrow">→</span>
+        <div class="flow-box operation gate-output"><span>tanh × <i class="g-output">o<sub>t</sub></i></span><small>output gate</small></div><span class="flow-arrow">→</span>
+        <div class="flow-box output"><span>輸出 h<sub>t</sub></span></div>
       </div>
       <div class="cell-input">共同輸入 <strong>[h<sub>t−1</sub>, x<sub>t</sub>]</strong></div>
       <div class="cell-gates">
@@ -276,9 +276,9 @@ function renderNativeSlide(number, slide) {
         ${nativeCard('Output Gate', 'oₜ：決定輸出多少', 'tone-purple')}
       </div>
       <div class="native-formula">
-        <div>C<sub>t</sub> = f<sub>t</sub> ⊙ C<sub>t−1</sub> + i<sub>t</sub> ⊙ C̃<sub>t</sub></div>
+        <div>C<sub>t</sub> = <i class="g-forget">f<sub>t</sub></i> ⊙ C<sub>t−1</sub> + <i class="g-input">i<sub>t</sub></i> ⊙ <i class="g-cand">C̃<sub>t</sub></i></div>
         <span class="formula-sep">｜</span>
-        <div>h<sub>t</sub> = o<sub>t</sub> ⊙ tanh(C<sub>t</sub>)</div>
+        <div>h<sub>t</sub> = <i class="g-output">o<sub>t</sub></i> ⊙ tanh(C<sub>t</sub>)</div>
       </div>
       <p class="native-note">⊙ 為逐元素相乘；σ（sigmoid）把門的輸出限制在 0–1；Cₜ 以加法更新，梯度較不易消失。</p>
     `);
