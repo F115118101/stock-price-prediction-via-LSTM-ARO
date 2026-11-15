@@ -843,3 +843,37 @@
 .p17-term{display:flex;align-items:center;gap:14px;min-height:50px;padding:6px 16px;background:#fff;border:1.5px solid #dfe6f0;border-radius:12px}
 .p17-sym{flex:none;width:96px;font-size:var(--fs-body);font-weight:750;color:#3c66b9;font-family:"Cambria Math","Times New Roman",serif}
 .p17-text{font-size:var(--fs-secondary);line-height:1.35;color:#202b42}
+
+/* P07 (slide 9)：LSTM cell 輸送帶圖解 */
+.p09-cell{position:absolute;left:60px;top:188px;width:1160px;height:390px}
+.p09-cell svg{display:block;width:100%;height:100%;overflow:visible;font-family:inherit}
+.p09-cell g[data-step]{cursor:pointer;transition:opacity .25s}
+.p09-cell[data-step="1"] g.p09-s2,.p09-cell[data-step="1"] g.p09-s3,
+.p09-cell[data-step="2"] g.p09-s1,.p09-cell[data-step="2"] g.p09-s3,
+.p09-cell[data-step="3"] g.p09-s1,.p09-cell[data-step="3"] g.p09-s2{opacity:.16}
+.p09-cap{font-size:15px;fill:#60708a}
+.p09-t1{font-size:18px;font-weight:700;fill:#20314e}
+.p09-t2{font-size:14px;fill:#52637c}
+.p09-sub{font-size:12px}
+.p09-mem{fill:#fff9df;stroke:#c99a27;stroke-width:2}
+.p09-short{fill:#f6efff;stroke:#8b62c6;stroke-width:2}
+.p09-in{fill:#eef6ff;stroke:#4777cb;stroke-width:2}
+.p09-belt{fill:none;stroke:#c99a27;stroke-width:7;stroke-linecap:round}
+.p09-bus{fill:none;stroke:#94a3b8;stroke-width:3}
+.p09-tap{fill:none;stroke:#94a3b8;stroke-width:2;stroke-dasharray:5 4}
+.p09-link{fill:none;stroke:#64748b;stroke-width:2.2}
+.p09-pill{fill:#fff;stroke:#94a3b8;stroke-width:1.5}
+.p09-gate{stroke-width:2}
+.p09-gate.forget{fill:#fff4f4;stroke:#d85b61}.p09-gate.input{fill:#f2fbf5;stroke:#4c9b68}
+.p09-gate.cand{fill:#f2f6ff;stroke:#4777cb}.p09-gate.output{fill:#f8f3ff;stroke:#8b62c6}
+.p09-op{fill:#fff;stroke-width:2.5}.p09-opt{font-size:22px;font-weight:800;fill:#20314e}
+.p09-op.forget,.p09-badge.forget{stroke:#d85b61}.p09-op.input,.p09-badge.input{stroke:#4c9b68}.p09-op.output,.p09-badge.output{stroke:#8b62c6}
+.p09-badge{stroke-width:0}.p09-badge.forget{fill:#d85b61}.p09-badge.input{fill:#4c9b68}.p09-badge.output{fill:#8b62c6}
+.p09-badget{font-size:14px;font-weight:800;fill:#fff}
+.p09-steps{position:absolute;left:60px;top:596px;width:1160px;display:flex;align-items:center;gap:16px}
+.p09-buttons{display:flex;gap:8px;flex:none}
+.p09-buttons button{font:inherit;font-size:var(--fs-label);font-weight:700;padding:8px 14px;border-radius:999px;border:1.5px solid #cbd7e6;background:#fff;color:#334155;cursor:pointer}
+.p09-buttons button.active{background:#20314e;border-color:#20314e;color:#fff}
+.p09-explain{flex:1;min-height:58px;display:flex;align-items:center;justify-content:center;padding:6px 18px;border:1.5px solid #d8e4f1;border-radius:14px;background:#f8fafc;color:#17294a;font-size:var(--fs-body);font-weight:600;text-align:center}
+.p09-explain b{font-weight:800;margin-left:6px}
+.p09-explain .formula-sep{color:#94a3b8;font-weight:400;margin:0 18px}

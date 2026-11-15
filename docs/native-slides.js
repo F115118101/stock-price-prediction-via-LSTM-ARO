@@ -199,7 +199,7 @@ function renderNativeSlide(number, slide) {
         <div class="p07-card rnn">
           <div>
             <div class="p07-head">
-              <h3>RNN</h3>
+              <h3>傳統 RNN</h3>
               <span class="p07-sub">循環神經網路</span>
             </div>
             <div class="p07-diagram-wrap">
@@ -255,33 +255,91 @@ function renderNativeSlide(number, slide) {
     return true;
   }
 
-  // P09: LSTM 單元結構（互動式記憶流動圖解）
+  // P09: LSTM 單元結構——上方長期記憶輸送帶，下方閥門讀同一份輸入；可分三步點亮
   if (number === 9) {
+    const box = (x, y, w, h, cls, line1, line2) =>
+      `<rect class="${cls}" x="${x}" y="${y}" width="${w}" height="${h}" rx="12"/>` +
+      `<text x="${x + w / 2}" y="${line2 ? y + 24 : y + h / 2 + 7}" class="p09-t1" text-anchor="middle">${line1}</text>` +
+      (line2 ? `<text x="${x + w / 2}" y="${y + 45}" class="p09-t2" text-anchor="middle">${line2}</text>` : '');
+    const op = (x, y, sym, cls) => `<circle class="p09-op ${cls}" cx="${x}" cy="${y}" r="16"/><text x="${x}" y="${y + 7}" class="p09-opt" text-anchor="middle">${sym}</text>`;
+    const badge = (x, y, n, cls) => `<circle class="p09-badge ${cls}" cx="${x}" cy="${y}" r="13"/><text x="${x}" y="${y + 5}" class="p09-badget" text-anchor="middle">${n}</text>`;
+    const sub = t => `<tspan class="p09-sub" dy="5">${t}</tspan><tspan dy="-5"> </tspan>`;
+    const steps = {
+      all: 'C<sub>t</sub> = <i class="g-forget">f<sub>t</sub></i> ⊙ C<sub>t−1</sub> + <i class="g-input">i<sub>t</sub></i> ⊙ <i class="g-cand">C̃<sub>t</sub></i><span class="formula-sep">｜</span>h<sub>t</sub> = <i class="g-output">o<sub>t</sub></i> ⊙ tanh(C<sub>t</sub>)',
+      1: '忘記門 <i class="g-forget">f<sub>t</sub></i>（0～1）決定舊記憶留幾成：<b><i class="g-forget">f<sub>t</sub></i> ⊙ C<sub>t−1</sub></b>',
+      2: '候選記憶 <i class="g-cand">C̃<sub>t</sub></i> 是今天的新資訊，輸入門 <i class="g-input">i<sub>t</sub></i> 決定寫進幾成：<b>+ <i class="g-input">i<sub>t</sub></i> ⊙ <i class="g-cand">C̃<sub>t</sub></i></b>',
+      3: '新記憶過 tanh，輸出門 <i class="g-output">o<sub>t</sub></i> 決定輸出幾成：<b>h<sub>t</sub> = <i class="g-output">o<sub>t</sub></i> ⊙ tanh(C<sub>t</sub>)</b>'
+    };
     slide.insertAdjacentHTML('beforeend', `
       <h1 class="slide-header-title">LSTM Cell：一個時間步內，資訊如何流動？</h1>
-      <p class="native-lead">上方是記憶傳遞路徑；下方的門決定保留、寫入與輸出多少資訊。</p>
-      <div class="cell-memory">
-        <div class="flow-box memory"><span>舊記憶 C<sub>t−1</sub></span></div><span class="flow-arrow">→</span>
-        <div class="flow-box operation gate-forget"><span>× <i class="g-forget">f<sub>t</sub></i></span><small>forget gate</small></div><span class="flow-arrow">→</span>
-        <div class="flow-box operation gate-write"><span>+ <i class="g-input">i<sub>t</sub></i> ⊙ <i class="g-cand">C̃<sub>t</sub></i></span><small>新資訊</small></div><span class="flow-arrow">→</span>
-        <div class="flow-box memory"><span>新記憶 C<sub>t</sub></span></div><span class="flow-arrow">→</span>
-        <div class="flow-box operation gate-output"><span>tanh × <i class="g-output">o<sub>t</sub></i></span><small>output gate</small></div><span class="flow-arrow">→</span>
-        <div class="flow-box output"><span>輸出 h<sub>t</sub></span></div>
+      <p class="native-lead">上方輸送帶是長期記憶 C；下方的閥門讀同一份輸入，決定留多少、寫多少、輸出多少。</p>
+      <div class="p09-cell" data-step="all">
+        <svg viewBox="0 0 1160 390" role="img" aria-label="LSTM cell：長期記憶輸送帶與三個閥門">
+          <defs><marker id="p09Arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M0,0L10,5L0,10z" fill="#64748b"/></marker><marker id="p09Belt" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" orient="auto"><path d="M0,0L10,5L0,10z" fill="#c99a27"/></marker></defs>
+          <text x="580" y="22" class="p09-cap" text-anchor="middle">長期記憶輸送帶（cell state）：一路往右傳，只在 ×、+ 兩處被修改</text>
+          <g class="p09-common">
+            ${box(0, 270, 160, 46, 'p09-short', `h${sub('t−1')}昨天的輸出`)}
+            ${box(0, 330, 160, 46, 'p09-in', `x${sub('t')}今天的股價`)}
+            <path class="p09-bus" d="M160,293H200V353H160M200,323H830"/>
+            <text x="520" y="352" class="p09-cap" text-anchor="middle">同一份輸入 [h${sub('t−1')}, x${sub('t')}]：每個閥門和候選記憶都讀它</text>
+          </g>
+          <g class="p09-s1" data-step="1">
+            ${box(0, 45, 150, 50, 'p09-mem', `C${sub('t−1')}舊記憶`)}
+            <path class="p09-belt" d="M150,70H314"/>
+            <path class="p09-tap" d="M330,323V258"/>
+            ${box(270, 200, 120, 56, 'p09-gate forget', `忘記門 f${sub('t')}`, 'σ：留幾成')}
+            <path class="p09-link" d="M330,200V90" marker-end="url(#p09Arrow)"/>
+            ${op(330, 70, '×', 'forget')}
+            ${badge(272, 202, '1', 'forget')}
+          </g>
+          <g class="p09-s2" data-step="2">
+            <path class="p09-belt" d="M346,70H614"/>
+            <path class="p09-tap" d="M560,323V258M700,323V258"/>
+            ${box(500, 200, 120, 56, 'p09-gate input', `輸入門 i${sub('t')}`, 'σ：寫幾成')}
+            ${box(640, 200, 120, 56, 'p09-gate cand', `候選記憶 C̃${sub('t')}`, 'tanh：新資訊')}
+            <path class="p09-link" d="M560,200V140H610" marker-end="url(#p09Arrow)"/>
+            <path class="p09-link" d="M700,200V140H650" marker-end="url(#p09Arrow)"/>
+            ${op(630, 140, '×', 'input')}
+            <path class="p09-link" d="M630,124V90" marker-end="url(#p09Arrow)"/>
+            ${op(630, 70, '+', 'input')}
+            ${badge(502, 202, '2', 'input')}
+          </g>
+          <g class="p09-s3" data-step="3">
+            <path class="p09-belt" d="M646,70H996" marker-end="url(#p09Belt)"/>
+            ${box(1010, 45, 150, 50, 'p09-mem', `C${sub('t')}新記憶`)}
+            <path class="p09-link" d="M930,70V114" marker-end="url(#p09Arrow)"/>
+            <rect class="p09-pill" x="890" y="118" width="80" height="30" rx="15"/><text x="930" y="139" class="p09-t2" text-anchor="middle">tanh</text>
+            <path class="p09-link" d="M930,148V208" marker-end="url(#p09Arrow)"/>
+            <path class="p09-tap" d="M830,323V258"/>
+            ${box(770, 200, 120, 56, 'p09-gate output', `輸出門 o${sub('t')}`, 'σ：輸出幾成')}
+            <path class="p09-link" d="M890,228H910" marker-end="url(#p09Arrow)"/>
+            ${op(930, 228, '×', 'output')}
+            <path class="p09-link" d="M946,228H1085V293" marker-end="url(#p09Arrow)"/>
+            ${box(1000, 297, 160, 46, 'p09-short', `h${sub('t')}今天的輸出`)}
+            <text x="1080" y="368" class="p09-cap" text-anchor="middle">→ 傳給下一天、下一層</text>
+            ${badge(772, 202, '3', 'output')}
+          </g>
+        </svg>
       </div>
-      <div class="cell-input">共同輸入 <strong>[h<sub>t−1</sub>, x<sub>t</sub>]</strong></div>
-      <div class="cell-gates">
-        ${nativeCard('Forget Gate', 'fₜ：決定舊記憶保留多少', 'tone-red')}
-        ${nativeCard('Input Gate', 'iₜ：決定寫入多少候選資訊', 'tone-green')}
-        ${nativeCard('Candidate', 'C̃ₜ：產生候選記憶', 'tone-blue')}
-        ${nativeCard('Output Gate', 'oₜ：決定輸出多少', 'tone-purple')}
+      <div class="p09-steps">
+        <div class="p09-buttons" role="group" aria-label="分步驟查看">
+          <button type="button" data-step="all">全部</button>
+          <button type="button" data-step="1">① 忘記</button>
+          <button type="button" data-step="2">② 寫入</button>
+          <button type="button" data-step="3">③ 輸出</button>
+        </div>
+        <div class="p09-explain"></div>
       </div>
-      <div class="native-formula">
-        <div>C<sub>t</sub> = <i class="g-forget">f<sub>t</sub></i> ⊙ C<sub>t−1</sub> + <i class="g-input">i<sub>t</sub></i> ⊙ <i class="g-cand">C̃<sub>t</sub></i></div>
-        <span class="formula-sep">｜</span>
-        <div>h<sub>t</sub> = <i class="g-output">o<sub>t</sub></i> ⊙ tanh(C<sub>t</sub>)</div>
-      </div>
-      <p class="native-note">⊙ 為逐元素相乘；σ（sigmoid）把門的輸出限制在 0–1；Cₜ 以加法更新，梯度較不易消失。</p>
     `);
+    const cell = slide.querySelector('.p09-cell'), explain = slide.querySelector('.p09-explain');
+    const show = step => {
+      cell.dataset.step = step;
+      explain.innerHTML = `<span>${steps[step]}</span>`;
+      slide.querySelectorAll('.p09-buttons button').forEach(btn => btn.classList.toggle('active', btn.dataset.step === step));
+    };
+    slide.querySelectorAll('.p09-buttons button').forEach(btn => btn.addEventListener('click', e => { e.stopPropagation(); show(btn.dataset.step); }));
+    cell.querySelectorAll('g[data-step]').forEach(g => g.addEventListener('click', e => { e.stopPropagation(); show(cell.dataset.step === g.dataset.step ? 'all' : g.dataset.step); }));
+    show('all');
     return true;
   }
 

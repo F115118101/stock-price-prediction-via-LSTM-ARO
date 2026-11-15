@@ -4208,7 +4208,7 @@ window.SLIDES_PART1 = [
               {
                 "bold": true,
                 "size": 24,
-                "text": "RNN",
+                "text": "傳統 RNN",
                 "color": "#3C66B9"
               }
             ],
