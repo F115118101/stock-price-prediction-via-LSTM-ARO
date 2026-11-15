@@ -1938,7 +1938,7 @@ window.SLIDES_PART2 = [
               {
                 "bold": true,
                 "size": 27,
-                "text": "ARO 數學細節：步長、選擇維度、接受條件",
+                "text": "ARO 數學細節：步長與選擇維度",
                 "color": "#182B4D"
               }
             ],
@@ -1992,7 +1992,7 @@ window.SLIDES_PART2 = [
               {
                 "bold": false,
                 "size": 10,
-                "text": "原文 Eq. (6)–(11)、(19)–(20)（pp.4–5）；符號依原文",
+                "text": "原文 Eqs. (6)–(11)（p.4）；符號依原文",
                 "color": "#57657A"
               }
             ],
@@ -2043,7 +2043,7 @@ window.SLIDES_PART2 = [
         "tailEnd": "",
         "box": [
           694944,
-          1755648,
+          2055648,
           10744200,
           969264
         ],
@@ -2064,7 +2064,7 @@ window.SLIDES_PART2 = [
         "tailEnd": "",
         "box": [
           896112,
-          1837943,
+          2137943,
           2743200,
           320040
         ],
@@ -2097,7 +2097,7 @@ window.SLIDES_PART2 = [
         "tailEnd": "",
         "box": [
           3703320,
-          1810512,
+          2110512,
           7269480,
           393192
         ],
@@ -2130,7 +2130,7 @@ window.SLIDES_PART2 = [
         "tailEnd": "",
         "box": [
           3703320,
-          2276856,
+          2576856,
           7296912,
           329184
         ],
@@ -2163,7 +2163,7 @@ window.SLIDES_PART2 = [
         "tailEnd": "",
         "box": [
           694944,
-          2880360,
+          3680360,
           10744200,
           969264
         ],
@@ -2184,7 +2184,7 @@ window.SLIDES_PART2 = [
         "tailEnd": "",
         "box": [
           896112,
-          2962656,
+          3762656,
           2743200,
           320040
         ],
@@ -2217,7 +2217,7 @@ window.SLIDES_PART2 = [
         "tailEnd": "",
         "box": [
           3703320,
-          2974854,
+          3774854,
           7269480,
           313932
         ],
@@ -2250,7 +2250,7 @@ window.SLIDES_PART2 = [
         "tailEnd": "",
         "box": [
           3703320,
-          3447666,
+          4247666,
           7296912,
           236988
         ],
@@ -2266,126 +2266,6 @@ window.SLIDES_PART2 = [
                 "bold": false,
                 "size": 13,
                 "text": "t 為目前迭代，T 為總迭代數；r₂ ∈ (0,1) 控制步長的方向與幅度。",
-                "color": "#57657A"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          694944,
-          4005072,
-          10744200,
-          969264
-        ],
-        "image": "",
-        "fill": "#F1F6FD",
-        "geom": "roundRect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          896112,
-          4087368,
-          2743200,
-          320040
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 17,
-                "text": "貪婪式接受",
-                "color": "#3C66B9"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          3703320,
-          4059935,
-          7269480,
-          393192
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 18,
-                "text": "xᵢ(t+1) = vᵢ  if  f(vᵢ) < f(xᵢ)",
-                "color": "#182B4D"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          3703320,
-          4526280,
-          7296912,
-          329184
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 13,
-                "text": "只有候選解的適應度較佳（此處以誤差最小化）才更新。",
                 "color": "#57657A"
               }
             ],
@@ -3076,6 +2956,600 @@ window.SLIDES_PART2 = [
     ]
   },
   {
+    "number": 20,
+    "background": "#F8FAFD",
+    "items": [
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          0,
+          0,
+          12191695,
+          118872
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          475488,
+          246888,
+          11247120,
+          384048
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 13,
+                "text": "ARO 公式",
+                "color": "#3C66B9"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          475488,
+          713232,
+          11201400,
+          612648
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 27,
+                "text": "ARO 位置更新：候選位置什麼時候被接受？",
+                "color": "#182B4D"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#CFD9E6",
+        "tailEnd": "",
+        "box": [
+          512064,
+          1389888,
+          11155680,
+          0
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "line",
+        "type": "cxnSp",
+        "lineWidth": 15240,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          502920,
+          6501384,
+          10972800,
+          228600
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 10,
+                "text": "原文 Eq. (19)（p.5）；f 以預測誤差計，越小越好",
+                "color": "#57657A"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          11247120,
+          6473952,
+          393192,
+          228600
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 10,
+                "text": "30",
+                "color": "#57657A"
+              }
+            ],
+            "align": "r"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          585216,
+          5934456,
+          10991088,
+          393192
+        ],
+        "image": "",
+        "fill": "#EAF3FC",
+        "geom": "roundRect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          713232,
+          5984748,
+          10735056,
+          292608
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 13,
+                "text": "接受條件對兩種策略都適用：A(t) 決定用哪種方式產生候選（下一頁），Eq. (19) 決定要不要搬過去。",
+                "color": "#182B4D"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          694944,
+          1755648,
+          10744200,
+          969264
+        ],
+        "image": "",
+        "fill": "#F1F6FD",
+        "geom": "roundRect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          896112,
+          1837944,
+          2743200,
+          320040
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 17,
+                "text": "候選位置從哪來",
+                "color": "#3C66B9"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          3703320,
+          1810511,
+          7269480,
+          393192
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 18,
+                "text": "vᵢ(t+1)：繞路覓食 Eq. (6) 或隨機躲藏 Eq. (16)",
+                "color": "#182B4D"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          3703320,
+          2276856,
+          7296912,
+          329184
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 13,
+                "text": "兩種策略都只是「提出」一個新位置，還沒有真的搬過去。",
+                "color": "#57657A"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          694944,
+          2880360,
+          10744200,
+          969264
+        ],
+        "image": "",
+        "fill": "#F1F6FD",
+        "geom": "roundRect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          896112,
+          2962656,
+          2743200,
+          320040
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 17,
+                "text": "貪婪式接受",
+                "color": "#3C66B9"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          3703320,
+          2935223,
+          7269480,
+          393192
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 18,
+                "text": "xᵢ(t+1) = vᵢ(t+1)　若 f(vᵢ(t+1)) < f(xᵢ(t))",
+                "color": "#182B4D"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          3703320,
+          3401568,
+          7296912,
+          329184
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 13,
+                "text": "f 是適應度：用這組超參數訓練 LSTM 後的預測誤差。",
+                "color": "#57657A"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          694944,
+          4005072,
+          10744200,
+          969264
+        ],
+        "image": "",
+        "fill": "#F1F6FD",
+        "geom": "roundRect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          896112,
+          4087368,
+          2743200,
+          320040
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 17,
+                "text": "否則留在原地",
+                "color": "#3C66B9"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          3703320,
+          4059935,
+          7269480,
+          393192
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 18,
+                "text": "xᵢ(t+1) = xᵢ(t)",
+                "color": "#182B4D"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          3703320,
+          4526280,
+          7296912,
+          329184
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 13,
+                "text": "新設定沒有比較好就丟掉，所以每隻兔子的成績只會持平或變好。",
+                "color": "#57657A"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      }
+    ]
+  },
+  {
     "number": 21,
     "background": "#F8FAFD",
     "items": [
@@ -3207,7 +3681,7 @@ window.SLIDES_PART2 = [
               {
                 "bold": false,
                 "size": 9,
-                "text": "原文 Eqs.(19)–(20) (p.5)",
+                "text": "原文 Eq. (20) (p.5)",
                 "color": "#60708A"
               }
             ],

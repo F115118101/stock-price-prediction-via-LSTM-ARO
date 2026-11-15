@@ -3,7 +3,7 @@ let slides=[],index=0,tab='explain',selectedText='';
 const $=s=>document.querySelector(s);
 const slideEl=$('#slide'),drawer=$('#drawer'),body=$('#drawerBody');
 const titles={9:'LSTM Cell：一個時間步內，資訊如何流動？',10:'Gate 的內部：每個門如何計算',11:'帶入數字：一次 LSTM 更新怎麼算'};
-const category=i=>i<=4?'研究動機':i<=6?'資料與任務':i<=14?'LSTM 核心概念':i<=15?'比較方法':i<=21?'ARO 核心概念':i<=25?'方法整合':i<=35?'評估與結果':i<=38?'討論與結論':'參考文獻';
+const category=i=>i<=4?'研究動機':i<=7?'基礎概念與資料':i<=14?'LSTM 核心概念':i<=15?'比較方法':i<=21?'ARO 核心概念':i<=25?'方法整合':i<=35?'評估與結果':i<=38?'討論與結論':'參考文獻';
 let widgetType = i =>
   i === 2 ? 'motivation' :
   i === 5 ? 'window' :
@@ -16,9 +16,9 @@ let widgetType = i =>
   i === 15 ? 'ga_simulation' :
   i === 16 ? 'rabbit_population' :
   i === 17 ? 'detour' :
-  i === 18 ? 'greedy_selection' :
+  i === 18 ? 'step_length' :
   i === 19 ? 'hiding' :
-  i === 20 ? 'burrow_map' :
+  i === 20 ? 'greedy_selection' :
   i === 21 ? 'energy' :
   (i === 22 || i === 23) ? 'builder' :
   i === 24 ? 'optimization_loop' :
@@ -159,7 +159,7 @@ const customHeaderSlides=new Set([12,14]);
 function sharedSection(n){
   if(n===1)return '論文簡報';
   if(n<=4)return '01｜研究動機';
-  if(n<=6)return '02｜資料與任務';
+  if(n<=7)return '02｜基礎概念與資料';
   if(n<=14)return '03｜LSTM 與比較方法';
   if(n<=21)return '04｜GA 與 ARO';
   if(n<=25)return '05｜方法整合';

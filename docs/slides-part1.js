@@ -1914,6 +1914,1068 @@ window.SLIDES_PART1 = [
     ]
   },
   {
+    "number": 7,
+    "background": "#F8FAFD",
+    "items": [
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          0,
+          0,
+          12191695,
+          118872
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          475488,
+          246888,
+          11247120,
+          384048
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 13,
+                "text": "基礎概念",
+                "color": "#3C66B9"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          475488,
+          713232,
+          11201400,
+          612648
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 27,
+                "text": "ANN、RNN、LSTM：從一般網路到序列記憶",
+                "color": "#182B4D"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#CFD9E6",
+        "tailEnd": "",
+        "box": [
+          512064,
+          1389888,
+          11155680,
+          0
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "line",
+        "type": "cxnSp",
+        "lineWidth": 15240,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          502920,
+          6501384,
+          10972800,
+          228600
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 10,
+                "text": "原文 §3.2–3.3（pp.3–4）；圖為教學示意",
+                "color": "#57657A"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          11247120,
+          6473952,
+          393192,
+          228600
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 10,
+                "text": "28",
+                "color": "#57657A"
+              }
+            ],
+            "align": "r"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          1005840,
+          2011680,
+          2743200,
+          3200400
+        ],
+        "image": "",
+        "fill": "#F1F6FD",
+        "geom": "roundRect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          1115568,
+          2240280,
+          2514600,
+          457200
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 24,
+                "text": "ANN",
+                "color": "#3C66B9"
+              }
+            ],
+            "align": "ctr"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          1188720,
+          4160520,
+          2377440,
+          731520
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 16,
+                "text": "輸入 → Dense → Dense → 輸出",
+                "color": "#57657A"
+              }
+            ],
+            "align": "ctr"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          1618488,
+          2971800,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          1618488,
+          3429000,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          1618488,
+          3886200,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          2304288,
+          2971800,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          2304288,
+          3429000,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          2304288,
+          3886200,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#57657A",
+        "tailEnd": "",
+        "box": [
+          1874519,
+          3218688,
+          429769,
+          0
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "line",
+        "type": "cxnSp",
+        "lineWidth": 15240,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          2990088,
+          2971800,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          2990088,
+          3429000,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          2990088,
+          3886200,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#57657A",
+        "tailEnd": "",
+        "box": [
+          2560320,
+          3218688,
+          429768,
+          0
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "line",
+        "type": "cxnSp",
+        "lineWidth": 15240,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          4709160,
+          2011680,
+          2743200,
+          3200400
+        ],
+        "image": "",
+        "fill": "#F1F6FD",
+        "geom": "roundRect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          4818888,
+          2240280,
+          2514600,
+          457200
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 24,
+                "text": "傳統 RNN",
+                "color": "#3C66B9"
+              }
+            ],
+            "align": "ctr"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          4892040,
+          4160520,
+          2377440,
+          731520
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 16,
+                "text": "每步保留 hidden state",
+                "color": "#57657A"
+              }
+            ],
+            "align": "ctr"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          5321808,
+          2971800,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          5321808,
+          3429000,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          6007608,
+          2971800,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          6007608,
+          3429000,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#57657A",
+        "tailEnd": "",
+        "box": [
+          5577840,
+          3218688,
+          429768,
+          0
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "line",
+        "type": "cxnSp",
+        "lineWidth": 15240,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          6693408,
+          2971800,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          6693408,
+          3429000,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#57657A",
+        "tailEnd": "",
+        "box": [
+          6263640,
+          3218688,
+          429768,
+          0
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "line",
+        "type": "cxnSp",
+        "lineWidth": 15240,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          8394192,
+          2011680,
+          2743200,
+          3200400
+        ],
+        "image": "",
+        "fill": "#F1F6FD",
+        "geom": "roundRect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          8503919,
+          2240280,
+          2514600,
+          457200
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 24,
+                "text": "LSTM",
+                "color": "#3C66B9"
+              }
+            ],
+            "align": "ctr"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          8577072,
+          4160520,
+          2377440,
+          731520
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 16,
+                "text": "額外維護 cell state",
+                "color": "#57657A"
+              }
+            ],
+            "align": "ctr"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          9006840,
+          2971800,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#178B78",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          9006840,
+          3429000,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#178B78",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          9692640,
+          2971800,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#178B78",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          9692640,
+          3429000,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#178B78",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#57657A",
+        "tailEnd": "",
+        "box": [
+          9262872,
+          3218688,
+          429768,
+          0
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "line",
+        "type": "cxnSp",
+        "lineWidth": 15240,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          10378440,
+          2971800,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#178B78",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          10378440,
+          3429000,
+          164592,
+          164592
+        ],
+        "image": "",
+        "fill": "#178B78",
+        "geom": "ellipse",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#57657A",
+        "tailEnd": "",
+        "box": [
+          9948672,
+          3218688,
+          429768,
+          0
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "line",
+        "type": "cxnSp",
+        "lineWidth": 15240,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          585216,
+          5971032,
+          10991088,
+          393192
+        ],
+        "image": "",
+        "fill": "#EAF3FC",
+        "geom": "roundRect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          713232,
+          6021324,
+          10735056,
+          292608
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 13,
+                "text": "LSTM 的門控機制維持長期資訊；Stacked LSTM 再把一層的時間序列輸出交給下一層。",
+                "color": "#182B4D"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      }
+    ]
+  },
+  {
     "number": 5,
     "background": "#F8FAFD",
     "items": [
@@ -3666,1068 +4728,6 @@ window.SLIDES_PART1 = [
         "flipV": "",
         "headEnd": "",
         "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      }
-    ]
-  },
-  {
-    "number": 7,
-    "background": "#F8FAFD",
-    "items": [
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          0,
-          0,
-          12191695,
-          118872
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          475488,
-          246888,
-          11247120,
-          384048
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 13,
-                "text": "基礎概念",
-                "color": "#3C66B9"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          475488,
-          713232,
-          11201400,
-          612648
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 27,
-                "text": "ANN、RNN、LSTM：從一般網路到序列記憶",
-                "color": "#182B4D"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#CFD9E6",
-        "tailEnd": "",
-        "box": [
-          512064,
-          1389888,
-          11155680,
-          0
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "line",
-        "type": "cxnSp",
-        "lineWidth": 15240,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          502920,
-          6501384,
-          10972800,
-          228600
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 10,
-                "text": "原文 §3.2–3.3（pp.3–4）；圖為教學示意",
-                "color": "#57657A"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          11247120,
-          6473952,
-          393192,
-          228600
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 10,
-                "text": "28",
-                "color": "#57657A"
-              }
-            ],
-            "align": "r"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1005840,
-          2011680,
-          2743200,
-          3200400
-        ],
-        "image": "",
-        "fill": "#F1F6FD",
-        "geom": "roundRect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1115568,
-          2240280,
-          2514600,
-          457200
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 24,
-                "text": "ANN",
-                "color": "#3C66B9"
-              }
-            ],
-            "align": "ctr"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1188720,
-          4160520,
-          2377440,
-          731520
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 16,
-                "text": "輸入 → Dense → Dense → 輸出",
-                "color": "#57657A"
-              }
-            ],
-            "align": "ctr"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1618488,
-          2971800,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1618488,
-          3429000,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1618488,
-          3886200,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          2304288,
-          2971800,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          2304288,
-          3429000,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          2304288,
-          3886200,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#57657A",
-        "tailEnd": "",
-        "box": [
-          1874519,
-          3218688,
-          429769,
-          0
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "line",
-        "type": "cxnSp",
-        "lineWidth": 15240,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          2990088,
-          2971800,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          2990088,
-          3429000,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          2990088,
-          3886200,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#57657A",
-        "tailEnd": "",
-        "box": [
-          2560320,
-          3218688,
-          429768,
-          0
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "line",
-        "type": "cxnSp",
-        "lineWidth": 15240,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          4709160,
-          2011680,
-          2743200,
-          3200400
-        ],
-        "image": "",
-        "fill": "#F1F6FD",
-        "geom": "roundRect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          4818888,
-          2240280,
-          2514600,
-          457200
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 24,
-                "text": "傳統 RNN",
-                "color": "#3C66B9"
-              }
-            ],
-            "align": "ctr"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          4892040,
-          4160520,
-          2377440,
-          731520
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 16,
-                "text": "每步保留 hidden state",
-                "color": "#57657A"
-              }
-            ],
-            "align": "ctr"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          5321808,
-          2971800,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          5321808,
-          3429000,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          6007608,
-          2971800,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          6007608,
-          3429000,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#57657A",
-        "tailEnd": "",
-        "box": [
-          5577840,
-          3218688,
-          429768,
-          0
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "line",
-        "type": "cxnSp",
-        "lineWidth": 15240,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          6693408,
-          2971800,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          6693408,
-          3429000,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#3C66B9",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#57657A",
-        "tailEnd": "",
-        "box": [
-          6263640,
-          3218688,
-          429768,
-          0
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "line",
-        "type": "cxnSp",
-        "lineWidth": 15240,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          8394192,
-          2011680,
-          2743200,
-          3200400
-        ],
-        "image": "",
-        "fill": "#F1F6FD",
-        "geom": "roundRect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          8503919,
-          2240280,
-          2514600,
-          457200
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 24,
-                "text": "LSTM",
-                "color": "#3C66B9"
-              }
-            ],
-            "align": "ctr"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          8577072,
-          4160520,
-          2377440,
-          731520
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 16,
-                "text": "額外維護 cell state",
-                "color": "#57657A"
-              }
-            ],
-            "align": "ctr"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          9006840,
-          2971800,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#178B78",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          9006840,
-          3429000,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#178B78",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          9692640,
-          2971800,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#178B78",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          9692640,
-          3429000,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#178B78",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#57657A",
-        "tailEnd": "",
-        "box": [
-          9262872,
-          3218688,
-          429768,
-          0
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "line",
-        "type": "cxnSp",
-        "lineWidth": 15240,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          10378440,
-          2971800,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#178B78",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          10378440,
-          3429000,
-          164592,
-          164592
-        ],
-        "image": "",
-        "fill": "#178B78",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#57657A",
-        "tailEnd": "",
-        "box": [
-          9948672,
-          3218688,
-          429768,
-          0
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "line",
-        "type": "cxnSp",
-        "lineWidth": 15240,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          585216,
-          5971032,
-          10991088,
-          393192
-        ],
-        "image": "",
-        "fill": "#EAF3FC",
-        "geom": "roundRect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          713232,
-          6021324,
-          10735056,
-          292608
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 13,
-                "text": "LSTM 的門控機制維持長期資訊；Stacked LSTM 再把一層的時間序列輸出交給下一層。",
-                "color": "#182B4D"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
         "flipH": "",
         "rotation": 0
       }
