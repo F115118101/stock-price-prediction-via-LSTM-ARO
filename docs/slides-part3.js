@@ -4293,7 +4293,7 @@ window.SLIDES_PART3 = [
               {
                 "bold": true,
                 "size": 27,
-                "text": "時間成本：離線超參數搜尋 vs. 最終模型推論",
+                "text": "時間成本：離線超參數搜尋 vs. 最終模型執行",
                 "color": "#182B4D"
               }
             ],
@@ -4398,8 +4398,8 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           704088,
-          1847088,
-          3337560,
+          1980000,
+          5334000,
           1133856
         ],
         "image": "",
@@ -4419,8 +4419,8 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           822960,
-          1938528,
-          3099815,
+          2071440,
+          5096256,
           320040
         ],
         "image": "",
@@ -4434,7 +4434,7 @@ window.SLIDES_PART3 = [
               {
                 "bold": false,
                 "size": 14,
-                "text": "ARO 搜尋：50×50",
+                "text": "ARO：50 代 × 50 隻 × 30 檔",
                 "color": "#57657A"
               }
             ],
@@ -4452,8 +4452,8 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           822960,
-          2322576,
-          3099815,
+          2455488,
+          5096256,
           502920
         ],
         "image": "",
@@ -4484,9 +4484,9 @@ window.SLIDES_PART3 = [
         "line": "",
         "tailEnd": "",
         "box": [
-          4434840,
-          1847088,
-          3337560,
+          6187439,
+          1980000,
+          5334000,
           1133856
         ],
         "image": "",
@@ -4505,9 +4505,9 @@ window.SLIDES_PART3 = [
         "line": "",
         "tailEnd": "",
         "box": [
-          4553712,
-          1938528,
-          3099815,
+          6306311,
+          2071440,
+          5096256,
           320040
         ],
         "image": "",
@@ -4521,7 +4521,7 @@ window.SLIDES_PART3 = [
               {
                 "bold": false,
                 "size": 14,
-                "text": "GA 搜尋：50×50",
+                "text": "GA：50 代 × 50 隻 × 30 檔",
                 "color": "#57657A"
               }
             ],
@@ -4538,9 +4538,9 @@ window.SLIDES_PART3 = [
         "line": "",
         "tailEnd": "",
         "box": [
-          4553712,
-          2322576,
-          3099815,
+          6306311,
+          2455488,
+          5096256,
           502920
         ],
         "image": "",
@@ -4571,95 +4571,8 @@ window.SLIDES_PART3 = [
         "line": "",
         "tailEnd": "",
         "box": [
-          8183879,
-          1847088,
-          3337560,
-          1133856
-        ],
-        "image": "",
-        "fill": "#F4F8FD",
-        "geom": "roundRect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          8302752,
-          1938528,
-          3099815,
-          320040
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 14,
-                "text": "ARO 30 檔預測",
-                "color": "#57657A"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          8302752,
-          2322576,
-          3099815,
-          502920
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 24,
-                "text": "301.956 秒",
-                "color": "#178B78"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
           841248,
-          3337560,
+          3760000,
           1874519,
           292608
         ],
@@ -4692,7 +4605,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           2871216,
-          3374136,
+          3796576,
           1758249,
           228600
         ],
@@ -4713,7 +4626,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           10149840,
-          3337560,
+          3760000,
           1234440,
           274320
         ],
@@ -4746,7 +4659,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           841248,
-          3721608,
+          4144048,
           1874519,
           292608
         ],
@@ -4779,7 +4692,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           2871216,
-          3758184,
+          4180624,
           3215718,
           228600
         ],
@@ -4800,7 +4713,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           10149840,
-          3721608,
+          4144048,
           1234440,
           274320
         ],
@@ -4833,7 +4746,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           841248,
-          4105656,
+          4528096,
           1874519,
           292608
         ],
@@ -4866,7 +4779,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           2871216,
-          4142232,
+          4564672,
           3719356,
           228600
         ],
@@ -4887,7 +4800,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           10149840,
-          4105656,
+          4528096,
           1234440,
           274320
         ],
@@ -4920,7 +4833,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           841248,
-          4489704,
+          4912144,
           1874519,
           292608
         ],
@@ -4953,7 +4866,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           2871216,
-          4526280,
+          4948720,
           3890620,
           228600
         ],
@@ -4974,7 +4887,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           10149840,
-          4489704,
+          4912144,
           1234440,
           274320
         ],
@@ -5007,7 +4920,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           841248,
-          4873752,
+          5296192,
           1874519,
           292608
         ],
@@ -5040,7 +4953,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           2871216,
-          4910328,
+          5332768,
           4822547,
           228600
         ],
@@ -5061,7 +4974,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           10149840,
-          4873752,
+          5296192,
           1234440,
           274320
         ],
@@ -5094,7 +5007,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           841248,
-          5257800,
+          5680240,
           1874519,
           292608
         ],
@@ -5127,7 +5040,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           2871216,
-          5294376,
+          5716816,
           6462051,
           228600
         ],
@@ -5148,7 +5061,7 @@ window.SLIDES_PART3 = [
         "tailEnd": "",
         "box": [
           10149840,
-          5257800,
+          5680240,
           1234440,
           274320
         ],
@@ -5179,15 +5092,9 @@ window.SLIDES_PART3 = [
       {
         "line": "",
         "tailEnd": "",
-        "box": [
-          585216,
-          5971032,
-          10991088,
-          393192
-        ],
         "image": "",
-        "fill": "#EAF3FC",
-        "geom": "roundRect",
+        "fill": "#C66817",
+        "geom": "rect",
         "type": "sp",
         "lineWidth": 0,
         "paragraphs": [],
@@ -5195,17 +5102,50 @@ window.SLIDES_PART3 = [
         "headEnd": "",
         "anchor": "ctr",
         "flipH": "",
-        "rotation": 0
+        "rotation": 0,
+        "box": [
+          585216,
+          1530000,
+          64008,
+          320040
+        ]
       },
       {
         "line": "",
         "tailEnd": "",
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 15,
+                "text": "離線超參數搜尋：一次性，只為找出最佳設定",
+                "color": "#C66817"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0,
         "box": [
           713232,
-          6021324,
-          10735056,
-          292608
-        ],
+          1530000,
+          6400800,
+          320040
+        ]
+      },
+      {
+        "line": "",
+        "tailEnd": "",
         "image": "",
         "fill": "",
         "geom": "rect",
@@ -5216,9 +5156,84 @@ window.SLIDES_PART3 = [
             "runs": [
               {
                 "bold": false,
-                "size": 13,
-                "text": "最佳化耗時不可與每日一次的推論耗時混為一談；原文把搜尋視為一次性工作。",
-                "color": "#182B4D"
+                "size": 11,
+                "text": "§4.3（p.7）",
+                "color": "#8A97AB"
+              }
+            ],
+            "align": "r"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0,
+        "box": [
+          7150000,
+          1530000,
+          4400000,
+          320040
+        ]
+      },
+      {
+        "line": "#CFD9E6",
+        "tailEnd": "",
+        "box": [
+          512064,
+          3290000,
+          11155680,
+          0
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "line",
+        "type": "cxnSp",
+        "lineWidth": 15240,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "image": "",
+        "fill": "#3C66B9",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0,
+        "box": [
+          585216,
+          3360000,
+          64008,
+          320040
+        ]
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 15,
+                "text": "最終模型：用定案的固定設定，30 檔跑一次",
+                "color": "#3C66B9"
               }
             ],
             "align": "l"
@@ -5228,7 +5243,46 @@ window.SLIDES_PART3 = [
         "headEnd": "",
         "anchor": "ctr",
         "flipH": "",
-        "rotation": 0
+        "rotation": 0,
+        "box": [
+          713232,
+          3360000,
+          7400000,
+          320040
+        ]
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 11,
+                "text": "Table 11（p.15）",
+                "color": "#8A97AB"
+              }
+            ],
+            "align": "r"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0,
+        "box": [
+          8150000,
+          3360000,
+          3400000,
+          320040
+        ]
       }
     ]
   },

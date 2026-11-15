@@ -18,7 +18,7 @@ function paperResultsLesson(){
     const view=d.querySelector('#paperView').value;
     d.querySelector('#stockPicker').hidden=view!=='stocks';
     if(view==='time'){
-      d.querySelector('#paperContent').innerHTML=`<p class="paper-citation">原論文 §4.3、Table 11；30 檔股票的最終模型推論時間。</p><div class="paper-table-wrap"><table class="paper-table"><thead><tr><th>模型</th><th>推論時間（秒）</th></tr></thead><tbody>${inferenceRows.map(([name,seconds])=>`<tr><td>${name}</td><td>${seconds.toFixed(name==='LSTM-ARO'?3:1)}</td></tr>`).join('')}</tbody></table></div><div class="paper-fact-grid"><div><small>ARO 搜尋 50 × 50</small><strong>8.737 天</strong></div><div><small>GA 搜尋 50 × 50</small><strong>8.353 天</strong></div></div><p class="lesson-note">搜尋時間與最終模型的推論時間屬於不同階段。</p>`;
+      d.querySelector('#paperContent').innerHTML=`<p class="paper-citation">原論文 §4.3、Table 11；30 檔股票的最終模型執行時間（論文未說明是否含訓練）。</p><div class="paper-table-wrap"><table class="paper-table"><thead><tr><th>模型</th><th>推論時間（秒）</th></tr></thead><tbody>${inferenceRows.map(([name,seconds])=>`<tr><td>${name}</td><td>${seconds.toFixed(name==='LSTM-ARO'?3:1)}</td></tr>`).join('')}</tbody></table></div><div class="paper-fact-grid"><div><small>ARO 搜尋 50 × 50</small><strong>8.737 天</strong></div><div><small>GA 搜尋 50 × 50</small><strong>8.353 天</strong></div></div><p class="lesson-note">搜尋時間與最終模型的推論時間屬於不同階段。</p>`;
       return;
     }
     const name=d.querySelector('#paperStock').value,row=paperRows.find(r=>r.stock===name),mseDelta=row.aroMse-row.gaMse,r2Delta=row.aroR2-row.gaR2;

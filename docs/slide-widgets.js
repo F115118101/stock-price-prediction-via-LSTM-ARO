@@ -980,7 +980,7 @@
     const d = lessonBox(`
       <div class="formula-display cost-formula" id="offlineCostFormula"></div>
       <div id="controls"></div>
-      <p class="lesson-note">75,000 次模型訓練代表巨大算力投入；但這是離線單次調參，部署到線上後推論僅需數百毫秒。</p>
+      <p class="lesson-note">75,000 次模型訓練代表巨大算力投入；但這是離線單次調參，定案後最終模型 30 檔跑一次約 302 秒（每檔約 10 秒，Table 11）。</p>
     `);
     const c = d.querySelector('#controls');
     control(c, 'trainSec', '單一模型平均訓練耗時 (秒)', 5, 20, 1, 10);
