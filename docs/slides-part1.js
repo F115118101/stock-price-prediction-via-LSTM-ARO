@@ -947,478 +947,6 @@ window.SLIDES_PART1 = [
     ]
   },
   {
-    "number": 3,
-    "background": "#F8FAFD",
-    "items": [
-      {
-        "line": "#0B9D98",
-        "tailEnd": "",
-        "box": [
-          0,
-          0,
-          12191695,
-          128016
-        ],
-        "image": "",
-        "fill": "#0B9D98",
-        "geom": "roundRect",
-        "type": "sp",
-        "lineWidth": 12700,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          566928,
-          283464,
-          7315200,
-          274320
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 11,
-                "text": "01｜研究動機",
-                "color": "#0B9D98"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          566928,
-          640080,
-          11109960,
-          585216
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 30,
-                "text": "研究貢獻與整體架構",
-                "color": "#101A30"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#DFE6F0",
-        "tailEnd": "",
-        "box": [
-          566928,
-          6510528,
-          11064240,
-          11887
-        ],
-        "image": "",
-        "fill": "#DFE6F0",
-        "geom": "roundRect",
-        "type": "sp",
-        "lineWidth": 12700,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          585216,
-          6574536,
-          9144000,
-          182880
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 9,
-                "text": "原文摘要與 Fig.2 (p.7)",
-                "color": "#60708A"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          11155680,
-          6556248,
-          411480,
-          192024
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 10,
-                "text": "03",
-                "color": "#60708A"
-              }
-            ],
-            "align": "r"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#EAF1FF",
-        "tailEnd": "",
-        "box": [
-          822960,
-          1554480,
-          4754880,
-          3429000
-        ],
-        "image": "",
-        "fill": "#EAF1FF",
-        "geom": "roundRect",
-        "type": "sp",
-        "lineWidth": 12700,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#DDF7F2",
-        "tailEnd": "",
-        "box": [
-          6629400,
-          1554480,
-          4754880,
-          3429000
-        ],
-        "image": "",
-        "fill": "#DDF7F2",
-        "geom": "roundRect",
-        "type": "sp",
-        "lineWidth": 12700,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1234440,
-          1828800,
-          3931920,
-          502920
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 25,
-                "text": "ARO：外部最佳化",
-                "color": "#367AF6"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1280160,
-          2743200,
-          3840480,
-          1097280
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 21,
-                "text": "提出候選超參數",
-                "color": "#202B42"
-              }
-            ],
-            "align": "ctr"
-          },
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 21,
-                "text": "評估誤差 → 更新候選解",
-                "color": "#202B42"
-              }
-            ],
-            "align": "ctr"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          6903720,
-          1828800,
-          4160520,
-          502920
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 24,
-                "text": "Deep LSTM：預測模型",
-                "color": "#0B9D98"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          7040880,
-          2743200,
-          3794760,
-          1097280
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 21,
-                "text": "讀取過去 20 天股價",
-                "color": "#202B42"
-              }
-            ],
-            "align": "ctr"
-          },
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 21,
-                "text": "輸出隔天的預測價格",
-                "color": "#202B42"
-              }
-            ],
-            "align": "ctr"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#F39A42",
-        "tailEnd": "triangle",
-        "box": [
-          5596128,
-          2761488,
-          987552,
-          0
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "line",
-        "type": "sp",
-        "lineWidth": 50800,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "none",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#FFF0DE",
-        "tailEnd": "",
-        "box": [
-          4590288,
-          5385816,
-          3017520,
-          438912
-        ],
-        "image": "",
-        "fill": "#FFF0DE",
-        "geom": "roundRect",
-        "type": "sp",
-        "lineWidth": 12700,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          4590288,
-          5385816,
-          3017520,
-          438912
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 15,
-                "text": "輸出最佳模型",
-                "color": "#B66B24"
-              }
-            ],
-            "align": "ctr"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#367AF6",
-        "tailEnd": "triangle",
-        "box": [
-          5596128,
-          3794760,
-          987552,
-          0
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "line",
-        "type": "cxnSp",
-        "lineWidth": 50800,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "none",
-        "anchor": "t",
-        "flipH": "1",
-        "rotation": 0
-      }
-    ]
-  },
-  {
     "number": 4,
     "background": "#F8FAFD",
     "items": [
@@ -1909,6 +1437,478 @@ window.SLIDES_PART1 = [
         "headEnd": "",
         "anchor": "ctr",
         "flipH": "",
+        "rotation": 0
+      }
+    ]
+  },
+  {
+    "number": 3,
+    "background": "#F8FAFD",
+    "items": [
+      {
+        "line": "#0B9D98",
+        "tailEnd": "",
+        "box": [
+          0,
+          0,
+          12191695,
+          128016
+        ],
+        "image": "",
+        "fill": "#0B9D98",
+        "geom": "roundRect",
+        "type": "sp",
+        "lineWidth": 12700,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          566928,
+          283464,
+          7315200,
+          274320
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 11,
+                "text": "01｜研究動機",
+                "color": "#0B9D98"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          566928,
+          640080,
+          11109960,
+          585216
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 30,
+                "text": "研究貢獻與整體架構",
+                "color": "#101A30"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#DFE6F0",
+        "tailEnd": "",
+        "box": [
+          566928,
+          6510528,
+          11064240,
+          11887
+        ],
+        "image": "",
+        "fill": "#DFE6F0",
+        "geom": "roundRect",
+        "type": "sp",
+        "lineWidth": 12700,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          585216,
+          6574536,
+          9144000,
+          182880
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 9,
+                "text": "原文摘要與 Fig.2 (p.7)",
+                "color": "#60708A"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          11155680,
+          6556248,
+          411480,
+          192024
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 10,
+                "text": "03",
+                "color": "#60708A"
+              }
+            ],
+            "align": "r"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#EAF1FF",
+        "tailEnd": "",
+        "box": [
+          822960,
+          1554480,
+          4754880,
+          3429000
+        ],
+        "image": "",
+        "fill": "#EAF1FF",
+        "geom": "roundRect",
+        "type": "sp",
+        "lineWidth": 12700,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#DDF7F2",
+        "tailEnd": "",
+        "box": [
+          6629400,
+          1554480,
+          4754880,
+          3429000
+        ],
+        "image": "",
+        "fill": "#DDF7F2",
+        "geom": "roundRect",
+        "type": "sp",
+        "lineWidth": 12700,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          1234440,
+          1828800,
+          3931920,
+          502920
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 25,
+                "text": "ARO：外部最佳化",
+                "color": "#367AF6"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          1280160,
+          2743200,
+          3840480,
+          1097280
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 21,
+                "text": "提出候選超參數",
+                "color": "#202B42"
+              }
+            ],
+            "align": "ctr"
+          },
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 21,
+                "text": "評估誤差 → 更新候選解",
+                "color": "#202B42"
+              }
+            ],
+            "align": "ctr"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          6903720,
+          1828800,
+          4160520,
+          502920
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 24,
+                "text": "Deep LSTM：預測模型",
+                "color": "#0B9D98"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          7040880,
+          2743200,
+          3794760,
+          1097280
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 21,
+                "text": "讀取過去 20 天股價",
+                "color": "#202B42"
+              }
+            ],
+            "align": "ctr"
+          },
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 21,
+                "text": "輸出隔天的預測價格",
+                "color": "#202B42"
+              }
+            ],
+            "align": "ctr"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#F39A42",
+        "tailEnd": "triangle",
+        "box": [
+          5596128,
+          2761488,
+          987552,
+          0
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "line",
+        "type": "sp",
+        "lineWidth": 50800,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "none",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#FFF0DE",
+        "tailEnd": "",
+        "box": [
+          4590288,
+          5385816,
+          3017520,
+          438912
+        ],
+        "image": "",
+        "fill": "#FFF0DE",
+        "geom": "roundRect",
+        "type": "sp",
+        "lineWidth": 12700,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          4590288,
+          5385816,
+          3017520,
+          438912
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 15,
+                "text": "輸出最佳模型",
+                "color": "#B66B24"
+              }
+            ],
+            "align": "ctr"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "ctr",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#367AF6",
+        "tailEnd": "triangle",
+        "box": [
+          5596128,
+          3794760,
+          987552,
+          0
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "line",
+        "type": "cxnSp",
+        "lineWidth": 50800,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "none",
+        "anchor": "t",
+        "flipH": "1",
         "rotation": 0
       }
     ]
