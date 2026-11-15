@@ -1113,7 +1113,7 @@
       <p class="lesson-note">T = 50（論文的迭代次數）。上限在 t = 1 時為 e − 1 ≈ 1.72，到 t = T 時已接近 0：前期大步探索、後期小步收斂。</p>`);
     const c = d.querySelector('#controls');
     control(c, 't', '目前迭代 t', 1, STEP_T, 1, 10);
-    control(c, 'r2', '隨機數 r₂', 0, 1, 0.01, 0.2);
+    control(c, 'r2', '隨機數 r₂', 0, 1, 0.01, 0.25);
     const resample = document.createElement('button');
     resample.type = 'button'; resample.className = 'try-formula'; resample.textContent = '重新模擬一次（重抽每代的 r₂）';
     resample.onclick = () => { stepSamples = Array.from({ length: STEP_T }, () => Math.random()); update(); };
