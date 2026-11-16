@@ -5318,13 +5318,34 @@ window.SLIDES_PART2 = [
         "rotation": 0
       },
       {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          914400,
+          1390650,
+          4838700,
+          5029200
+        ],
+        "image": "assets/fig2-lstm-aro.png",
+        "fill": "",
+        "geom": "rect",
+        "type": "pic",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
         "line": "#DFE6F0",
         "tailEnd": "",
         "box": [
-          1078992,
-          1481328,
-          10040112,
-          649224
+          6286500,
+          1390650,
+          5334000,
+          1524000
         ],
         "image": "",
         "fill": "#FFFFFF",
@@ -5342,16 +5363,16 @@ window.SLIDES_PART2 = [
         "line": "#367AF6",
         "tailEnd": "",
         "box": [
-          1298448,
-          1591056,
-          420624,
-          420624
+          6286500,
+          1390650,
+          57150,
+          1524000
         ],
         "image": "",
         "fill": "#367AF6",
-        "geom": "ellipse",
+        "geom": "rect",
         "type": "sp",
-        "lineWidth": 12700,
+        "lineWidth": 0,
         "paragraphs": [],
         "flipV": "",
         "headEnd": "",
@@ -5363,43 +5384,10 @@ window.SLIDES_PART2 = [
         "line": "",
         "tailEnd": "",
         "box": [
-          1298448,
-          1591056,
-          420624,
-          420624
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 12,
-                "text": "01",
-                "color": "#FFFFFF"
-              }
-            ],
-            "align": "ctr"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1993392,
-          1600200,
-          2788920,
-          365760
+          6534150,
+          1657350,
+          4914900,
+          285750
         ],
         "image": "",
         "fill": "",
@@ -5412,8 +5400,8 @@ window.SLIDES_PART2 = [
               {
                 "bold": true,
                 "size": 20,
-                "text": "初始化兔群",
-                "color": "#202B42"
+                "text": "左欄｜ARO 外層搜尋",
+                "color": "#367AF6"
               }
             ],
             "align": "l"
@@ -5421,7 +5409,7 @@ window.SLIDES_PART2 = [
         ],
         "flipV": "",
         "headEnd": "",
-        "anchor": "ctr",
+        "anchor": "t",
         "flipH": "",
         "rotation": 0
       },
@@ -5429,10 +5417,10 @@ window.SLIDES_PART2 = [
         "line": "",
         "tailEnd": "",
         "box": [
-          5559552,
-          1600200,
-          4892040,
-          365760
+          6534150,
+          2038350,
+          4914900,
+          819150
         ],
         "image": "",
         "fill": "",
@@ -5445,8 +5433,8 @@ window.SLIDES_PART2 = [
               {
                 "bold": false,
                 "size": 18,
-                "text": "隨機參數組合",
-                "color": "#60708A"
+                "text": "初始化兔群 → 計算能量因子 A → A > 1 繞路覓食，否則隨機躲藏 → 算適應度並更新位置，重複到最大迭代。",
+                "color": "#4A5873"
               }
             ],
             "align": "l"
@@ -5454,27 +5442,6 @@ window.SLIDES_PART2 = [
         ],
         "flipV": "",
         "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#F39A42",
-        "tailEnd": "triangle",
-        "box": [
-          1508760,
-          2148840,
-          0,
-          164592
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "line",
-        "type": "sp",
-        "lineWidth": 17780,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "none",
         "anchor": "t",
         "flipH": "",
         "rotation": 0
@@ -5483,499 +5450,13 @@ window.SLIDES_PART2 = [
         "line": "#DFE6F0",
         "tailEnd": "",
         "box": [
-          1078992,
-          2331720,
-          10040112,
-          649224
+          6286500,
+          3143250,
+          5334000,
+          1524000
         ],
         "image": "",
         "fill": "#FFFFFF",
-        "geom": "roundRect",
-        "type": "sp",
-        "lineWidth": 12700,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#367AF6",
-        "tailEnd": "",
-        "box": [
-          1298448,
-          2441448,
-          420624,
-          420624
-        ],
-        "image": "",
-        "fill": "#367AF6",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 12700,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1298448,
-          2441448,
-          420624,
-          420624
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 12,
-                "text": "02",
-                "color": "#FFFFFF"
-              }
-            ],
-            "align": "ctr"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1993392,
-          2450592,
-          2788920,
-          365760
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 20,
-                "text": "建構 LSTM",
-                "color": "#202B42"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          5559552,
-          2450592,
-          4892040,
-          365760
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 18,
-                "text": "各組架構不同",
-                "color": "#60708A"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#F39A42",
-        "tailEnd": "triangle",
-        "box": [
-          1508760,
-          2999232,
-          0,
-          164592
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "line",
-        "type": "sp",
-        "lineWidth": 17780,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "none",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#DFE6F0",
-        "tailEnd": "",
-        "box": [
-          1078992,
-          3182112,
-          10040112,
-          649224
-        ],
-        "image": "",
-        "fill": "#FFFFFF",
-        "geom": "roundRect",
-        "type": "sp",
-        "lineWidth": 12700,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#367AF6",
-        "tailEnd": "",
-        "box": [
-          1298448,
-          3291840,
-          420624,
-          420624
-        ],
-        "image": "",
-        "fill": "#367AF6",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 12700,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1298448,
-          3291840,
-          420624,
-          420624
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 12,
-                "text": "03",
-                "color": "#FFFFFF"
-              }
-            ],
-            "align": "ctr"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1993392,
-          3300984,
-          2788920,
-          365760
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 20,
-                "text": "訓練與評分",
-                "color": "#202B42"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          5559552,
-          3300984,
-          4892040,
-          365760
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 18,
-                "text": "用誤差評估",
-                "color": "#60708A"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#F39A42",
-        "tailEnd": "triangle",
-        "box": [
-          1508760,
-          3849624,
-          0,
-          164592
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "line",
-        "type": "sp",
-        "lineWidth": 17780,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "none",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#DFE6F0",
-        "tailEnd": "",
-        "box": [
-          1078992,
-          4032504,
-          10040112,
-          649224
-        ],
-        "image": "",
-        "fill": "#FFFFFF",
-        "geom": "roundRect",
-        "type": "sp",
-        "lineWidth": 12700,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#367AF6",
-        "tailEnd": "",
-        "box": [
-          1298448,
-          4142232,
-          420624,
-          420624
-        ],
-        "image": "",
-        "fill": "#367AF6",
-        "geom": "ellipse",
-        "type": "sp",
-        "lineWidth": 12700,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1298448,
-          4142232,
-          420624,
-          420624
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 12,
-                "text": "04",
-                "color": "#FFFFFF"
-              }
-            ],
-            "align": "ctr"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1993392,
-          4151376,
-          2788920,
-          365760
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 20,
-                "text": "ARO 更新",
-                "color": "#202B42"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          5559552,
-          4151376,
-          4892040,
-          365760
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": false,
-                "size": 18,
-                "text": "覓食／躲藏",
-                "color": "#60708A"
-              }
-            ],
-            "align": "l"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#F39A42",
-        "tailEnd": "triangle",
-        "box": [
-          1508760,
-          4700016,
-          0,
-          164592
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "line",
-        "type": "sp",
-        "lineWidth": 17780,
-        "paragraphs": [],
-        "flipV": "",
-        "headEnd": "none",
-        "anchor": "t",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "#DFE6F0",
-        "tailEnd": "",
-        "box": [
-          1078992,
-          4882896,
-          10040112,
-          649224
-        ],
-        "image": "",
-        "fill": "#DDF7F2",
         "geom": "roundRect",
         "type": "sp",
         "lineWidth": 12700,
@@ -5990,16 +5471,16 @@ window.SLIDES_PART2 = [
         "line": "#0B9D98",
         "tailEnd": "",
         "box": [
-          1298448,
-          4992624,
-          420624,
-          420624
+          6286500,
+          3143250,
+          57150,
+          1524000
         ],
         "image": "",
         "fill": "#0B9D98",
-        "geom": "ellipse",
+        "geom": "rect",
         "type": "sp",
-        "lineWidth": 12700,
+        "lineWidth": 0,
         "paragraphs": [],
         "flipV": "",
         "headEnd": "",
@@ -6011,43 +5492,10 @@ window.SLIDES_PART2 = [
         "line": "",
         "tailEnd": "",
         "box": [
-          1298448,
-          4992624,
-          420624,
-          420624
-        ],
-        "image": "",
-        "fill": "",
-        "geom": "rect",
-        "type": "sp",
-        "lineWidth": 0,
-        "paragraphs": [
-          {
-            "runs": [
-              {
-                "bold": true,
-                "size": 12,
-                "text": "05",
-                "color": "#FFFFFF"
-              }
-            ],
-            "align": "ctr"
-          }
-        ],
-        "flipV": "",
-        "headEnd": "",
-        "anchor": "ctr",
-        "flipH": "",
-        "rotation": 0
-      },
-      {
-        "line": "",
-        "tailEnd": "",
-        "box": [
-          1993392,
-          5001768,
-          2788920,
-          365760
+          6534150,
+          3409950,
+          4914900,
+          285750
         ],
         "image": "",
         "fill": "",
@@ -6060,8 +5508,8 @@ window.SLIDES_PART2 = [
               {
                 "bold": true,
                 "size": 20,
-                "text": "保留最佳解",
-                "color": "#202B42"
+                "text": "右欄｜Deep LSTM 內層評分",
+                "color": "#0B9D98"
               }
             ],
             "align": "l"
@@ -6069,7 +5517,7 @@ window.SLIDES_PART2 = [
         ],
         "flipV": "",
         "headEnd": "",
-        "anchor": "ctr",
+        "anchor": "t",
         "flipH": "",
         "rotation": 0
       },
@@ -6077,10 +5525,10 @@ window.SLIDES_PART2 = [
         "line": "",
         "tailEnd": "",
         "box": [
-          5559552,
-          5001768,
-          4892040,
-          365760
+          6534150,
+          3790950,
+          4914900,
+          819150
         ],
         "image": "",
         "fill": "",
@@ -6093,8 +5541,8 @@ window.SLIDES_PART2 = [
               {
                 "bold": false,
                 "size": 18,
-                "text": "取得最終模型",
-                "color": "#60708A"
+                "text": "資料切成訓練／測試；依兔子的超參數建模、訓練，再預測測試資料並計算誤差。",
+                "color": "#4A5873"
               }
             ],
             "align": "l"
@@ -6102,7 +5550,115 @@ window.SLIDES_PART2 = [
         ],
         "flipV": "",
         "headEnd": "",
-        "anchor": "ctr",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#DFE6F0",
+        "tailEnd": "",
+        "box": [
+          6286500,
+          4895850,
+          5334000,
+          1524000
+        ],
+        "image": "",
+        "fill": "#FFFFFF",
+        "geom": "roundRect",
+        "type": "sp",
+        "lineWidth": 12700,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "#C0504D",
+        "tailEnd": "",
+        "box": [
+          6286500,
+          4895850,
+          57150,
+          1524000
+        ],
+        "image": "",
+        "fill": "#C0504D",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          6534150,
+          5162550,
+          4914900,
+          285750
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": true,
+                "size": 20,
+                "text": "紅色箭頭｜兩邊如何連起來",
+                "color": "#C0504D"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
+        "flipH": "",
+        "rotation": 0
+      },
+      {
+        "line": "",
+        "tailEnd": "",
+        "box": [
+          6534150,
+          5543550,
+          4914900,
+          819150
+        ],
+        "image": "",
+        "fill": "",
+        "geom": "rect",
+        "type": "sp",
+        "lineWidth": 0,
+        "paragraphs": [
+          {
+            "runs": [
+              {
+                "bold": false,
+                "size": 18,
+                "text": "兔子的位置（一組超參數）送去建模；算出的誤差回傳，當作這隻兔子的適應度 f。",
+                "color": "#4A5873"
+              }
+            ],
+            "align": "l"
+          }
+        ],
+        "flipV": "",
+        "headEnd": "",
+        "anchor": "t",
         "flipH": "",
         "rotation": 0
       }
