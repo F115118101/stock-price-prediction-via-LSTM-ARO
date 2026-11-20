@@ -46,7 +46,8 @@ MCD MMM MRK MSFT NKE PG TRV UNH CRM VZ V WBA WMT DIS DOW
 
 | 項目 | 設定 | 來源 |
 |---|---|---|
-| 輸入 / 輸出 | 前 20 天收盤價 → 隔天收盤價（單變量，形狀 `(20, 1)`） | 論文 |
+| 輸入 / 輸出 | 前 20 天收盤價 → 隔天收盤價（單變量） | 論文 |
+| 輸入形狀 | `(20, 1)`：20 個時間步 × 1 個特徵（論文只寫 "Input 20"；`INPUT_LAYOUT = "features"` 可改成 1 步 × 20 特徵做對照） | 推論 |
 | 切分 | 依時間前 80% 訓練、後 20% 測試 | 論文 |
 | 正規化 | Min-Max 到 [0, 1]，最小/最大值只取訓練段涵蓋的價格；預測後反轉回原價格 | 自訂 |
 
@@ -80,21 +81,27 @@ MCD MMM MRK MSFT NKE PG TRV UNH CRM VZ V WBA WMT DIS DOW
 | 訓練次數 | 每個架構 1 次 | 5 個 seed（42–46）取平均 | 自訂 |
 | 隨機種子 | 由「股票＋架構」決定，同一架構重跑結果相同 | 42–46 | 自訂 |
 
-最終訓練用 50 epochs 的依據：論文 Table 11 的單檔訓練時間（LSTM1D 8.3 s、LSTM2D 12.5 s、LSTM3D 16.7 s）和本機「batch 32 跑 50 epochs」的耗時幾乎一樣（LSTM2D ≈ 12 s）。
+論文沒有寫 epochs。最終訓練取 50；搜尋階段縮成 20，是為了讓每人在 5 小時內跑完（§4）。
+batch 32、`shuffle=True`、LSTM 的 tanh / sigmoid 都是 Keras 預設值。多層 LSTM 時，除最後一層外都設 `return_sequences=True`。
 
-LSTM 層都用 Keras 預設（tanh / sigmoid）。多層時，除最後一層外都設 `return_sequences=True`。
+**論文沒寫的地方，一律採 Keras 預設值**：作者用 Python／Keras，表格只列「層＋參數」，沒有額外設定時最可能就是框架預設。
 
 ### 3.2 固定架構模型
 
 | 模型 | 架構（輸入 `(20, 1)`） | Optimizer / LR | 可訓練參數 |
 |---|---|---|---:|
 | **NAIVE** | 預測值 = 前一天收盤價 | — | 0 |
-| **ANN** | Flatten → Dense(10, ReLU) → Dense(10, ReLU) → Dropout(0.5) → Dense(1) | Adam / 1e-3 | 331 |
-| **LSTM1D** | LSTM(10) → Dense(10, ReLU) → Dropout(0.5) → Dense(1) | Adam / 1e-3 | 601 |
-| **LSTM2D** | LSTM(10) → LSTM(10) → Dense(10, ReLU) → Dropout(0.5) → Dense(1) | Adam / 1e-3 | 1,441 |
-| **LSTM3D** | LSTM(10) → LSTM(10) → LSTM(10) → Dense(10, ReLU) → Dropout(0.5) → Dense(1) | Adam / 1e-3 | 2,281 |
+| **ANN** | Input(20) → Dense(10) → Dense(10) → Dropout(0.5) → Dense(1) | Adam / 1e-3 | 331 |
+| **LSTM1D** | Input(20) → LSTM(10) → Dense(10) → Dropout(0.5) → Dense(1) | Adam / 1e-3 | 601 |
+| **LSTM2D** | Input(20) → LSTM(10) → LSTM(10) → Dense(10) → Dropout(0.5) → Dense(1) | Adam / 1e-3 | 1,441 |
+| **LSTM3D** | Input(20) → LSTM(10) → LSTM(10) → LSTM(10) → Dense(10) → Dropout(0.5) → Dense(1) | Adam / 1e-3 | 2,281 |
 
-- 層數、神經元數、Dropout 照論文 Table 1–4；ReLU 激活與 Adam / 1e-3 是自訂（論文未寫）。
+- 層的順序、神經元數、Dropout 位置與比例，與論文 Table 1–4 及 §3.6.1–3.6.4 的文字逐項一致。
+- 隱藏 Dense 層：論文沒寫激活函數 → **Keras 預設 linear（無激活）**。可用 `DENSE_ACTIVATION = "relu"` 做對照實驗。
+  2026-11-20 實測（50 epochs、2 seeds 平均的測試 MSE）：linear 在 3 檔 × 4 個固定模型上都比 ReLU 低 2–6 倍，
+  例如 AAPL LSTM1D 54 vs 228、MSFT ANN 305 vs 949、KO LSTM2D 4.8 vs 13.9。
+  論文提到 ANN 的 MAPE 僅次於 LSTM-ARO，線性 Dense 的 ANN 較符合這個描述。
+- Adam / 1e-3：論文沒寫固定架構模型的 optimizer；Adam 及其預設學習率 1e-3 是 Keras 最常見的寫法。
 - NAIVE 不是論文模型，用來判斷模型有沒有勝過「明天 = 今天」。
 
 ### 3.3 可搜尋架構（LSTM-GA、LSTM-ARO，論文 Table 5–6）
@@ -104,7 +111,7 @@ Input(20, 1)
 → LSTM(x0)
 → LSTM(x2)            ← 只有 x1 = 1 才加入
 → LSTM(x4)            ← 只有 x3 = 1 才加入
-→ Dense(x5, ReLU)
+→ Dense(x5)           ← 激活同固定架構（預設 linear）
 → Dropout(x6)
 → Dense(1)
 optimizer = x7，learning rate = x8
@@ -152,7 +159,8 @@ optimizer = x7，learning rate = x8
 ### 4.1 論文本身的運算量
 
 - ARO 30 檔合計 754,890 s（8.7 天），GA 721,660 s。每檔 50 × 51 = 2,550 次評估，平均**每次約 9.9 s**。
-- 本機單一 process 跑 LSTM2D 50 epochs 約 12 s，與論文 12.5 s 相近。完全照論文 50 × 50 跑，即使平行也要約 3 天，所以縮小搜尋預算。
+- 照論文 50 × 50、每個候選 50 epochs，本機 8 個 process 平行也要約 3 天；三人分工仍遠超過每人 5 小時，所以**架構與搜尋空間不變，只縮小搜尋預算**（pop × iters、搜尋時的 epochs）。
+- 論文沒有寫硬體，Table 11 的時間無法拿來推回 epochs 或輸入形狀（實測兩種輸入形狀的耗時比例都對不上，見 §11）。
 
 ### 4.2 實測與預估（論文模式、pop 10 × iters 10、搜尋 20 / 最終 50 epochs、5 seeds）
 
@@ -179,7 +187,7 @@ optimizer = x7，learning rate = x8
 | `"2/3"` | AMGN CAT GS IBM KO MMM NKE UNH V DOW | 10 |
 | `"3/3"` | AAPL CSCO HD INTC JPM MRK PG CRM WMT | 9 |
 
-除了 `SHARD`，其他設定三人必須一致。notebook 會印出 RUN ID（例：`paper_e20-50_s5_p10_i10_data-22650beb`），三人要相同。
+除了 `SHARD`，其他設定三人必須一致。notebook 會印出 RUN ID（例：`paper_lin_t20_e20-50_s5_p10_i10_data-22650beb`），三人要相同。
 
 ### 5.2 存檔與續跑
 
@@ -197,7 +205,7 @@ optimizer = x7，learning rate = x8
 ### 5.4 輸出
 
 ```
-results_djia/paper_e20-50_s5/
+results_djia/paper_lin_t20_e20-50_s5/
 ├── <TICKER>/
 │   ├── NAIVE | ANN | LSTM1D | LSTM2D | LSTM3D/
 │   │   ├── done.json            # 平均指標、標準差、時間、完整設定
@@ -277,15 +285,49 @@ results_djia/paper_e20-50_s5/
 | 評估 | fitness | 測試集 MSE（原價格） | 論文 Fig. 2 |
 | | 指標 | MSE、MAE、MAPE（比例）、R²，原價格尺度 | 論文 |
 | 固定模型 | 架構 | Table 1–4（§3.2） | 論文 |
-| | Dense 激活 | ReLU | 自訂 |
+| | Dense 激活 | linear（Keras 預設） | 推論（論文未寫） |
 | | Optimizer / LR | Adam / 1e-3 | 自訂 |
 | 搜尋 | 架構與搜尋空間 | Table 5–6（§3.3） | 論文 |
 | | 族群 × 迭代 | 10 × 10（GA、ARO 相同） | 自訂（論文 50 × 50） |
 | | 搜尋時 epochs | 20，固定 | 自訂 |
 | | GA 運算子 | tournament 3、uniform crossover 0.8、mutation 1/9、菁英 1 | 自訂 |
 | | ARO | Eq. 6–20，H 乘 N(0, 1) | 論文／原始 ARO |
-| 最終訓練 | epochs | 50，固定 | 自訂（與 Table 11 時間吻合） |
+| 最終訓練 | epochs | 50，固定 | 自訂 |
 | | batch | 32 | 自訂 |
 | | seeds | 5（42–46），取平均 | 自訂 |
 | 執行 | 分工 | 3 份，依股票輪流分配 | — |
 | | 平行 | 自動：Colab 2 個 process；16 執行緒的筆電 8 個 | 實測 |
+
+---
+
+## 11. 與論文逐項核對
+
+依論文 §3.5–4.3、Table 1–11、Fig. 2 逐項比對。「推論」= 論文沒寫，採最可能的做法；「縮小」= 為了時間刻意偏離。
+
+| 項目 | 論文原文 | 本實驗 | 狀態 |
+|---|---|---|---|
+| 資料來源 / 期間 | Yahoo Finance，2018.01.01–2023.01.01，DJIA 30 檔 | 同；凍結於 2026-11-20 下載 | 一致（缺 WBA） |
+| 視窗 / 輸出 | 前 20 天價格 → 隔天價格 | 同 | 一致 |
+| 切分 | 80% 訓練、20% 測試 | 同，依時間順序 | 一致 |
+| ANN | Input 20 → Dense 10 → Dense 10 → Dropout 0.5 → Dense 1（Table 1） | 同 | 一致 |
+| LSTM1D | Input 20 → LSTM 10 → Dense 10 → Dropout 0.5 → Dense 1（Table 2） | 同 | 一致 |
+| LSTM2D | Input 20 → LSTM 10 → LSTM 10 → Dense 10 → Dropout 0.5 → Dense 1（Table 3） | 同 | 一致 |
+| LSTM3D | Input 20 → LSTM 10 ×3 → Dense 10 → Dropout 0.5 → Dense 1（Table 4） | 同 | 一致 |
+| LSTM-GA / ARO 架構 | Input 20 → LSTM x0 → LSTM(x1) x2 → LSTM(x3) x4 → Dense x5 → Dropout x6 → Dense 1，另搜 optimizer、LR（Table 5） | 同 | 一致 |
+| 搜尋空間 | 神經元 1–20、層 0/1、Dropout 0.3–0.7、5 種 optimizer、LR 1e-2–1e-6（Table 6） | 同 | 一致 |
+| ARO 公式 | Eq. 6–20 | 同；Eq. 13 的 r₄ 依原始 ARO 用 N(0,1)（論文同時列出未使用的 n₂） | 一致（一處勘誤） |
+| fitness | 訓練 → 預測測試集 → 算誤差（Fig. 2） | 測試集 MSE | 一致 |
+| GA 與 ARO 預算 | 都是族群 50 × 迭代 50 | 都是 10 × 10 | **縮小**（相同預算比較的原則不變） |
+| 指標 | MSE、MAE、MAPE、R²（Eq. 21–24），表格 MAPE 為比例 | 同，原價格尺度 | 一致 |
+| Dense 激活 | 未寫 | Keras 預設 linear | 推論 |
+| 輸入形狀 | 只寫 "Input 20" | 20 步 × 1 特徵 | 推論（可切換） |
+| 固定模型 optimizer / LR | 未寫 | Adam / 1e-3 | 推論 |
+| Epochs | 未寫 | 搜尋 20、最終 50 | 推論＋**縮小** |
+| Batch / shuffle | 未寫 | 32 / 是（Keras 預設） | 推論 |
+| Loss | 未寫 | MSE | 推論 |
+| 正規化 | 未寫 | Min-Max（只用訓練段） | 推論 |
+| 價格欄位 | 只寫 price | Close | 推論 |
+| GA 運算子 | 只說有 selection、crossover、mutation | tournament 3、uniform 0.8、mutation 1/9、菁英 1 | 推論 |
+| 解的編碼 | 未寫 | 9 維連續 [0,1] → 離散值 | 推論 |
+| 重複訓練 | 未寫（看起來每個模型訓練一次） | 最終模型 5 seeds 取平均 | 自訂（降低隨機性，不影響架構） |
+| NAIVE 基準 | 無 | 額外加入 | 額外 |
