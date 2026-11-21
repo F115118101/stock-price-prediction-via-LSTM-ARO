@@ -101,6 +101,7 @@ batch 32、`shuffle=True`、LSTM 的 tanh / sigmoid 都是 Keras 預設值。多
   2026-11-20 實測（50 epochs、2 seeds 平均的測試 MSE）：linear 在 3 檔 × 4 個固定模型上都比 ReLU 低 2–6 倍，
   例如 AAPL LSTM1D 54 vs 228、MSFT ANN 305 vs 949、KO LSTM2D 4.8 vs 13.9。
   論文提到 ANN 的 MAPE 僅次於 LSTM-ARO，線性 Dense 的 ANN 較符合這個描述。
+  `"1/3"` 10 檔的正式比較（對照論文 Table 7–10）也是 linear 明顯較接近論文，**定案用 linear**，詳見 `relu_vs_linear_test.md` 第 5 節。
 - Adam / 1e-3：論文沒寫固定架構模型的 optimizer；Adam 及其預設學習率 1e-3 是 Keras 最常見的寫法。
 - NAIVE 不是論文模型，用來判斷模型有沒有勝過「明天 = 今天」。
 
@@ -250,8 +251,8 @@ results_djia/paper_lin_t20_e20-50_s5/
 
 ## 8. 待辦
 
-1. 三人各跑一份 → 合併 → 彙整。
-2. 把論文 Table 7–10（MSE、MAE、MAPE、R²）完整抄成 `data/paper_tables.csv`，加上與本實驗名次的對照。PDF 文字抽取的欄位錯亂，`docs/paper-data.js` 目前只有 5 檔，需要對照 PDF 補全並核對。
+1. ~~三人各跑一份 → 合併 → 彙整~~：已完成（2026-11-21），結果與分析見 `djia_results.md`。
+2. ~~把論文 Table 7–10 抄成 `data/paper_tables.csv`~~：已完成（30 檔 × 6 模型，2026-11-20）。彙整時加上與本實驗名次的對照。
 3. 視需要調整 `ITERATIONS`：時間估算那格會給出 5 小時內 ARO 可用的最大迭代數。調整時三人必須一起改。
 
 ---
