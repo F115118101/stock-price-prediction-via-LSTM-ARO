@@ -1,0 +1,129 @@
+/* 實作簡報（implementation.html）專用樣式。外框、工具列、進度條、Learning Lab 抽屜沿用 styles.css / layout.css / native-slides.css。
+   所有尺寸都是 1280×720 畫布上的 px。 */
+.impl-body{position:absolute;left:60px;top:150px;width:1160px;height:520px}
+.impl-body.tall{top:132px;height:540px}
+.impl-rule{position:absolute;left:60px;top:684px;width:1160px;height:1.5px;background:#dfe6f0}
+.impl-source{position:absolute;left:60px;bottom:14px;margin:0;color:#60708a;font-size:var(--fs-footnote)}
+.impl-lead{margin:0 0 16px;color:#60708a;font-size:var(--fs-secondary);line-height:1.45}
+.row{display:flex;gap:18px;min-width:0}
+.col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.f1{flex:1}.f2{flex:2}.f13{flex:1.3}.f15{flex:1.5}
+.native-card.interactive,.seq.interactive,.code-panel.interactive,.impl-table.interactive,.impl-chart.interactive,.impl-strip.interactive{cursor:pointer}
+.native-card.interactive:hover,.seq.interactive:hover,.code-panel.interactive:hover,.impl-table.interactive:hover,.impl-chart.interactive:hover,.impl-strip.interactive:hover{box-shadow:0 0 0 3px #0b9d9833}
+.interactive:focus-visible{outline:3px solid #f39a42;outline-offset:2px}
+.native-card .tag{display:inline-block;font-size:var(--fs-label);font-weight:750;padding:2px 10px;border-radius:20px;background:#e9f7f5;color:#087e79;margin-bottom:8px}
+.native-card .tag.red{background:#fdeeee;color:#c2434a}.native-card .tag.gold{background:#fff5dc;color:#9a7414}
+.native-card .tag.blue{background:#ebf1fc;color:#2f5fb5}.native-card .tag.purple{background:#f3edfb;color:#7448b4}
+.native-card p+p{margin-top:6px}
+.native-card .stat{display:block;font-size:44px;font-weight:800;line-height:1.1;color:#087e79;margin:2px 0 6px;font-variant-numeric:tabular-nums}
+.native-card .stat.red{color:#c2434a}.native-card .stat.gold{color:#9a7414}
+.native-card ul{margin:0;padding-left:1.15em;font-size:var(--fs-secondary);line-height:1.4}
+.native-card li{margin:3px 0}
+.impl-strip{background:#e9f7f5;border-radius:12px;padding:12px 18px;color:#087e79;font-size:var(--fs-body);font-weight:700;line-height:1.4;text-align:center}
+.impl-strip.gold{background:#fff5dc;color:#8a6610}.impl-strip.red{background:#fdeeee;color:#b23a40}
+.impl-strip.left{text-align:left;font-weight:500;color:#20314e}
+
+/* 程式碼面板 */
+.code-panel{background:#101a30;border-radius:14px;padding:14px 18px 12px;color:#dbe5f3;min-width:0;overflow:hidden;position:relative}
+.code-panel .code-name{display:flex;justify-content:space-between;align-items:center;font-size:var(--fs-label);color:#7bdbd3;font-weight:750;margin-bottom:8px;letter-spacing:.02em}
+.code-panel .code-name small{color:#8a9bb5;font-weight:500;font-size:13px}
+.code-panel pre,.drawer-code pre{margin:0;font-family:Consolas,"Cascadia Mono","SFMono-Regular",Menlo,monospace;font-size:13.5px;line-height:1.5;white-space:pre;tab-size:4}
+.code-panel pre{overflow:hidden}
+.tok-k{color:#ff9fb8}.tok-s{color:#a5e3a0}.tok-c{color:#8a9bb5;font-style:italic}.tok-n{color:#f8c57a}.tok-f{color:#8ecbff}.tok-b{color:#c7b0ff}
+.code-panel mark,.drawer-code mark{background:#0b9d9840;color:inherit;border-radius:3px;padding:0 2px}
+
+/* 抽屜內的完整程式碼 */
+.drawer-code{background:#101a30;color:#dbe5f3;border-radius:10px;padding:14px 16px;overflow:auto;margin:0 0 16px;max-height:none}
+.drawer-code pre{font-size:13px}
+.drawer-code-title{display:flex;justify-content:space-between;align-items:baseline;margin:18px 0 8px;font-size:14px;font-weight:800;color:#20314e}
+.drawer-code-title:first-child{margin-top:0}
+.drawer-code-title small{font-weight:500;color:#60708a}
+.drawer-body table{border-collapse:collapse;width:100%;font-size:13.5px;margin:0 0 16px}
+.drawer-body th,.drawer-body td{border-bottom:1px solid #e1e8f1;padding:6px 8px;text-align:left}
+.drawer-body th{background:#eef3f9}
+.drawer-body code{font-family:Consolas,"Cascadia Mono",monospace;background:#e9eef6;border-radius:4px;padding:1px 5px;font-size:.9em}
+.drawer-body .drawer-code code{background:none;padding:0}
+
+/* 模型層序列 */
+.seq{display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid #dfe6f0;border-radius:14px;padding:12px 16px;min-width:0}
+.seq-name{width:118px;flex:none;font-size:var(--fs-heading);font-weight:800;color:#20314e;line-height:1.1}
+.seq-name small{display:block;font-size:13px;font-weight:500;color:#60708a;margin-top:4px}
+.layer{flex:none;display:grid;place-items:center;text-align:center;min-width:92px;padding:7px 10px;border:2px solid #cbd7e6;border-radius:11px;background:#fff;color:#20314e;font-size:var(--fs-label);font-weight:750;line-height:1.2}
+.layer small{display:block;font-size:12px;font-weight:500;color:#60708a;margin-top:2px;font-family:Consolas,monospace}
+.layer.in{border-color:#94a3b8;background:#f4f7fb}
+.layer.lstm{border-color:#4777cb;background:#f2f6ff;color:#2f5fb5}
+.layer.dense{border-color:#c99a27;background:#fffbea;color:#8a6610}
+.layer.drop{border-color:#b3bfcf;background:#f8fafc;color:#60708a;border-style:dashed}
+.layer.flat{border-color:#94a3b8;background:#fff}
+.layer.out{border-color:#4c9b68;background:#f1fbf4;color:#2f7d4c}
+.layer.naive{border-color:#8b62c6;background:#f6efff;color:#7448b4}
+.seq .arr{color:#0b9d98;font-weight:800;font-size:18px;flex:none}
+.seq .params{margin-left:auto;flex:none;text-align:right;font-size:13px;color:#60708a;line-height:1.3}
+.seq .params b{display:block;font-size:var(--fs-secondary);color:#20314e;font-variant-numeric:tabular-nums}
+.seq.search{border-color:#0b9d98;background:#f4fbfa}
+
+/* 表格 */
+.impl-table{background:#fff;border:1.5px solid #dfe6f0;border-radius:14px;overflow:hidden}
+.impl-table table{border-collapse:collapse;width:100%;font-size:var(--fs-secondary);line-height:1.3}
+.impl-table th,.impl-table td{padding:9px 14px;border-bottom:1px solid #e6ecf4;text-align:left;vertical-align:middle}
+.impl-table th{background:#eef3f9;color:#20314e;font-size:var(--fs-label);font-weight:800}
+.impl-table tr:last-child td{border-bottom:0}
+.impl-table td.r,.impl-table th.r{text-align:right;font-variant-numeric:tabular-nums}
+.impl-table tr.hl td{background:#e9f7f5;font-weight:700}
+.impl-table .good{color:#087e79;font-weight:800}.impl-table .bad{color:#c2434a;font-weight:800}
+.impl-table.compact table{font-size:var(--fs-label)}
+.impl-table.compact th,.impl-table.compact td{padding:7px 12px}
+.mono{font-family:Consolas,"Cascadia Mono",monospace;font-size:.92em}
+
+/* 長條圖 */
+.impl-chart{background:#fff;border:1.5px solid #dfe6f0;border-radius:14px;padding:16px 22px}
+.legend{display:flex;gap:20px;font-size:var(--fs-label);color:#52637c;margin-bottom:10px}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px}
+.hbars{display:grid;gap:9px}
+.hbar{display:grid;grid-template-columns:112px 1fr;gap:12px;align-items:center}
+.hbar>span{font-weight:750;font-size:var(--fs-label);color:#20314e}
+.hbar .pair{display:grid;gap:3px;position:relative}
+.hbar .bar{height:17px;border-radius:4px;position:relative;min-width:2px}
+.hbar .bar.p{background:#9fb0c8}.hbar .bar.v{background:#0b9d98}
+.hbar .bar em{position:absolute;left:calc(100% + 7px);top:50%;transform:translateY(-50%);font-style:normal;font-size:13px;font-weight:700;color:#20314e;white-space:nowrap}
+.ref-line{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed #c2434a}
+
+/* 流程（程式架構） */
+.pipe{display:flex;align-items:stretch;gap:10px}
+.pipe .native-card{flex:1;padding:14px 16px}
+.pipe .native-card h2{font-size:var(--fs-secondary)}
+.pipe .native-card p{font-size:var(--fs-label)}
+.pipe .flow-arrow{font-size:24px}
+
+/* 封面 */
+.impl-cover-bar{position:absolute;left:67px;top:67px;width:14px;height:547px;border-radius:7px;background:#0b9d98}
+.impl-cover-eyebrow{position:absolute;left:108px;top:96px;margin:0;color:#7bdbd3;font-size:20px;font-weight:700}
+.impl-cover-title{position:absolute;left:108px;top:170px;margin:0;color:#fff;font-size:48px;line-height:1.3;font-weight:750}
+.impl-cover-sub{position:absolute;left:108px;top:356px;margin:0;color:#c8d4e6;font-size:var(--fs-body);line-height:1.5;width:700px}
+.impl-cover-pill{position:absolute;left:108px;top:470px;padding:10px 26px;border-radius:10px;background:#0b9d98;color:#fff;font-size:24px;font-weight:750}
+.impl-cover-stats{position:absolute;left:108px;top:560px;display:flex;gap:34px;color:#c8d4e6;font-size:var(--fs-label)}
+.impl-cover-stats b{display:block;color:#7bdbd3;font-size:30px;line-height:1.1;font-variant-numeric:tabular-nums}
+.impl-cover-team{position:absolute;left:796px;top:430px;color:#fff;font-size:var(--fs-body);line-height:1.35}
+.impl-cover-team small{display:block;color:#7bdbd3;font-size:var(--fs-label);font-weight:750;margin:14px 0 4px}
+.impl-cover-team small:first-child{margin-top:0}
+.slide-page-number.on-dark{color:#4b5d7a}
+
+/* 結論頁（深色） */
+.impl-dark-title{position:absolute;left:60px;top:60px;margin:0;color:#fff;font-size:var(--fs-title);font-weight:750}
+.impl-dark-eyebrow{position:absolute;left:60px;top:31px;margin:0;color:#7bdbd3;font-size:var(--fs-label);font-weight:750;letter-spacing:.05em}
+.dark-cards .native-card{background:#ffffff0f;border-color:#ffffff26;color:#dbe5f3;box-shadow:none}
+.dark-cards .native-card h2{color:#7bdbd3}
+.dark-cards .native-card p{color:#dbe5f3}
+
+/* 縮寫對照 */
+abbr.gl{text-decoration:none;border-bottom:1px dotted #7b8ba5;cursor:help}
+.code-panel abbr.gl{border-bottom-color:#56657f}
+.gl-table{margin:0 0 10px;background:#fff;border:1px solid #dfe6f0;border-radius:10px;padding:8px 12px}
+.gl-table summary{cursor:pointer;font-size:13px;font-weight:800;color:#087e79}
+.gl-table table{margin:8px 0 2px}
+.gl-table td{vertical-align:top;font-size:13px;line-height:1.45}
+.gl-table td:first-child{white-space:nowrap;width:1%}
+.gl-local{display:block;color:#9a7414;font-size:11px;margin-top:2px}
