@@ -1,6 +1,6 @@
 html,body{width:100%;height:100%;overflow:hidden}
-.workspace{height:100dvh;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px 20px;overflow:hidden}
-.presentation{width:min(100%,1500px,calc((100dvh - 72px)*16/9));max-width:100%;min-width:0;display:flex;flex-direction:column}
+.workspace{height:100vh;height:100dvh;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px 20px;overflow:hidden}
+.presentation{width:min(100%,calc((100vh - 72px)*16/9));width:min(100%,calc((100dvh - 72px)*16/9));max-width:100%;min-width:0;display:flex;flex-direction:column}
 .slide-frame{flex:none}
 .slide-item.text{line-height:1.22}
 .slide-item.interactive:hover{filter:none}
@@ -127,7 +127,7 @@ html,body{width:100%;height:100%;overflow:hidden}
 .lr-option strong{font-size:16px}
 @media(max-width:700px){.discrete-widget .lesson-stage{position:static}.lr-candidate-table>div{grid-template-columns:1fr}}
 @media(max-width:700px){.drawer,.drawer.wide{width:100vw}.lesson-box.has-chart{display:block}.lesson-stage{position:sticky;top:-18px;padding:6px 0 10px;margin-bottom:18px;border-bottom:1px solid #e4eaf2}.lesson-box.builder-layout .lesson-stage{position:static}.lesson-stage .formula-display{font-size:14px}.lesson-chart{margin-top:5px}.lesson-chart svg{max-height:165px}}
-@media(max-width:700px){.workspace{min-height:0;padding:8px;align-items:center}.presentation{width:min(100%,calc((100dvh - 61px)*16/9))}.toolbar{height:45px;gap:7px}.pager{gap:4px}.pager button:not(.overview-trigger){height:28px;width:28px;font-size:16px}.pager span{font-size:11px;min-width:50px}.pager .overview-trigger{font-size:10px;padding:6px;margin-left:2px}.learn-button{font-size:10px;padding:7px 8px}}
+@media(max-width:700px){.workspace{min-height:0;padding:8px;align-items:center}.presentation{width:min(100%,calc((100vh - 61px)*16/9));width:min(100%,calc((100dvh - 61px)*16/9))}.toolbar{height:45px;gap:7px}.pager{gap:4px}.pager button:not(.overview-trigger){height:28px;width:28px;font-size:16px}.pager span{font-size:11px;min-width:50px}.pager .overview-trigger{font-size:10px;padding:6px;margin-left:2px}.learn-button{font-size:10px;padding:7px 8px}}
 /* Specialized Slide Widget Styles */
 .widget-card{background:#fff;border:1px solid #dce4ee;border-radius:10px;padding:14px;box-shadow:0 2px 6px #0000000a}
 .dual-loop-container{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}

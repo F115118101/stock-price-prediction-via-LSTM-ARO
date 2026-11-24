@@ -73,7 +73,7 @@ function bars(key, rows, max, ref, both = true) {
   const w = v => `${(v / max * 84).toFixed(2)}%`;
   const legend = both ? '<span><i style="background:#9fb0c8"></i>我們 · 論文模式</span><span><i style="background:#0b9d98"></i>我們 · 驗證集模式</span>'
                       : '<span><i style="background:#9fb0c8"></i>我們 · 論文模式（無驗證集）</span>';
-  return `<div class="impl-chart" data-lesson="${key}"><div class="legend">${legend}${ref ? `<span><i style="background:none;border-left:2px dashed #c2434a;border-radius:0;width:2px"></i>${ref.label}</span>` : ''}</div><div class="hbars"${both ? '' : ' style="gap:20px;margin-top:8px"'}>${rows.map(([n, p, v]) => `<div class="hbar"><span>${n}</span><div class="pair">${ref ? `<div class="ref-line" style="left:${w(ref.v)}"></div>` : ''}<div class="bar p" style="width:${w(p)}${both ? '' : ';height:24px'}"><em>${p.toFixed(2)}</em></div>${both ? `<div class="bar v" style="width:${w(v)}"><em>${v.toFixed(2)}</em></div>` : ''}</div></div>`).join('')}</div></div>`;
+  return `<div class="impl-chart" data-lesson="${key}"><div class="legend">${legend}${ref ? `<span><i style="background:none;border-left:2px dashed #c2434a;border-radius:0;width:2px"></i>${ref.label}</span>` : ''}</div><div class="hbars"${both ? '' : ' style="gap:26px;margin-top:8px"'}>${rows.map(([n, p, v]) => `<div class="hbar"><span>${n}</span><div class="pair">${ref ? `<div class="ref-line" style="left:${w(ref.v)}"></div>` : ''}<div class="bar p" style="width:${w(p)}${both ? '' : ';height:32px'}"><em>${p.toFixed(2)}</em></div>${both ? `<div class="bar v" style="width:${w(v)}"><em>${v.toFixed(2)}</em></div>` : ''}</div></div>`).join('')}</div></div>`;
 }
 // MSFT 測試期最後 60 天（兩種模式共用座標）
 const MSFT = {"paper": {"actual": "M48.0,83.3 L60.5,149.9 L73.1,176.4 L85.6,196.8 L98.2,195.0 L110.7,149.9 L123.3,180.1 L135.8,132.5 L148.3,127.3 L160.9,138.0 L173.4,139.8 L186.0,108.1 L198.5,80.9 L211.1,62.8 L223.6,165.4 L236.1,189.7 L248.7,141.3 L261.2,161.1 L273.8,182.2 L286.3,225.0 L298.8,256.1 L311.4,218.2 L323.9,183.8 L336.5,178.4 L349.0,201.6 L361.6,103.5 L374.1,81.6 L386.6,111.1 L399.2,108.9 L411.7,110.2 L424.3,110.4 L436.8,112.9 L449.4,108.5 L461.9,92.6 L474.4,79.1 L487.0,79.6 L499.5,110.0 L512.1,117.6 L524.6,39.0 L537.2,41.4 L549.7,39.6 L562.2,65.2 L574.8,92.2 L587.3,96.2 L599.9,80.1 L612.4,90.6 L624.9,52.9 L637.5,29.5 L650.0,27.9 L662.6,71.5 L675.1,94.5 L687.7,117.0 L700.2,109.8 L712.7,95.8 L725.3,129.0 L737.8,126.1 L750.4,135.5 L762.9,148.4 L775.5,114.0 L788.0,120.3", "naive": "M48.0,70.5 L60.5,83.3 L73.1,149.9 L85.6,176.4 L98.2,196.8 L110.7,195.0 L123.3,149.9 L135.8,180.1 L148.3,132.5 L160.9,127.3 L173.4,138.0 L186.0,139.8 L198.5,108.1 L211.1,80.9 L223.6,62.8 L236.1,165.4 L248.7,189.7 L261.2,141.3 L273.8,161.1 L286.3,182.2 L298.8,225.0 L311.4,256.1 L323.9,218.2 L336.5,183.8 L349.0,178.4 L361.6,201.6 L374.1,103.5 L386.6,81.6 L399.2,111.1 L411.7,108.9 L424.3,110.2 L436.8,110.4 L449.4,112.9 L461.9,108.5 L474.4,92.6 L487.0,79.1 L499.5,79.6 L512.1,110.0 L524.6,117.6 L537.2,39.0 L549.7,41.4 L562.2,39.6 L574.8,65.2 L587.3,92.2 L599.9,96.2 L612.4,80.1 L624.9,90.6 L637.5,52.9 L650.0,29.5 L662.6,27.9 L675.1,71.5 L687.7,94.5 L700.2,117.0 L712.7,109.8 L725.3,95.8 L737.8,129.0 L750.4,126.1 L762.9,135.5 L775.5,148.4 L788.0,114.0", "aro": "M48.0,99.0 L60.5,95.3 L73.1,122.8 L85.6,154.0 L98.2,180.9 L110.7,194.8 L123.3,182.0 L135.8,182.7 L148.3,165.4 L160.9,150.7 L173.4,147.1 L186.0,147.7 L198.5,135.8 L211.1,116.2 L223.6,96.5 L236.1,127.4 L248.7,162.5 L261.2,163.7 L273.8,167.3 L286.3,177.9 L298.8,202.2 L311.4,230.7 L323.9,232.4 L336.5,215.0 L349.0,199.7 L361.6,200.5 L374.1,163.4 L386.6,127.8 L399.2,120.0 L411.7,119.0 L424.3,120.5 L436.8,122.0 L449.4,123.9 L461.9,123.3 L474.4,116.0 L487.0,105.2 L499.5,98.7 L512.1,108.2 L524.6,119.0 L537.2,93.2 L549.7,74.2 L562.2,63.5 L574.8,69.3 L587.3,86.3 L599.9,99.3 L612.4,99.5 L624.9,102.0 L637.5,88.0 L650.0,68.0 L662.6,55.1 L675.1,66.8 L687.7,86.6 L700.2,108.4 L712.7,118.1 L725.3,116.0 L737.8,126.4 L750.4,132.8 L762.9,139.6 L775.5,148.8 L788.0,140.2", "mse_aro": 58.7, "mse_naive": 34.6}, "val": {"actual": "M48.0,83.3 L60.5,149.9 L73.1,176.4 L85.6,196.8 L98.2,195.0 L110.7,149.9 L123.3,180.1 L135.8,132.5 L148.3,127.3 L160.9,138.0 L173.4,139.8 L186.0,108.1 L198.5,80.9 L211.1,62.8 L223.6,165.4 L236.1,189.7 L248.7,141.3 L261.2,161.1 L273.8,182.2 L286.3,225.0 L298.8,256.1 L311.4,218.2 L323.9,183.8 L336.5,178.4 L349.0,201.6 L361.6,103.5 L374.1,81.6 L386.6,111.1 L399.2,108.9 L411.7,110.2 L424.3,110.4 L436.8,112.9 L449.4,108.5 L461.9,92.6 L474.4,79.1 L487.0,79.6 L499.5,110.0 L512.1,117.6 L524.6,39.0 L537.2,41.4 L549.7,39.6 L562.2,65.2 L574.8,92.2 L587.3,96.2 L599.9,80.1 L612.4,90.6 L624.9,52.9 L637.5,29.5 L650.0,27.9 L662.6,71.5 L675.1,94.5 L687.7,117.0 L700.2,109.8 L712.7,95.8 L725.3,129.0 L737.8,126.1 L750.4,135.5 L762.9,148.4 L775.5,114.0 L788.0,120.3", "naive": "M48.0,70.5 L60.5,83.3 L73.1,149.9 L85.6,176.4 L98.2,196.8 L110.7,195.0 L123.3,149.9 L135.8,180.1 L148.3,132.5 L160.9,127.3 L173.4,138.0 L186.0,139.8 L198.5,108.1 L211.1,80.9 L223.6,62.8 L236.1,165.4 L248.7,189.7 L261.2,141.3 L273.8,161.1 L286.3,182.2 L298.8,225.0 L311.4,256.1 L323.9,218.2 L336.5,183.8 L349.0,178.4 L361.6,201.6 L374.1,103.5 L386.6,81.6 L399.2,111.1 L411.7,108.9 L424.3,110.2 L436.8,110.4 L449.4,112.9 L461.9,108.5 L474.4,92.6 L487.0,79.1 L499.5,79.6 L512.1,110.0 L524.6,117.6 L537.2,39.0 L549.7,41.4 L562.2,39.6 L574.8,65.2 L587.3,92.2 L599.9,96.2 L612.4,80.1 L624.9,90.6 L637.5,52.9 L650.0,29.5 L662.6,27.9 L675.1,71.5 L687.7,94.5 L700.2,117.0 L712.7,109.8 L725.3,95.8 L737.8,129.0 L750.4,126.1 L762.9,135.5 L775.5,148.4 L788.0,114.0", "aro": "M48.0,85.7 L60.5,81.2 L73.1,81.6 L85.6,86.4 L98.2,94.6 L110.7,104.3 L123.3,110.8 L135.8,117.4 L148.3,120.0 L160.9,120.0 L173.4,119.2 L186.0,118.1 L198.5,114.6 L211.1,108.2 L223.6,99.3 L236.1,97.1 L248.7,100.1 L261.2,102.4 L273.8,106.0 L286.3,111.3 L298.8,120.3 L311.4,132.8 L323.9,143.6 L336.5,150.5 L349.0,154.2 L361.6,157.6 L374.1,153.5 L386.6,144.1 L399.2,134.4 L411.7,125.0 L424.3,116.6 L436.8,109.2 L449.4,103.3 L461.9,98.4 L474.4,93.1 L487.0,87.0 L499.5,81.0 L512.1,77.7 L524.6,76.6 L537.2,71.1 L549.7,64.0 L562.2,56.2 L574.8,50.5 L587.3,48.3 L599.9,48.3 L612.4,48.5 L624.9,49.7 L637.5,48.7 L650.0,44.7 L662.6,39.5 L675.1,36.9 L687.7,37.4 L700.2,41.3 L712.7,46.3 L725.3,50.5 L737.8,56.6 L750.4,62.8 L762.9,69.3 L775.5,76.5 L788.0,81.3", "mse_aro": 129.6, "mse_naive": 34.6}, "ticks": [[220, 225.5], [240, 119.4], [260, 13.2]], "xt": [[48.0, "10/06"], [298.8, "11/03"], [549.7, "12/02"], [788.0, "12/30"]]};
@@ -103,7 +103,7 @@ function msftChart(mode) {
 const fullCode = (...names) => names.map(n => ({name: n, text: CODE[n] || `# 找不到 ${n}`}));
 
 // ---------------------------------------------------------------- 投影片
-const S1 = '01｜實作設定', S2 = '02｜模型與程式', S3 = '03｜與論文對照', S4 = '04｜加入驗證集';
+const S1 = '01｜實作設定', S2 = '02｜模型與程式', S3 = '03｜數字對得上嗎', S4 = '04｜ARO 真的比較好嗎', S5 = '05｜贏得過 NAIVE 嗎';
 const SLIDES = [
 // 1 封面
 { cover: true, title: 'LSTM-ARO 重現實作：DJIA 29 檔股票', cat: '封面',
@@ -119,7 +119,7 @@ const SLIDES = [
 
 // 2 問題
 { section: S1, phase: 'one', title: '這次實作要回答三個問題', source: 'reproduction_plan.md §6',
-  html: `<div class="impl-body"><div style="height:40px"></div><div class="grid3" style="height:220px">
+  html: `<div class="impl-body"><div class="grid3" style="height:250px">
     ${card('q1', '數字對得上嗎？', '<p>同樣的資料與架構，我們的 MSE 是否接近論文 Table 7？</p>', {tag: 'Q1', tone: 'tone-blue', tagTone: 'blue'})}
     ${card('q2', 'ARO 真的比較好嗎？', '<p>論文說 LSTM-ARO 在 17 / 29 檔拿第一。換成較嚴謹的評估方式後，ARO 是否仍優於 GA 與固定架構？</p>', {tag: 'Q2', tone: 'tone-purple', tagTone: 'purple'})}
     ${card('q3', '有沒有更簡單的基準？', '<p>論文沒有和「明天 = 今天」比較。神經網路能不能贏過這個不需要訓練的方法？</p>', {tag: 'Q3', tone: 'tone-gold', tagTone: 'gold'})}
@@ -170,8 +170,8 @@ const SLIDES = [
 
 // 4 資料前處理
 { section: S1, phase: 'one', title: '資料前處理：20 天視窗、只用訓練段正規化', source: 'djia_reproduction.ipynb · prepare()',
-  html: `<div class="impl-body"><div class="row" style="height:520px">
-    <div class="f2" style="display:flex">${code('prepare', 'prepare()', '節錄', `def prepare(prices: pd.Series, cfg: Config) -> Data:
+  html: `<div class="impl-body"><div class="row">
+    <div style="display:flex;width:750px;flex:none">${code('prepare', 'prepare()', '節錄', `def prepare(prices: pd.Series, cfg: Config) -> Data:
     raw = prices.values.astype(float)
     n = len(raw) - cfg.window
     n_train = int(n * cfg.train_ratio)
@@ -187,7 +187,7 @@ const SLIDES = [
         X_eval, y_eval = X_train[-n_val:], y_train[-n_val:]
     else:
         X_fit, y_fit, X_eval, y_eval = X_train, y_train, X_test, y_test`, {style: 'flex:1'})}</div>
-    <div class="col" style="width:330px;flex:none">
+    <div class="col f1">
       ${card('window', '20 天 → 隔天', '<p>輸入形狀 (20, 1)：20 個時間步，每步 1 個特徵（收盤價）。</p>', {tone: 'tone-blue'})}
       ${card('split', '80% / 20% 依時間切', '<p>訓練約 991 筆、測試 248 筆（≈ 2022 年）。</p>', {tone: 'tone-green'})}
       ${card('minmax', '只用訓練段正規化', '<p>lo、hi 只取訓練段，避免偷看測試集的價格範圍。</p>', {tone: 'tone-gold'})}
@@ -204,7 +204,7 @@ const SLIDES = [
 
 // 5 實驗設定
 { section: S1, phase: 'one', title: '實驗設定：預算縮小，兩種評估模式', source: 'djia_reproduction.ipynb §1 實驗設定 · Config',
-  html: `<div class="impl-body"><div class="row" style="height:520px">
+  html: `<div class="impl-body"><div class="row">
     ${table('budget', ['項目', '>論文', '>我們'], [
       ['族群 × 迭代', '50 × 50', '10 × 10'],
       ['每檔評估次數上限', '2,550', '110'],
@@ -213,7 +213,7 @@ const SLIDES = [
       ['最終模型 seed 數', '1', '5'],
       ['batch size', '未寫明', '32'],
       ['隱藏 Dense 激活', '未寫明', 'linear'],
-    ], {style: 'flex:1;align-self:start'})}
+    ], {cls: 'fill', style: 'flex:1'})}
     <div class="col" style="width:560px;flex:none">
       ${card('paper', '論文模式 USE_VALIDATION = False', '<ul><li>fitness = 候選架構在<b>測試集</b>的 MSE（論文 Fig. 2）</li><li>固定 epochs，不做 early stopping</li><li>用測試集挑超參數 → 結果偏樂觀</li></ul>', {tone: 'tone-red', tag: '照論文', tagTone: 'red'})}
       ${card('val', '驗證集模式 USE_VALIDATION = True', '<ul><li>fitness = 訓練集尾端 20% <b>驗證集</b>的 MSE</li><li>early stopping：搜尋 patience 5、最終 patience 10</li><li>測試集只在最後用一次</li></ul>', {tone: 'tone-green', tag: '嚴謹版'})}
@@ -229,7 +229,7 @@ const SLIDES = [
 
 // 6 模型總覽
 { section: S2, phase: 'two', title: '七種模型的層序列', source: '論文 Table 1–5 · build_baseline() / build_lstm()',
-  html: `<div class="impl-body" style="display:flex;flex-direction:column;gap:10px">
+  html: `<div class="impl-body" style="gap:7px">
     ${seq('naive', 'NAIVE', '基準', [L('in', 'Input', '20 天'), L('naive', '取最後一天', 'x[t-1]')], '<b>0</b>參數')}
     ${seq('ann', 'ANN', 'Table 1', [L('in', 'Input', '(20, 1)'), L('flat', 'Flatten', '20'), L('dense', 'Dense 10'), L('dense', 'Dense 10'), L('drop', 'Dropout 0.5'), L('out', 'Dense 1')], '<b>331</b>參數')}
     ${seq('l1', 'LSTM1D', 'Table 2', [L('in', 'Input', '(20, 1)'), L('lstm', 'LSTM 10'), L('dense', 'Dense 10'), L('drop', 'Dropout 0.5'), L('out', 'Dense 1')], '<b>601</b>參數')}
@@ -251,18 +251,21 @@ const SLIDES = [
 { section: S2, phase: 'two', title: 'ANN：Flatten 後接兩層 Dense', source: 'djia_reproduction.ipynb · build_baseline()',
   html: `<div class="impl-body" style="display:flex;flex-direction:column;gap:16px">
     ${seq('annseq', 'ANN', '331 參數', [L('in', 'Input', '(None, 20, 1)'), L('flat', 'Flatten', '(None, 20)'), L('dense', 'Dense 10', '(None, 10)'), L('dense', 'Dense 10', '(None, 10)'), L('drop', 'Dropout 0.5', '(None, 10)'), L('out', 'Dense 1', '(None, 1)')], '')}
-    <div class="row" style="height:330px">
+    <div class="row">
       ${code('anncode', 'build_baseline("ANN")', '節錄', `def build_baseline(cfg: Config, name: str):
     if name == "ANN":
         k = _tf(cfg).keras
         m = k.Sequential([
-            k.Input(shape=input_shape(cfg)), k.layers.Flatten(),
-            k.layers.Dense(10, activation=_act(cfg)), k.layers.Dense(10, activation=_act(cfg)),
-            k.layers.Dropout(0.5), k.layers.Dense(1),
+            k.Input(shape=input_shape(cfg)),
+            k.layers.Flatten(),
+            k.layers.Dense(10, activation=_act(cfg)),
+            k.layers.Dense(10, activation=_act(cfg)),
+            k.layers.Dropout(0.5),
+            k.layers.Dense(1),
         ])
         m.compile(optimizer=k.optimizers.Adam(learning_rate=1e-3), loss="mse")
-        return m`, {style: 'flex:1'})}
-      <div class="col" style="width:360px;flex:none">
+        return m`, {style: 'width:640px;flex:none'})}
+      <div class="col f1">
         ${card('flatten', 'Flatten', '<p>ANN 不看時間順序，20 天價格就是 20 個獨立輸入。</p>', {tone: 'tone-blue'})}
         ${card('linear', 'activation = linear', '<p>論文沒寫激活函數，用 Keras 預設（無激活）。</p>', {tone: 'tone-gold'})}
         ${card('dropout', 'Dropout 0.5', '<p>訓練時隨機關掉一半神經元，預測時不作用。</p>', {tone: 'tone-purple'})}
@@ -292,8 +295,8 @@ const SLIDES = [
     m.add(k.layers.Dropout(dropout))
     m.add(k.layers.Dense(1))
     m.compile(optimizer=getattr(k.optimizers, optimizer)(learning_rate=lr), loss="mse")
-    return m`, {style: 'flex:1'})}
-      ${card('retseq', 'return_sequences', '<p>除了最後一層，LSTM 都輸出整段 20 步的序列，下一層才有 20 步可讀。</p><p>固定模型：<span class="mono">build_lstm(cfg, [10] * depth, 10, 0.5)</span>，depth = 1、2、3。</p>', {tone: 'tone-blue', style: 'width:340px;flex:none'})}
+    return m`, {style: 'width:710px;flex:none'})}
+      ${card('retseq', 'return_sequences', '<p>除了最後一層，LSTM 都輸出整段 20 步的序列，下一層才有 20 步可讀。</p><p>固定模型：<span class="mono">build_lstm(cfg, [10] * depth, 10, 0.5)</span>，depth = 1、2、3。</p>', {tone: 'tone-blue', style: 'flex:1'})}
     </div></div>`,
   lesson: { explain: '<p>三個固定 LSTM 模型與 GA／ARO 共用同一個 <code>build_lstm()</code>：傳入每層的神經元數清單即可。固定模型是 <code>[10]</code>、<code>[10, 10]</code>、<code>[10, 10, 10]</code>，Dense 10、Dropout 0.5、Adam 0.001。</p>', code: fullCode('build_lstm', 'build_baseline'), source: SRC.nb + SRC.paper },
   items: {
@@ -306,11 +309,11 @@ const SLIDES = [
 
 // 9 編碼
 { section: S2, phase: 'two', title: '搜尋空間：[0, 1]⁹ 的向量 → 一個 LSTM 架構', source: '論文 Table 6 · SEARCH_SPACE / decode() / hp_to_arch()',
-  html: `<div class="impl-body"><div class="row" style="height:520px">
+  html: `<div class="impl-body"><div class="row">
     ${table('space', ['維度', '選項'], [
       ['x₀ LSTM 1 神經元', '1–20'], ['x₁ 有無 LSTM 2', '0、1'], ['x₂ LSTM 2 神經元', '1–20'], ['x₃ 有無 LSTM 3', '0、1'], ['x₄ LSTM 3 神經元', '1–20'],
       ['x₅ Dense 神經元', '1–20'], ['x₆ Dropout', '0.3–0.7（5 種）'], ['x₇ Optimizer', 'Adagrad、Adam、Adamax、RMSprop、SGD'], ['x₈ Learning rate', '10⁻²～10⁻⁶（5 種）'],
-    ], {cls: 'compact', style: 'width:500px;flex:none;align-self:start'})}
+    ], {cls: 'compact fill', style: 'width:552px;flex:none'})}
     <div class="col f1">
       ${code('decode', 'decode() / hp_to_arch()', '節錄', `def decode(x: np.ndarray) -> dict:
     return {name: ch[min(max(int(float(v) * len(ch)), 0), len(ch) - 1)]
@@ -334,7 +337,7 @@ def hp_to_arch(hp: dict) -> dict:
 
 // 10 Fitness
 { section: S2, phase: 'two', title: 'Fitness：訓練候選架構、回傳 MSE', source: 'djia_reproduction.ipynb · class Fitness',
-  html: `<div class="impl-body"><div class="row" style="height:520px">
+  html: `<div class="impl-body"><div class="row">
     ${code('fitcode', 'Fitness.__call__()', '節錄', `    def __call__(self, x: np.ndarray) -> float:
         self.n_calls += 1
         arch = hp_to_arch(decode(x))
@@ -352,8 +355,8 @@ def hp_to_arch(hp: dict) -> dict:
         else:
             ep = fit_model(cfg, model, d.X_fit, d.y_fit, cfg.search_epochs)
         mse = float(np.mean((d.inverse(d.y_eval) - d.inverse(predict(cfg, model, d.X_eval))) ** 2))
-        # …（略：寫入快取與 candidates.jsonl）`, {style: 'flex:1'})}
-    <div class="col" style="width:320px;flex:none">
+        # …（略：寫入快取與 candidates.jsonl）`, {style: 'width:790px;flex:none'})}
+    <div class="col f1">
       ${card('cache', '相同架構只訓練一次', '<p>ARO 平均每檔 110 次呼叫只需訓練 81 個，GA 62 個。</p>', {tone: 'tone-green'})}
       ${card('seed', 'seed 由架構決定', '<p>同一架構不論何時被評估，結果都相同。</p>', {tone: 'tone-blue'})}
       ${card('resume', '可續跑', '<p>每次評估寫入 candidates.jsonl，斷線後讀回當快取。</p>', {tone: 'tone-gold'})}
@@ -408,7 +411,7 @@ def hp_to_arch(hp: dict) -> dict:
 
 // 12 GA
 { section: S2, phase: 'two', title: 'GA：論文未給細節，採常見設定', source: 'djia_reproduction.ipynb · ga()',
-  html: `<div class="impl-body"><div class="row" style="height:520px">
+  html: `<div class="impl-body"><div class="row">
     ${code('gacode', 'ga()', '節錄', `    def select():
         idx = rng.choice(n, size=min(tournament, n), replace=False)
         return P[idx[np.argmin(fit[idx])]]
@@ -423,8 +426,8 @@ def hp_to_arch(hp: dict) -> dict:
             children.append(child)
         P = np.array(children)
         fit = np.array([fobj(x) for x in P])
-        history.append(float(fit.min()))`, {style: 'flex:1'})}
-    <div class="col" style="width:340px;flex:none">
+        history.append(float(fit.min()))`, {style: 'width:740px;flex:none'})}
+    <div class="col f1">
       ${card('tour', '選擇：tournament 3', '<p>隨機抽 3 個，取最好的當父母。</p>', {tone: 'tone-blue'})}
       ${card('cross', '交配：uniform 0.8', '<p>80% 機率逐維隨機從兩個父母取值。</p>', {tone: 'tone-green'})}
       ${card('mut', '突變：1/9', '<p>每一維有 1/9 機率重設為 [0, 1] 的亂數。</p>', {tone: 'tone-gold'})}
@@ -441,7 +444,7 @@ def hp_to_arch(hp: dict) -> dict:
 
 // 13 final_eval
 { section: S2, phase: 'two', title: '最終評估：5 個 seed 重訓取平均', source: 'djia_reproduction.ipynb · final_eval() / fit_model()',
-  html: `<div class="impl-body"><div class="row" style="height:520px">
+  html: `<div class="impl-body"><div class="row">
     ${code('finalcode', 'final_eval()', '節錄', `def final_eval(cfg: Config, data: Data, build_fn):
     rows, preds = [], []
     y_true = data.inverse(data.y_test)
@@ -459,8 +462,8 @@ def hp_to_arch(hp: dict) -> dict:
         rows.append(dict(seed=cfg.seed + s, **metrics(y_true, p), epochs=ep,
                          train_s=round(time.time() - t, 2)))
         preds.append(p)
-    return rows, np.mean(preds, axis=0)`, {style: 'flex:1'})}
-    <div class="col" style="width:330px;flex:none">
+    return rows, np.mean(preds, axis=0)`, {style: 'width:680px;flex:none'})}
+    <div class="col f1">
       ${card('seeds', '5 個 seed', '<p>seed 42–46，指標取平均並記錄標準差。</p>', {tone: 'tone-blue'})}
       ${card('modepaper', '論文模式', '<p>固定 50 epochs。</p>', {tone: 'tone-red'})}
       ${card('modeval', '驗證集模式', '<p>early stopping patience 10，還原最佳權重。</p>', {tone: 'tone-green'})}
@@ -477,7 +480,7 @@ def hp_to_arch(hp: dict) -> dict:
 
 // 14 分工
 { section: S2, phase: 'two', title: '三人分工：Colab 平行跑、可續跑、可合併', source: 'djia_reproduction.ipynb · shard_tickers() / compatible()',
-  html: `<div class="impl-body tall" style="display:flex;flex-direction:column;gap:14px">
+  html: `<div class="impl-body tall" style="gap:16px"><div class="row">
       ${code('shard', 'shard_tickers() / compatible()', '完整', `def shard_tickers(tickers: List[str], shard: Optional[str]) -> List[str]:
     """shard = "k/n"：輪流分配（第 k 份取 tickers[k-1::n]），各份的股票數與長短都較平均。"""
     if not shard:
@@ -491,11 +494,11 @@ def compatible(cfg: Config, info: dict) -> List[str]:
     """回傳與目前設定不一致的欄位（空 list = 可合併）。"""
     c = info.get("config", {})
     keys = list(FP_FIELDS) + (["pop_size", "iterations"] if info.get("model") in SEARCHERS else [])
-    return [k for k in keys if c.get(k) != getattr(cfg, k)]`, {style: 'flex:none'})}
-    <div class="row" style="flex:1">
-      ${table('time', ['搜尋時間（29 檔合計）', '>論文模式', '>驗證集', '>每檔訓練架構數'], [['LSTM-ARO', '10.5 h', '8.7 h', '81'], ['LSTM-GA', '9.7 h', '6.7 h', '62']], {cls: 'compact', style: 'flex:1;align-self:start'})}
-      ${card('drive', '斷線可續跑', '<p>結果存在 Google Drive；重新「全部執行」會從中斷處接著跑。三人分工後每人約 3.4 小時（論文模式，Colab T4）。</p>', {tone: 'tone-green', style: 'width:470px;flex:none'})}
-    </div></div>`,
+    return [k for k in keys if c.get(k) != getattr(cfg, k)]`, {style: 'width:790px;flex:none'})}
+      ${card('drive', '斷線可續跑', '<p>結果存在 Google Drive；重新「全部執行」會從中斷處接著跑。</p><p>三人分工後每人約 3.4 小時（論文模式，Colab T4）。</p>', {tone: 'tone-green', style: 'flex:1'})}
+    </div>
+    ${table('time', ['搜尋時間（29 檔合計）', '>論文模式', '>驗證集', '>每檔訓練架構數'], [['LSTM-ARO', '10.5 h', '8.7 h', '81'], ['LSTM-GA', '9.7 h', '6.7 h', '62']])}
+    </div>`,
   lesson: { explain: '<p>29 檔輪流分成 3 份（10 / 10 / 9 檔），每人在自己的 Colab 上跑同一份 notebook，只改 <code>SHARD</code>。每個結果都附上完整設定與資料指紋，合併時逐欄比對。</p>', code: fullCode('shard_tickers', 'compatible', 'merge_results'), source: SRC.nb + SRC.plan },
   items: {
     shard: { title: '分工與相容性檢查', explain: '<p>輪流分配（第 k 份取 <code>tickers[k-1::n]</code>）讓每份的股票數接近，資料較短的 DOW 也不會集中在同一份。</p><p><code>FP_FIELDS</code> 包含所有會影響結果的設定（epochs、seed、評估模式、Dense 激活、資料指紋等）；執行緒數、是否用 GPU 不影響結果，不列入。</p>', code: fullCode('shard_tickers', 'compatible') },
@@ -503,23 +506,23 @@ def compatible(cfg: Config, info: dict) -> List[str]:
     time: { title: '執行時間', explain: '<p>驗證集模式的搜尋比較快，因為 early stopping 讓候選模型提早停止。每檔實際訓練的架構數兩種模式幾乎相同。</p>' },
   } },
 
-// 15 結果：對照論文（只用論文模式）
-{ section: S3, phase: 'three', title: '固定架構幾乎和論文一致，GA / ARO 差約 2 倍', source: 'djia_results.md §2',
-  html: `<div class="impl-body" style="display:flex;flex-direction:column;gap:14px">
-    <p class="impl-lead" style="margin:0">我們（論文模式）的 MSE ÷ 論文 Table 7 的 MSE（29 檔幾何平均；虛線 = 1.00，完全一致）</p>
-    ${bars('ratio', [['LSTM1D', .93], ['LSTM2D', .92], ['ANN', 1.10], ['LSTM3D', 1.46], ['LSTM-GA', 2.00], ['LSTM-ARO', 2.19]], 2.4, {v: 1, label: '論文 = 1.00'}, false)}
-    ${strip('fitness', '只看搜尋時那一次的測試 MSE（best_fitness）：GA 為論文的 1.04 倍、ARO 為 1.18 倍，幾乎一致', 'gold')}
+// 15 Q1：我們 ÷ 論文（兩種模式並列）
+{ section: S3, phase: 'three', title: '固定架構和論文一致，GA / ARO 差 1.5–2 倍', source: 'djia_results.md §2、§8.1',
+  html: `<div class="impl-body" style="gap:14px">
+    <p class="impl-lead" style="margin:0">我們的 MSE ÷ 論文 Table 7 的 MSE（29 檔幾何平均；虛線 = 1.00，完全一致）</p>
+    ${bars('ratio', [['LSTM1D', .93, .87], ['LSTM2D', .92, 1.17], ['ANN', 1.10, 1.18], ['LSTM3D', 1.46, 1.49], ['LSTM-GA', 2.00, 1.48], ['LSTM-ARO', 2.19, 1.58]], 2.4, {v: 1, label: '論文 = 1.00'})}
+    ${strip('fitness', '論文模式搜尋時那一次的測試 MSE（best_fitness）：GA 為論文的 1.04 倍、ARO 為 1.18 倍，幾乎一致', 'gold')}
   </div>`,
-  lesson: { explain: '<p>先用和論文相同的流程（fitness 用測試集、固定 epochs）比較。固定架構的 MSE 和論文同一量級，表示資料、前處理、模型結構都對得上。差距集中在 GA／ARO：約為論文的 2 倍。</p><p>但搜尋時的 <code>best_fitness</code>（只訓練一次、用測試集挑出的那個分數）和論文幾乎一致，論文報告的很可能就是這個數字。</p>', source: SRC.results },
+  lesson: { explain: '<p>固定架構（LSTM1D／2D／3D、ANN）不做超參數搜尋，兩種模式的 MSE 都和論文同一量級，表示資料、前處理、模型結構都對得上。</p><p>差距集中在 GA／ARO：論文模式約為論文的 2 倍，驗證集模式約 1.5 倍。但論文模式搜尋時的 <code>best_fitness</code> 和論文幾乎一致，論文報告的很可能就是這個數字。接下來兩頁說明原因。</p><p>幾何平均之下各檔差異很大，可到「動態演算」逐檔查看。</p>', widget: 'perTicker', source: SRC.results },
   items: {
-    ratio: { title: 'MSE 比值（論文模式）', explain: '<p>每一檔先算「我們 ÷ 論文」，再取 29 檔的幾何平均（比值適合用幾何平均，不會被少數極端值主導）。WMT 已乘 9 換算分割。</p><table><tr><th>模型</th><th>幾何平均</th><th>中位數</th></tr><tr><td>LSTM1D</td><td>0.93</td><td>1.01</td></tr><tr><td>LSTM2D</td><td>0.92</td><td>1.05</td></tr><tr><td>ANN</td><td>1.10</td><td>0.95</td></tr><tr><td>LSTM3D</td><td>1.46</td><td>1.40</td></tr><tr><td>LSTM-GA</td><td>2.00</td><td>1.75</td></tr><tr><td>LSTM-ARO</td><td>2.19</td><td>1.69</td></tr></table>' },
-    fitness: { title: 'best_fitness', explain: '<p><code>best_fitness</code> 是 Fitness 在搜尋過程中回傳的最小 MSE。論文模式下 eval 集就是測試集，所以它是「用測試集挑出來的那一次訓練」在測試集上的成績，和論文的流程完全相同。</p>' },
+    ratio: { title: 'MSE ÷ 論文', widget: 'perTicker', explain: '<p>每一檔先算「我們 ÷ 論文」，再取 29 檔的幾何平均（比值適合用幾何平均，不會被少數極端值主導）。WMT 已乘 9 換算分割。</p><table><tr><th>模型</th><th>論文模式</th><th>（中位數）</th><th>驗證集</th></tr><tr><td>LSTM1D</td><td>0.93</td><td>1.01</td><td>0.87</td></tr><tr><td>LSTM2D</td><td>0.92</td><td>1.05</td><td>1.17</td></tr><tr><td>ANN</td><td>1.10</td><td>0.95</td><td>1.18</td></tr><tr><td>LSTM3D</td><td>1.46</td><td>1.40</td><td>1.49</td></tr><tr><td>LSTM-GA</td><td>2.00</td><td>1.75</td><td>1.48</td></tr><tr><td>LSTM-ARO</td><td>2.19</td><td>1.69</td><td>1.58</td></tr></table><p>固定架構兩種模式唯一的差別是最終訓練是否 early stopping，只有 LSTM2D 顯著變差（26 / 29 檔），其他三個的差異都不顯著。</p>' },
+    fitness: { title: 'best_fitness', explain: '<p><code>best_fitness</code> 是 Fitness 在搜尋過程中回傳的最小 MSE。論文模式下 eval 集就是測試集，所以它是「用測試集挑出來的那一次訓練」在測試集上的成績，和論文的流程完全相同。</p><p>驗證集模式的 best_fitness 是驗證集（2021 年前後）的 MSE，價格水準和測試集不同，不能和論文直接比，所以不列。</p>' },
   } },
 
-// 16 重訓落差（論文模式）
-{ section: S3, phase: 'three', title: '用測試集挑架構，挑到的是「碰巧好的那一次」', source: 'djia_results.md §4',
-  html: `<div class="impl-body"><div class="row" style="height:250px">
-    <div class="pipe f1" style="flex-direction:column;gap:8px">
+// 16 論文模式的選擇偏誤
+{ section: S3, phase: 'three', title: '論文模式用測試集挑架構，挑到的是「碰巧好的那一次」', source: 'djia_results.md §4',
+  html: `<div class="impl-body"><div class="row" style="height:290px">
+    <div class="col f1" style="gap:10px">
       ${card('m1', '① 搜尋', '<p>每個架構只訓練一次，直接拿測試集 MSE 當 fitness</p>', {tone: 'tone-blue'})}
       ${card('m2', '② 挑選', '<p>從約 80 個「架構 × 隨機初始化」中挑出測試集上最好的</p>', {tone: 'tone-gold'})}
       ${card('m3', '③ 重訓', '<p>同一架構換 5 個 seed，表現回到平均水準</p>', {tone: 'tone-red'})}
@@ -543,72 +546,16 @@ def compatible(cfg: Config, info: dict) -> List[str]:
     worst: { title: '落差最大的例子', explain: '<p>共同點：神經元很少（1 個）、SGD 或 Adagrad 這類在 20 epochs 內不一定收斂的設定。這些架構在某個 seed 下碰巧很好，就被選中。</p>' },
   } },
 
-// 17 排名（論文 vs 我們論文模式）
-{ section: S3, phase: 'three', title: '排名：ARO ≈ GA ＞ 固定架構，但 ARO 沒有贏 GA', source: 'djia_results.md §3',
-  html: `<div class="impl-body">
-    ${table('rank', ['6 個論文模型，最終 MSE', '論文報告', '我們 · 論文模式'], [
-      ['拿第一的檔數', 'ARO 17、GA 10、LSTM1D 2', 'ARO 12、GA 11、LSTM2D 3、LSTM1D 2、ANN 1'],
-      ['平均名次 ARO / GA', '1.48 / 1.66', '2.03 / 2.34'],
-      ['平均名次 1D / 2D / 3D / ANN', '4.10 / 4.59 / 4.72 / 4.45', '3.07 / 3.55 / 5.83 / 4.17'],
-      {hl: true, cells: ['GA 或 ARO 勝過全部固定模型', '27 / 29', '23 / 29']},
-      ['ARO 比 GA 好的檔數', '17 / 29', '15 / 29（p = 0.80）'],
-    ])}
-    <div style="height:18px"></div>
-    <div class="grid2" style="height:150px">
-      ${card('yes', '站得住：自動搜尋 ＞ 固定架構', '<p>ARO 對 LSTM1D／2D／3D／ANN 分別贏 25 / 24 / 27 / 24 檔，Wilcoxon 皆 p &lt; 0.01。</p>', {tone: 'tone-green'})}
-      ${card('no', '站不住：ARO ＞ GA', '<p>ARO 只在 15 / 29 檔贏 GA，p = 0.80，差異不顯著。</p>', {tone: 'tone-red'})}
-    </div></div>`,
-  lesson: { explain: '<p>名次是每一檔股票在 6 個論文模型中依 MSE 排序，再取 29 檔的平均。論文的主張有兩個：搜尋架構優於固定架構、ARO 優於 GA。照論文流程跑，前者成立，後者無法重現。</p>', source: SRC.results },
-  items: {
-    rank: { title: '排名比較（論文模式）', explain: '<p>方向和論文一致：ARO、GA 排前兩名，LSTM3D 最後。但我們的 GA／ARO 平均名次（2.03 / 2.34）比論文差，有 6 檔被固定架構贏過，原因是搜尋挑到重訓後不穩定的架構（上一頁）。</p>' },
-    yes: { title: 'Wilcoxon 檢定（論文模式）', explain: '<p>Wilcoxon signed-rank 檢定把 29 檔的 MSE 兩兩配對，檢查差值的中位數是否為 0。不假設常態分布，適合這種跨股票、數值尺度差很多的比較。</p><table><tr><th>ARO vs</th><th>ARO 較好</th><th>p 值</th></tr><tr><td>LSTM-GA</td><td>15</td><td>0.80</td></tr><tr><td>LSTM1D</td><td>25</td><td>0.006</td></tr><tr><td>LSTM2D</td><td>24</td><td>0.003</td></tr><tr><td>LSTM3D</td><td>27</td><td>&lt; 0.001</td></tr><tr><td>ANN</td><td>24</td><td>&lt; 0.001</td></tr></table>' },
-    no: { title: 'ARO vs GA', explain: '<p>在相同的初始族群與評估次數下，ARO 和 GA 找到的架構品質沒有差別。論文的 17 / 29 也只是略多於一半。</p>' },
-  } },
-
-// 18 NAIVE 圖（論文模式）
-{ section: S3, phase: 'three', title: '所有神經網路都輸給「明天 = 今天」', source: 'djia_results.md §5 · MSFT predictions.csv（論文模式）',
-  html: `<div class="impl-body"><div class="row" style="height:520px">
-    <div class="impl-chart f1" data-lesson="chart" style="display:flex;flex-direction:column">
-      <div class="legend"><span><i style="background:#101a30"></i>實際</span><span><i style="background:#9fb0c8"></i>NAIVE（前一天）</span><span><i style="background:#e07a2e"></i>LSTM-ARO（論文模式，5 seed 平均）</span></div>
-      ${msftChart('paper')}
-      <p class="impl-lead" style="margin:10px 0 0;font-size:var(--fs-label)">MSFT 2022-10-06 ～ 12-30（測試期最後 60 天）。整段測試期 MSE：NAIVE ${MSFT.paper.mse_naive}、LSTM-ARO ${MSFT.paper.mse_aro}。ARO 的預測較平滑，轉折會慢一步。</p>
-    </div>
-    <div class="col" style="width:330px;flex:none">
-      ${card('win', 'NAIVE 每一檔都第一', '<p>MSE、MAE、MAPE、R² 四個指標皆然。</p>', {stat: '29 / 29'})}
-      ${card('mape', 'NAIVE 平均 MAPE', '<p>最好的 LSTM-GA 為 3.23%。</p>', {stat: '1.41%'})}
-      ${card('paperaro', '也贏過論文的數字', '<p>NAIVE 的 MSE 低於論文報告的 LSTM-ARO（29 / 29 檔）。</p>', {tone: 'tone-red'})}
-    </div></div></div>`,
-  lesson: { explain: '<p>NAIVE 不需要訓練，卻在全部 29 檔、MSE／MAE／MAPE／R² 都排第一。論文沒有和這個基準比較。</p><p>股價接近隨機漫步：明天的價格最好的估計就是今天的價格。只用過去 20 天收盤價，模型很難找到比這更多的資訊。</p>', source: SRC.results },
-  items: {
-    chart: { title: 'MSFT 預測圖', explain: '<p>NAIVE 的線就是實際價格往右平移一天。LSTM-ARO 的預測比較平滑：它從 20 天的價格學到「近期平均」，所以在急漲急跌時反應較慢，誤差反而比單純沿用昨天價格大。</p>' },
-    win: { title: 'NAIVE 全勝', explain: '<p>7 個模型一起排名時，NAIVE 在 29 檔的 MSE、MAE、MAPE、R² 都排第一。</p>' },
-    mape: { title: 'MAPE 比較（論文模式）', explain: '<p>平均 MAPE：NAIVE 1.41%、LSTM-GA 3.23%、LSTM1D 3.61%、LSTM-ARO 3.67%、ANN 3.93%、LSTM2D 4.08%、LSTM3D 5.28%。</p>' },
-    paperaro: { title: '和論文數字比較', explain: '<p>我們把論文 Table 7 的 LSTM-ARO MSE 逐格抄錄（<code>data/paper_tables.csv</code>），NAIVE 的 MSE 在 29 檔都比它低。所以即使接受論文偏樂觀的數字，LSTM-ARO 也沒有贏過 NAIVE。</p>' },
-  } },
-
-// 19 MSE ÷ NAIVE（論文模式）
-{ section: S3, phase: 'three', title: '和 NAIVE 比，各模型的 MSE 是幾倍？', source: 'djia_results.md §5',
-  html: `<div class="impl-body" style="display:flex;flex-direction:column;gap:14px">
-    <p class="impl-lead" style="margin:0">各模型 MSE ÷ NAIVE MSE（29 檔幾何平均；虛線 = 1，和 NAIVE 一樣好）</p>
-    ${bars('naiveratio', [['LSTM-GA', 3.78], ['LSTM-ARO', 4.08], ['LSTM1D', 5.16], ['LSTM2D', 6.03], ['ANN', 6.31], ['LSTM3D', 10.33]], 11.5, {v: 1, label: 'NAIVE = 1'}, false)}
-    ${strip('r2', '最好的模型誤差仍是 NAIVE 的近 4 倍；R² 看起來不低（0.7–0.8），主要是因為股價本身的延續性')}
-  </div>`,
-  lesson: { explain: '<p>把每個模型的 MSE 除以同一檔 NAIVE 的 MSE，可以排除股價水準的差異（高價股的 MSE 本來就大）。照論文流程，最好的 LSTM-GA 誤差仍是 NAIVE 的 3.78 倍。</p>', source: SRC.results },
-  items: {
-    naiveratio: { title: 'MSE ÷ NAIVE（論文模式）', explain: '<table><tr><th>模型</th><th>MSE ÷ NAIVE</th></tr><tr><td>LSTM-GA</td><td>3.78</td></tr><tr><td>LSTM-ARO</td><td>4.08</td></tr><tr><td>LSTM1D</td><td>5.16</td></tr><tr><td>LSTM2D</td><td>6.03</td></tr><tr><td>ANN</td><td>6.31</td></tr><tr><td>LSTM3D</td><td>10.33</td></tr></table>' },
-    r2: { title: '為什麼 R² 不低還是輸？', explain: '<p>R² 是和「預測整段測試期的平均價格」比。股價在測試期內波動很大，所以只要預測值大致跟著走，R² 就不低。平均 R²：NAIVE 0.952、LSTM-GA 0.774、LSTM1D 0.737、LSTM2D 0.722、LSTM-ARO 0.697。</p>' },
-  } },
-
-// 20 加入驗證集
-{ section: S4, phase: 'three', title: '不用測試集挑架構，GA / ARO 反而更好', source: 'djia_results.md §8.1、§8.3',
+// 17 驗證集模式
+{ section: S3, phase: 'three', title: '改用驗證集挑架構，GA / ARO 反而更好', source: 'djia_results.md §8.1、§8.3',
   html: `<div class="impl-body"><div class="grid4" style="height:190px">
     ${card('aro', 'ARO 最終 MSE', '<p>21 / 29 檔變好</p>', {stat: '−28%'})}
     ${card('ga', 'GA 最終 MSE', '<p>18 / 29 檔變好</p>', {stat: '−26%'})}
     ${card('stab', 'seed 間波動 ARO / GA', '<p>論文模式為 41% / 44%</p>', {stat: '24 / 23%'})}
     ${card('l2', 'LSTM2D 最終 MSE', '<p>唯一明顯變差（26 / 29 檔）</p>', {stat: '+27%', statTone: 'gold', tone: 'tone-gold'})}
   </div><div style="height:18px"></div>
-  <div class="row" style="height:300px">
-    ${table('opt', ['選出的 optimizer / lr（58 個）', '>論文模式', '>驗證集'], [['Adam / 0.01', '28', '36'], ['RMSprop / 0.01', '14', '13'], ['Adamax / 0.01', '6', '3'], ['SGD、Adagrad', '有', '0'], ['最終訓練 epochs', '50', '33–41']], {style: 'flex:1;align-self:start'})}
+  <div class="row">
+    ${table('opt', ['選出的 optimizer / lr（58 個）', '>論文模式', '>驗證集'], [['Adam / 0.01', '28', '36'], ['RMSprop / 0.01', '14', '13'], ['Adamax / 0.01', '6', '3'], ['SGD、Adagrad', '有', '0'], ['最終訓練 epochs', '50', '33–41']], {cls: 'fill', style: 'flex:1'})}
     <div class="col" style="width:470px;flex:none">
       ${card('why1', '挑到的架構比較穩定', '<p>驗證集的 fitness 和測試集無關，碰巧成分不會帶到測試成績。</p>', {tone: 'tone-green'})}
       ${card('why2', '最終訓練有 early stopping', '<p>還原驗證 loss 最低的權重，減少大學習率後期震盪。</p>', {tone: 'tone-blue'})}
@@ -624,21 +571,8 @@ def compatible(cfg: Config, info: dict) -> List[str]:
     why2: { title: 'early stopping 的效果', explain: '<p>學習率 0.01 的模型在後期容易震盪，固定跑滿 50 epochs 可能停在一個較差的位置。<code>restore_best_weights=True</code> 會回到驗證 loss 最低的那個 epoch。</p>', code: fullCode('fit_model') },
   } },
 
-// 21 三方對照：MSE ÷ 論文
-{ section: S4, phase: 'three', title: '和論文的差距：GA / ARO 從約 2 倍縮小到約 1.5 倍', source: 'djia_results.md §2、§8.1',
-  html: `<div class="impl-body" style="display:flex;flex-direction:column;gap:14px">
-    <p class="impl-lead" style="margin:0">我們的 MSE ÷ 論文 Table 7 的 MSE（29 檔幾何平均；虛線 = 1.00）</p>
-    ${bars('ratio3', [['LSTM1D', .93, .87], ['LSTM2D', .92, 1.17], ['ANN', 1.10, 1.18], ['LSTM3D', 1.46, 1.49], ['LSTM-GA', 2.00, 1.48], ['LSTM-ARO', 2.19, 1.58]], 2.4, {v: 1, label: '論文 = 1.00'})}
-    ${strip('ratio3note', '固定架構兩種模式差不多（LSTM2D 例外）；變化集中在 GA / ARO')}
-  </div>`,
-  lesson: { explain: '<p>加入驗證集模式後，三組數字放在一起看：固定架構不做超參數搜尋，受評估方式的影響很小，只有 LSTM2D 明顯變差；GA／ARO 則明顯改善。</p><p>幾何平均之下各檔差異很大，可到「動態演算」逐檔查看。</p>', widget: 'perTicker', source: SRC.results },
-  items: {
-    ratio3: { title: 'MSE ÷ 論文（三方）', widget: 'perTicker', explain: '<table><tr><th>模型</th><th>論文模式</th><th>驗證集</th></tr><tr><td>LSTM1D</td><td>0.93</td><td>0.87</td></tr><tr><td>LSTM2D</td><td>0.92</td><td>1.17</td></tr><tr><td>ANN</td><td>1.10</td><td>1.18</td></tr><tr><td>LSTM3D</td><td>1.46</td><td>1.49</td></tr><tr><td>LSTM-GA</td><td>2.00</td><td>1.48</td></tr><tr><td>LSTM-ARO</td><td>2.19</td><td>1.58</td></tr></table>' },
-    ratio3note: { title: '為什麼固定架構變化不大？', explain: '<p>固定架構沒有超參數搜尋，兩種模式唯一的差別是最終訓練是否 early stopping。LSTM2D 是唯一顯著變差的（26 / 29 檔），其他三個的差異都不顯著。</p>' },
-  } },
-
-// 22 排名（三方）
-{ section: S4, phase: 'three', title: '排名三方對照：嚴謹設定下結論更明確', source: 'djia_results.md §3、§8.2',
+// 18 Q2：排名（三方）
+{ section: S4, phase: 'three', title: '排名：自動搜尋 ＞ 固定架構，但 ARO 沒有贏 GA', source: 'djia_results.md §3、§8.2',
   html: `<div class="impl-body">
     ${table('rank', ['6 個論文模型，最終 MSE', '論文報告', '我們 · 論文模式', '我們 · 驗證集'], [
       ['拿第一的檔數', 'ARO 17、GA 10、1D 2', 'ARO 12、GA 11、其他 6', '<b>ARO 15、GA 13、ANN 1</b>'],
@@ -648,31 +582,52 @@ def compatible(cfg: Config, info: dict) -> List[str]:
       ['ARO 比 GA 好的檔數', '17 / 29', '15 / 29（p = 0.80）', '15 / 29（p = 0.55）'],
     ])}
     <div style="height:18px"></div>
-    <div class="grid2" style="height:150px">
-      ${card('yes', '站得住：自動搜尋 ＞ 固定架構', '<p>驗證集模式下 ARO 對 LSTM1D／2D／3D／ANN 分別贏 26 / 29 / 29 / 27 檔，Wilcoxon 皆 p &lt; 0.001。</p>', {tone: 'tone-green'})}
-      ${card('no', '站不住：ARO ＞ GA', '<p>兩種模式下 ARO 都只在 15 / 29 檔贏 GA，差異不顯著。</p>', {tone: 'tone-red'})}
+    <div class="grid2" style="height:180px">
+      ${card('yes', '站得住：自動搜尋 ＞ 固定架構', '<p>ARO 對 LSTM1D／2D／3D／ANN 分別贏 25 / 24 / 27 / 24 檔（論文模式）、26 / 29 / 29 / 27 檔（驗證集），Wilcoxon 皆 p &lt; 0.01。</p>', {tone: 'tone-green'})}
+      ${card('no', '站不住：ARO ＞ GA', '<p>兩種模式下 ARO 都只在 15 / 29 檔贏 GA（p = 0.80、0.55），差異不顯著。</p>', {tone: 'tone-red'})}
     </div></div>`,
   lesson: { explain: '<p>名次是每一檔股票在 6 個論文模型中依 MSE 排序，再取 29 檔的平均。論文的主張有兩個：搜尋架構優於固定架構、ARO 優於 GA。前者在我們兩種模式下都成立，後者無法重現。</p>', source: SRC.results },
   items: {
-    rank: { title: '排名比較', explain: '<p>驗證集模式的 ARO／GA 平均名次（1.66 / 1.59）和論文（1.48 / 1.66）最接近。論文模式下固定架構偶爾會贏，是因為 GA／ARO 挑到不穩定的架構。</p>' },
+    rank: { title: '排名比較', explain: '<p>方向和論文一致：ARO、GA 排前兩名，LSTM3D 最後。論文模式的 GA／ARO 平均名次（2.03 / 2.34）比論文差，有 6 檔被固定架構贏過，原因是搜尋挑到重訓後不穩定的架構。</p><p>驗證集模式的 ARO／GA 平均名次（1.66 / 1.59）和論文（1.48 / 1.66）最接近。</p>' },
     yes: { title: 'Wilcoxon 檢定', explain: '<p>Wilcoxon signed-rank 檢定把 29 檔的 MSE 兩兩配對，檢查差值的中位數是否為 0。不假設常態分布，適合這種跨股票、數值尺度差很多的比較。</p><table><tr><th>ARO vs</th><th>論文模式</th><th>驗證集</th></tr><tr><td>LSTM1D</td><td>25 檔，p=0.006</td><td>26 檔，p&lt;0.001</td></tr><tr><td>LSTM2D</td><td>24 檔，p=0.003</td><td>29 檔，p&lt;0.001</td></tr><tr><td>LSTM3D</td><td>27 檔，p&lt;0.001</td><td>29 檔，p&lt;0.001</td></tr><tr><td>ANN</td><td>24 檔，p&lt;0.001</td><td>27 檔，p&lt;0.001</td></tr></table>' },
     no: { title: 'ARO vs GA', explain: '<p>兩種模式都是 15 / 29 檔，p = 0.80 與 0.55。在相同的初始族群與評估次數下，ARO 和 GA 找到的架構品質沒有差別。論文的 17 / 29 也接近一半。</p>' },
   } },
 
-// 23 MSE ÷ NAIVE（三方）
-{ section: S4, phase: 'three', title: '和 NAIVE 比：驗證集模式更接近，但仍差近 3 倍', source: 'djia_results.md §5、§8',
-  html: `<div class="impl-body" style="display:flex;flex-direction:column;gap:14px">
+// 19 Q3：NAIVE 圖
+{ section: S5, phase: 'three', title: '所有神經網路都輸給「明天 = 今天」', source: 'djia_results.md §5 · MSFT predictions.csv（論文模式）',
+  html: `<div class="impl-body"><div class="row" style="height:520px">
+    <div class="impl-chart f1" data-lesson="chart" style="display:flex;flex-direction:column">
+      <div class="legend"><span><i style="background:#101a30"></i>實際</span><span><i style="background:#9fb0c8"></i>NAIVE（前一天）</span><span><i style="background:#e07a2e"></i>LSTM-ARO（論文模式，5 seed 平均）</span></div>
+      ${msftChart('paper')}
+      <p class="impl-lead" style="margin:10px 0 0;font-size:16px">MSFT 2022-10-06 ～ 12-30（測試期最後 60 天）。整段測試期 MSE：NAIVE ${MSFT.paper.mse_naive}、LSTM-ARO ${MSFT.paper.mse_aro}。ARO 的預測較平滑，轉折會慢一步。</p>
+    </div>
+    <div class="col" style="width:330px;flex:none">
+      ${card('win', 'NAIVE 每一檔都第一', '<p>MSE、MAE、MAPE、R² 四個指標、兩種模式皆然。</p>', {stat: '29 / 29'})}
+      ${card('mape', 'NAIVE 平均 MAPE', '<p>論文模式最好的 LSTM-GA 為 3.23%。</p>', {stat: '1.41%'})}
+      ${card('paperaro', '也贏過論文的數字', '<p>NAIVE 的 MSE 低於論文報告的 LSTM-ARO（29 / 29 檔）。</p>', {tone: 'tone-red'})}
+    </div></div></div>`,
+  lesson: { explain: '<p>NAIVE 不需要訓練，卻在全部 29 檔、MSE／MAE／MAPE／R² 都排第一，論文模式和驗證集模式都一樣。論文沒有和這個基準比較。</p><p>股價接近隨機漫步：明天的價格最好的估計就是今天的價格。只用過去 20 天收盤價，模型很難找到比這更多的資訊。</p>', source: SRC.results },
+  items: {
+    chart: { title: 'MSFT 預測圖', explain: '<p>NAIVE 的線就是實際價格往右平移一天。LSTM-ARO 的預測比較平滑：它從 20 天的價格學到「近期平均」，所以在急漲急跌時反應較慢，誤差反而比單純沿用昨天價格大。</p>' },
+    win: { title: 'NAIVE 全勝', explain: '<p>7 個模型一起排名時，NAIVE 在 29 檔的 MSE、MAE、MAPE、R² 都排第一。</p>' },
+    mape: { title: 'MAPE 比較（論文模式）', explain: '<p>平均 MAPE：NAIVE 1.41%、LSTM-GA 3.23%、LSTM1D 3.61%、LSTM-ARO 3.67%、ANN 3.93%、LSTM2D 4.08%、LSTM3D 5.28%。</p>' },
+    paperaro: { title: '和論文數字比較', explain: '<p>我們把論文 Table 7 的 LSTM-ARO MSE 逐格抄錄（<code>data/paper_tables.csv</code>），NAIVE 的 MSE 在 29 檔都比它低。所以即使接受論文偏樂觀的數字，LSTM-ARO 也沒有贏過 NAIVE。</p>' },
+  } },
+
+// 20 Q3：MSE ÷ NAIVE（兩種模式並列）
+{ section: S5, phase: 'three', title: '和 NAIVE 比：最好的模型誤差仍是 NAIVE 的約 3 倍', source: 'djia_results.md §5、§8',
+  html: `<div class="impl-body" style="gap:14px">
     <p class="impl-lead" style="margin:0">各模型 MSE ÷ NAIVE MSE（29 檔幾何平均；虛線 = 1，和 NAIVE 一樣好）</p>
-    ${bars('naiveratio3', [['LSTM-GA', 3.78, 2.79], ['LSTM-ARO', 4.08, 2.94], ['LSTM1D', 5.16, 4.87], ['ANN', 6.31, 6.78], ['LSTM2D', 6.03, 7.64], ['LSTM3D', 10.33, 10.57]], 11.5, {v: 1, label: 'NAIVE = 1'})}
-    ${strip('r2', '最好的模型誤差仍是 NAIVE 的近 3 倍；R² 看起來很高（0.8–0.9），主要是因為股價本身的延續性')}
+    ${bars('naiveratio', [['LSTM-GA', 3.78, 2.79], ['LSTM-ARO', 4.08, 2.94], ['LSTM1D', 5.16, 4.87], ['ANN', 6.31, 6.78], ['LSTM2D', 6.03, 7.64], ['LSTM3D', 10.33, 10.57]], 11.5, {v: 1, label: 'NAIVE = 1'})}
+    ${strip('r2', '最好的 LSTM-GA 仍是 NAIVE 的 2.79 倍（論文模式 3.78 倍）；R² 看起來很高，主要是因為股價本身的延續性')}
   </div>`,
   lesson: { explain: '<p>把每個模型的 MSE 除以同一檔 NAIVE 的 MSE，可以排除股價水準的差異（高價股的 MSE 本來就大）。驗證集模式讓 GA／ARO 更接近 NAIVE，但仍差將近 3 倍。</p>', source: SRC.results },
   items: {
-    naiveratio3: { title: 'MSE ÷ NAIVE（三方）', explain: '<table><tr><th>模型</th><th>論文模式</th><th>驗證集</th></tr><tr><td>LSTM-GA</td><td>3.78</td><td>2.79</td></tr><tr><td>LSTM-ARO</td><td>4.08</td><td>2.94</td></tr><tr><td>LSTM1D</td><td>5.16</td><td>4.87</td></tr><tr><td>ANN</td><td>6.31</td><td>6.78</td></tr><tr><td>LSTM2D</td><td>6.03</td><td>7.64</td></tr><tr><td>LSTM3D</td><td>10.33</td><td>10.57</td></tr></table>' },
-    r2: { title: '為什麼 R² 很高還是輸？', explain: '<p>R² 是和「預測整段測試期的平均價格」比。股價在測試期內波動很大，所以只要預測值大致跟著走，R² 就很高。NAIVE 的平均 R² 是 0.952；驗證集模式的 LSTM-GA 為 0.871、LSTM-ARO 為 0.842。</p>' },
+    naiveratio: { title: 'MSE ÷ NAIVE', explain: '<table><tr><th>模型</th><th>論文模式</th><th>驗證集</th></tr><tr><td>LSTM-GA</td><td>3.78</td><td>2.79</td></tr><tr><td>LSTM-ARO</td><td>4.08</td><td>2.94</td></tr><tr><td>LSTM1D</td><td>5.16</td><td>4.87</td></tr><tr><td>ANN</td><td>6.31</td><td>6.78</td></tr><tr><td>LSTM2D</td><td>6.03</td><td>7.64</td></tr><tr><td>LSTM3D</td><td>10.33</td><td>10.57</td></tr></table>' },
+    r2: { title: '為什麼 R² 很高還是輸？', explain: '<p>R² 是和「預測整段測試期的平均價格」比。股價在測試期內波動很大，所以只要預測值大致跟著走，R² 就很高。</p><p>平均 R²：NAIVE 0.952；論文模式 LSTM-GA 0.774、LSTM1D 0.737、LSTM2D 0.722、LSTM-ARO 0.697；驗證集模式 LSTM-GA 0.871、LSTM-ARO 0.842。</p>' },
   } },
 
-// 24 結論
+// 21 結論
 { dark: true, title: '重現得到的五個發現', cat: '結論', source: 'djia_results.md',
   html: `<p class="impl-dark-eyebrow">結論</p><h1 class="impl-dark-title" data-lesson="page">重現得到的五個發現</h1>
   <div class="impl-body dark-cards" style="top:132px"><div class="grid2" style="height:330px;grid-template-rows:1fr 1fr">
