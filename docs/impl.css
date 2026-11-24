@@ -104,6 +104,8 @@
 .impl-cover-title{position:absolute;left:108px;top:170px;margin:0;color:#fff;font-size:48px;line-height:1.3;font-weight:750}
 .impl-cover-sub{position:absolute;left:108px;top:356px;margin:0;color:#c8d4e6;font-size:var(--fs-body);line-height:1.5;width:700px}
 .impl-cover-pill{position:absolute;left:108px;top:470px;padding:10px 26px;border-radius:10px;background:#0b9d98;color:#fff;font-size:24px;font-weight:750}
+.impl-cover-colab{position:absolute;left:400px;top:477px;padding:6px 16px;border:1.5px solid #7bdbd3;border-radius:10px;color:#7bdbd3;font-size:var(--fs-label);font-weight:700;text-decoration:none;white-space:nowrap}
+.impl-cover-colab:hover,.impl-cover-colab:focus-visible{background:#7bdbd3;color:#101a30}
 .impl-cover-stats{position:absolute;left:108px;top:560px;display:flex;gap:34px;color:#c8d4e6;font-size:var(--fs-label)}
 .impl-cover-stats b{display:block;color:#7bdbd3;font-size:30px;line-height:1.1;font-variant-numeric:tabular-nums}
 .impl-cover-team{position:absolute;left:796px;top:430px;color:#fff;font-size:var(--fs-body);line-height:1.35}
@@ -127,3 +129,12 @@ abbr.gl{text-decoration:none;border-bottom:1px dotted #7b8ba5;cursor:help}
 .gl-table td{vertical-align:top;font-size:13px;line-height:1.45}
 .gl-table td:first-child{white-space:nowrap;width:1%}
 .gl-local{display:block;color:#9a7414;font-size:11px;margin-top:2px}
+
+/* 逐檔 small multiples（Learning Lab 動態演算） */
+.lab-mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 10px}
+.lab-mini-grid .mini{display:flex;flex-direction:column;height:150px;min-width:0}
+.mini-plot{flex:1;display:flex;align-items:flex-end;gap:4px;padding-top:4px;border-bottom:1.5px solid #cbd7e6}
+.mini-col{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;min-width:0}
+.mini-col i{display:block;width:100%;border-radius:3px 3px 0 0}
+.mini-col em{font-style:normal;font-size:10.5px;font-weight:700;color:#20314e;white-space:nowrap;margin-bottom:2px;font-variant-numeric:tabular-nums}
+.mini b{text-align:center;font-size:13px;color:#20314e;margin-top:4px}
