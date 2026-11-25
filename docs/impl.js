@@ -121,7 +121,7 @@ const SLIDES = [
 { section: S1, phase: 'one', title: '這次實作要回答三個問題', source: 'reproduction_plan.md §6',
   html: `<div class="impl-body"><div class="grid3" style="height:250px">
     ${card('q1', '數字對得上嗎？', '<p>同樣的資料與架構，我們的 MSE 是否接近論文 Table 7？</p>', {tag: 'Q1', tone: 'tone-blue', tagTone: 'blue'})}
-    ${card('q2', 'ARO 真的比較好嗎？', '<p>論文說 LSTM-ARO 在 17 / 29 檔拿第一。換成較嚴謹的評估方式後，ARO 是否仍優於 GA 與固定架構？</p>', {tag: 'Q2', tone: 'tone-purple', tagTone: 'purple'})}
+    ${card('q2', 'ARO 真的比較好嗎？', '<p>論文中 LSTM-ARO 在 17 / 29 檔拿第一。換成較嚴謹的評估方式後，ARO 的領先是否仍然存在？</p>', {tag: 'Q2', tone: 'tone-purple', tagTone: 'purple'})}
     ${card('q3', '有沒有更簡單的基準？', '<p>論文沒有和「明天 = 今天」比較。神經網路能不能贏過這個不需要訓練的方法？</p>', {tag: 'Q3', tone: 'tone-gold', tagTone: 'gold'})}
   </div><div style="height:40px"></div>${strip('plan', '做法：同一套程式 × 兩種評估模式 × 29 檔 × 7 種模型 = 406 組完整實驗')}</div>`,
   lesson: { explain: '<p>重現的重點不是把數字抄對，而是檢查論文的<b>結論</b>在相同條件下是否成立。我們除了照論文的流程跑一次，也用「測試集只在最後用一次」的方式跑一次，並加入 NAIVE 基準。</p>', source: SRC.plan + SRC.paper },
@@ -237,13 +237,13 @@ const SLIDES = [
     ${seq('l3', 'LSTM3D', 'Table 4', [L('in', 'Input', '(20, 1)'), L('lstm', 'LSTM 10'), L('lstm', 'LSTM 10'), L('lstm', 'LSTM 10'), L('dense', 'Dense 10'), L('drop', 'Dropout 0.5'), L('out', 'Dense 1')], '<b>2,281</b>參數')}
     ${seq('search', 'GA / ARO', 'Table 5', [L('in', 'Input', '(20, 1)'), L('lstm', 'LSTM x₀'), L('lstm', 'LSTM x₂', 'x₁=1 才有'), L('lstm', 'LSTM x₄', 'x₃=1 才有'), L('dense', 'Dense x₅'), L('drop', 'Dropout x₆'), L('out', 'Dense 1')], '<b>依搜尋</b>x₇ optimizer、x₈ lr', 'search')}
   </div>`,
-  lesson: { explain: '<p>所有模型都輸出一個數字（正規化後的隔天價格），損失函數為 MSE。固定架構一律用 Adam、學習率 0.001；GA／ARO 的 optimizer 與學習率也是搜尋對象。</p><p>參數量依 Keras 公式計算：LSTM(u) 接 d 維輸入有 4·((d+u)·u + u) 個參數，例如第一層 LSTM 10 為 4·(11·10 + 10) = 480。</p>', code: fullCode('build_baseline', 'build_lstm'), source: SRC.nb + SRC.paper },
+  lesson: { explain: '<p>所有模型都輸出一個數字（正規化後的隔天價格），損失函數為 MSE。固定架構一律用 Adam、學習率 0.001；GA／ARO 的 optimizer 與學習率也是搜尋對象。</p><h3>計算公式（Keras）</h3><ul><li><b>LSTM(u)</b>，輸入 d 維：4 個閘門（輸入、遺忘、輸出、候選）各有 W（d·u）、U（u·u）、b（u），共 <b>4·((d+u)·u + u)</b>。</li><li><b>Dense(n)</b>，輸入 d 維：權重 d·n ＋ 偏差 n = <b>d·n + n</b>。</li><li><b>Flatten、Dropout</b>：只改形狀或隨機遮蔽，<b>0</b> 個參數。</li><li>LSTM 的 d 是<b>每個時間步</b>的特徵數（這裡是 1），與序列長度 20 無關；ANN 先 Flatten 成 20 維，所以 Dense 的 d = 20。</li></ul><h3>NAIVE</h3><p>直接取前一天收盤價，沒有可學參數：<b>0</b>。</p><h3>ANN（Table 1）</h3><table><tr><th>層</th><th>計算</th><th>參數</th></tr><tr><td>Flatten</td><td>(20, 1) → 20</td><td>0</td></tr><tr><td>Dense 10（輸入 20 維）</td><td>20·10 + 10</td><td>210</td></tr><tr><td>Dense 10（輸入 10 維）</td><td>10·10 + 10</td><td>110</td></tr><tr><td>Dropout 0.5</td><td>無權重</td><td>0</td></tr><tr><td>Dense 1（輸入 10 維）</td><td>10·1 + 1</td><td>11</td></tr><tr><td><b>合計</b></td><td>210 + 110 + 11</td><td><b>331</b></td></tr></table><h3>LSTM1D（Table 2）</h3><table><tr><th>層</th><th>計算</th><th>參數</th></tr><tr><td>LSTM 10（輸入 1 維）</td><td>4·((1+10)·10 + 10)</td><td>480</td></tr><tr><td>Dense 10（輸入 10 維）</td><td>10·10 + 10</td><td>110</td></tr><tr><td>Dropout 0.5</td><td>無權重</td><td>0</td></tr><tr><td>Dense 1（輸入 10 維）</td><td>10·1 + 1</td><td>11</td></tr><tr><td><b>合計</b></td><td>480 + 110 + 11</td><td><b>601</b></td></tr></table><h3>LSTM2D（Table 3）</h3><table><tr><th>層</th><th>計算</th><th>參數</th></tr><tr><td>LSTM 10（輸入 1 維）</td><td>4·((1+10)·10 + 10)</td><td>480</td></tr><tr><td>LSTM 10（輸入 10 維）</td><td>4·((10+10)·10 + 10)</td><td>840</td></tr><tr><td>Dense 10（輸入 10 維）</td><td>10·10 + 10</td><td>110</td></tr><tr><td>Dropout 0.5</td><td>無權重</td><td>0</td></tr><tr><td>Dense 1（輸入 10 維）</td><td>10·1 + 1</td><td>11</td></tr><tr><td><b>合計</b></td><td>480 + 840 + 110 + 11</td><td><b>1,441</b></td></tr></table><h3>LSTM3D（Table 4）</h3><table><tr><th>層</th><th>計算</th><th>參數</th></tr><tr><td>LSTM 10（輸入 1 維）</td><td>4·((1+10)·10 + 10)</td><td>480</td></tr><tr><td>LSTM 10（輸入 10 維）</td><td>4·((10+10)·10 + 10)</td><td>840</td></tr><tr><td>LSTM 10（輸入 10 維）</td><td>4·((10+10)·10 + 10)</td><td>840</td></tr><tr><td>Dense 10（輸入 10 維）</td><td>10·10 + 10</td><td>110</td></tr><tr><td>Dropout 0.5</td><td>無權重</td><td>0</td></tr><tr><td>Dense 1（輸入 10 維）</td><td>10·1 + 1</td><td>11</td></tr><tr><td><b>合計</b></td><td>480 + 840 + 840 + 110 + 11</td><td><b>2,281</b></td></tr></table><h3>LSTM-GA / LSTM-ARO（Table 5）</h3><p>設各層 LSTM 神經元為 u₁、u₂、u₃（沒有的層略過），Dense 為 k，最後一層 LSTM 的神經元為 u_last：</p><ul><li>第 1 層 LSTM：4·((1+u₁)·u₁ + u₁)</li><li>第 2 層（x₁=1）：4·((u₁+u₂)·u₂ + u₂)</li><li>第 3 層（x₃=1）：4·((u₂+u₃)·u₃ + u₃)</li><li>Dense k：u_last·k + k</li><li>輸出 Dense 1：k + 1</li></ul><p>例：LSTM 13 → LSTM 7 → Dense 10 → Dense 1 = 4·(14·13+13) + 4·(20·7+7) + (7·10+10) + 11 = 780 + 588 + 80 + 11 = <b>1,459</b>。可到 GA／ARO 卡片的「動態演算」自己組合試算。</p>', code: fullCode('build_baseline', 'build_lstm'), source: SRC.nb + SRC.paper },
   items: {
     naive: { title: 'NAIVE', explain: '<p>預測值 = 前一天的實際收盤價（<code>data.prev_test</code>），不需要訓練。</p>' },
     ann: { title: 'ANN（Table 1）', explain: '<p>Flatten 把 (20, 1) 攤平成 20 維，接兩層 Dense 10。參數：20·10+10 = 210、10·10+10 = 110、10+1 = 11，共 331。</p>', code: fullCode('build_baseline') },
     l1: { title: 'LSTM1D（Table 2）', explain: '<p>LSTM 10（480）＋ Dense 10（110）＋ Dense 1（11）= 601 個參數。</p>', code: fullCode('build_lstm', 'build_baseline') },
     l2: { title: 'LSTM2D（Table 3）', explain: '<p>第二層 LSTM 的輸入是第一層的 10 維輸出：4·(20·10 + 10) = 840。總計 480 + 840 + 110 + 11 = 1,441。</p>', code: fullCode('build_lstm', 'build_baseline') },
-    l3: { title: 'LSTM3D（Table 4）', explain: '<p>再多一層 LSTM 10（840），共 2,281 個參數。層數最多，但在我們的實驗中表現最差。</p>', code: fullCode('build_lstm', 'build_baseline') },
+    l3: { title: 'LSTM3D（Table 4）', explain: '<p>再多一層 LSTM 10（840）：480 + 840 + 840 + 110 + 11 = 2,281 個參數。層數最多，但在我們的實驗中表現最差。</p>', code: fullCode('build_lstm', 'build_baseline') },
     search: { title: 'LSTM-GA / LSTM-ARO（Table 5）', explain: '<p>架構與固定 LSTM 相同，只是每一層有沒有、幾個神經元、Dropout、optimizer、學習率都由 9 維向量 x₀…x₈ 決定。可切到「動態演算」自己組一個。</p>', code: fullCode('SEARCH_SPACE', 'decode', 'hp_to_arch', 'build_lstm'), widget: 'decode' },
   } },
 
@@ -572,7 +572,7 @@ def compatible(cfg: Config, info: dict) -> List[str]:
   } },
 
 // 18 Q2：排名（三方）
-{ section: S4, phase: 'three', title: '排名：自動搜尋 ＞ 固定架構，但 ARO 沒有贏 GA', source: 'djia_results.md §3、§8.2',
+{ section: S4, phase: 'three', title: '排名：自動搜尋 ＞ 固定架構，ARO 與 GA 相當', source: 'djia_results.md §3、§8.2',
   html: `<div class="impl-body">
     ${table('rank', ['6 個論文模型，最終 MSE', '論文報告', '我們 · 論文模式', '我們 · 驗證集'], [
       ['拿第一的檔數', 'ARO 17、GA 10、1D 2', 'ARO 12、GA 11、其他 6', '<b>ARO 15、GA 13、ANN 1</b>'],
@@ -583,17 +583,49 @@ def compatible(cfg: Config, info: dict) -> List[str]:
     ])}
     <div style="height:18px"></div>
     <div class="grid2" style="height:180px">
-      ${card('yes', '站得住：自動搜尋 ＞ 固定架構', '<p>ARO 對 LSTM1D／2D／3D／ANN 分別贏 25 / 24 / 27 / 24 檔（論文模式）、26 / 29 / 29 / 27 檔（驗證集），Wilcoxon 皆 p &lt; 0.01。</p>', {tone: 'tone-green'})}
-      ${card('no', '站不住：ARO ＞ GA', '<p>兩種模式下 ARO 都只在 15 / 29 檔贏 GA（p = 0.80、0.55），差異不顯著。</p>', {tone: 'tone-red'})}
+      ${card('yes', '成立：自動搜尋 ＞ 固定架構','<p>ARO 對 LSTM1D／2D／3D／ANN 分別贏 25 / 24 / 27 / 24 檔（論文模式）、26 / 29 / 29 / 27 檔（驗證集），Wilcoxon 皆 p &lt; 0.01。</p>', {tone: 'tone-green'})}
+      ${card('no', '沒有出現：ARO 的領先', '<p>論文中 ARO 拿第一 17 檔、GA 10 檔；我們兩種模式下 ARO 都在 15 / 29 檔勝過 GA（p = 0.80、0.55），兩者互有勝負，差異不顯著。</p>', {tone: 'tone-gold'})}
     </div></div>`,
-  lesson: { explain: '<p>名次是每一檔股票在 6 個論文模型中依 MSE 排序，再取 29 檔的平均。論文的主張有兩個：搜尋架構優於固定架構、ARO 優於 GA。前者在我們兩種模式下都成立，後者無法重現。</p>', source: SRC.results },
+  lesson: { explain: '<p>名次是每一檔股票在 6 個論文模型中依 MSE 排序，再取 29 檔的平均。論文的結果中，搜尋架構明顯優於固定架構，ARO 拿第一的次數最多。前者在我們兩種模式下都成立；後者沒有出現，ARO 和 GA 互有勝負。</p>', source: SRC.results },
   items: {
     rank: { title: '排名比較', explain: '<p>方向和論文一致：ARO、GA 排前兩名，LSTM3D 最後。論文模式的 GA／ARO 平均名次（2.03 / 2.34）比論文差，有 6 檔被固定架構贏過，原因是搜尋挑到重訓後不穩定的架構。</p><p>驗證集模式的 ARO／GA 平均名次（1.66 / 1.59）和論文（1.48 / 1.66）最接近。</p>' },
     yes: { title: 'Wilcoxon 檢定', explain: '<p>Wilcoxon signed-rank 檢定把 29 檔的 MSE 兩兩配對，檢查差值的中位數是否為 0。不假設常態分布，適合這種跨股票、數值尺度差很多的比較。</p><table><tr><th>ARO vs</th><th>論文模式</th><th>驗證集</th></tr><tr><td>LSTM1D</td><td>25 檔，p=0.006</td><td>26 檔，p&lt;0.001</td></tr><tr><td>LSTM2D</td><td>24 檔，p=0.003</td><td>29 檔，p&lt;0.001</td></tr><tr><td>LSTM3D</td><td>27 檔，p&lt;0.001</td><td>29 檔，p&lt;0.001</td></tr><tr><td>ANN</td><td>24 檔，p&lt;0.001</td><td>27 檔，p&lt;0.001</td></tr></table>' },
-    no: { title: 'ARO vs GA', explain: '<p>兩種模式都是 15 / 29 檔，p = 0.80 與 0.55。在相同的初始族群與評估次數下，ARO 和 GA 找到的架構品質沒有差別。論文的 17 / 29 也接近一半。</p>' },
+    no: { title: 'ARO vs GA', explain: '<p>兩種模式都是 15 / 29 檔，p = 0.80 與 0.55。在相同的初始族群與評估次數下，ARO 和 GA 找到的架構品質沒有顯著差別。用論文 Table 7 的數字做同樣的檢定，ARO 對 GA 為 17 / 29（p = 0.27），也不顯著。</p>' },
   } },
 
-// 19 Q3：NAIVE 圖
+// 19 Q2：加大搜尋 15 × 15
+{ section: S4, phase: 'three', title: '加大搜尋到 15 × 15：GA 改善較多，結論不變', source: 'djia_results.md §9 · results/djia_val_p15/all_results.csv',
+  html: `<div class="impl-body"><p class="impl-lead" style="margin:0 0 12px">驗證集模式，族群 × 迭代從 10 × 10 加到 15 × 15（每檔評估 110 → 240 次）；固定架構與 NAIVE 沿用原結果</p>
+  <div class="grid4" style="height:170px">
+    ${card('ga', 'GA 最終 MSE', '<p>20 / 29 檔變好（p = 0.04）</p>', {stat: '−14%'})}
+    ${card('aro', 'ARO 最終 MSE', '<p>14 / 29 檔變好（p = 0.23）</p>', {stat: '−8%', statTone: 'gold', tone: 'tone-gold'})}
+    ${card('gar', 'GA ÷ 論文', '<p>10 × 10 為 1.48</p>', {stat: '1.27'})}
+    ${card('aror', 'ARO ÷ 論文', '<p>10 × 10 為 1.58</p>', {stat: '1.46'})}
+  </div><div style="height:18px"></div>
+  <div class="row">
+    ${table('vs', ['驗證集模式，最終 MSE', '>10 × 10', '>15 × 15'], [
+      ['ARO 勝過 GA 的檔數', '15 / 29', '10 / 29（1 檔平手）'],
+      ['Wilcoxon p（ARO vs GA）', '0.55', '0.09'],
+      ['6 個論文模型中拿第一 ARO / GA', '15 / 13', '11 / 16'],
+      ['ARO 勝過 LSTM1D／2D／3D／ANN', '26 / 29 / 29 / 27', '26 / 29 / 29 / 26'],
+      {hl: true, cells: ['勝過 NAIVE 的檔數', '0 / 29', '0 / 29']},
+    ], {cls: 'fill', style: 'flex:1'})}
+    <div class="col" style="width:440px;flex:none">
+      ${card('flip', '17 檔換了勝出者', '<p>ARO 和 GA 誰在某一檔勝出，主要取決於這次搜尋的隨機性。</p>', {tone: 'tone-gold'})}
+      ${card('same', '結論不變', '<p>自動搜尋 ＞ 固定架構；ARO 與 GA 相當；仍未勝過 NAIVE。</p>', {tone: 'tone-green'})}
+    </div></div></div>`,
+  lesson: { explain: '<p>為了確認「ARO 與 GA 相當」不是搜尋預算太小造成的，我們把驗證集模式的族群與迭代加到 15，其他設定完全不變，同樣三人分工在 Colab 跑完 29 檔。</p><p>兩者和論文的差距都縮小，但改善幅度不同：GA 的最終 MSE 幾何平均下降 14%（顯著），ARO 只下降 8%（不顯著）。ARO 和 GA 的勝負從 15 比 14 變成 10 比 18，仍不顯著。</p>', source: SRC.results },
+  items: {
+    ga: { title: 'GA：15 × 15 ÷ 10 × 10', explain: '<p>最終 MSE 幾何平均 0.86，29 檔中 20 檔變好，Wilcoxon p = 0.041。搜尋時驗證集的最佳 fitness 有 23 / 29 檔變低。</p>' },
+    aro: { title: 'ARO：15 × 15 ÷ 10 × 10', explain: '<p>最終 MSE 幾何平均 0.92，只有 14 / 29 檔變好，p = 0.23。</p><p>搜尋時驗證集的最佳 fitness 有 25 / 29 檔變低，但測試誤差沒有跟著下降：更大的搜尋找到了在驗證集上更好的架構，這個優勢沒有完全帶到測試集。變差最多的是 INTC（論文的 2.69 倍 → 12.0 倍）與 NKE（1.18 → 2.64）。</p>' },
+    gar: { title: 'GA ÷ 論文', explain: '<p>29 檔幾何平均 1.48 → 1.27，中位數 1.31 → 1.12；比論文好的檔數 7 → 9。三種設定中最接近論文的一組。</p>' },
+    aror: { title: 'ARO ÷ 論文', explain: '<p>29 檔幾何平均 1.58 → 1.46，中位數 1.36 → 1.32；比論文好的檔數 8 → 6。</p><p>15 × 15 選出的架構：24 / 29 檔只有 1 層 LSTM，28 / 29 檔學習率 0.01。</p>' },
+    vs: { title: 'ARO vs GA', explain: '<p>四個指標的趨勢相同：15 × 15 時 GA 在 6 個論文模型中拿第一 14–16 檔，ARO 11–13 檔。</p><p>TRV 平手是因為兩者選到同一個架構，最終訓練的 seed 也相同，所以 MSE 完全一樣。</p>' },
+    flip: { title: '勝出者的變動', explain: '<table><tr><th>10 × 10 → 15 × 15</th><th>檔數</th><th>股票</th></tr><tr><td>ARO → GA</td><td>11</td><td>AAPL AXP BA CSCO DIS HD HON IBM INTC NKE V</td></tr><tr><td>GA → ARO</td><td>6</td><td>AMGN CRM GS KO MCD PG</td></tr><tr><td>GA → 平手</td><td>1</td><td>TRV</td></tr><tr><td>都是 ARO</td><td>4</td><td>CAT DOW JNJ JPM</td></tr><tr><td>都是 GA</td><td>7</td><td>CVX MMM MRK MSFT UNH VZ WMT</td></tr></table><p>GA 與 ARO 每檔只搜尋一次（各一個演算法 seed），單一檔的勝負有很大的運氣成分；要比較演算法本身，需要同一檔用多個 seed 重複搜尋。</p>' },
+    same: { title: '結論不變', explain: '<p>加大搜尋讓數字更接近論文，但沒有改變任何結論。考量每多一級預算的時間成本（15 × 15 約為 10 × 10 的 2 倍，25 × 25 估計再 2.5 倍），報告以 10 × 10 為主要結果，15 × 15 作為補充驗證。</p>' },
+  } },
+
+// 20 Q3：NAIVE 圖
 { section: S5, phase: 'three', title: '所有神經網路都輸給「明天 = 今天」', source: 'djia_results.md §5 · MSFT predictions.csv（論文模式）',
   html: `<div class="impl-body"><div class="row" style="height:520px">
     <div class="impl-chart f1" data-lesson="chart" style="display:flex;flex-direction:column">
@@ -614,7 +646,7 @@ def compatible(cfg: Config, info: dict) -> List[str]:
     paperaro: { title: '和論文數字比較', explain: '<p>我們把論文 Table 7 的 LSTM-ARO MSE 逐格抄錄（<code>data/paper_tables.csv</code>），NAIVE 的 MSE 在 29 檔都比它低。所以即使接受論文偏樂觀的數字，LSTM-ARO 也沒有贏過 NAIVE。</p>' },
   } },
 
-// 20 Q3：MSE ÷ NAIVE（兩種模式並列）
+// 21 Q3：MSE ÷ NAIVE（兩種模式並列）
 { section: S5, phase: 'three', title: '和 NAIVE 比：最好的模型誤差仍是 NAIVE 的約 3 倍', source: 'djia_results.md §5、§8',
   html: `<div class="impl-body" style="gap:14px">
     <p class="impl-lead" style="margin:0">各模型 MSE ÷ NAIVE MSE（29 檔幾何平均；虛線 = 1，和 NAIVE 一樣好）</p>
@@ -627,23 +659,23 @@ def compatible(cfg: Config, info: dict) -> List[str]:
     r2: { title: '為什麼 R² 很高還是輸？', explain: '<p>R² 是和「預測整段測試期的平均價格」比。股價在測試期內波動很大，所以只要預測值大致跟著走，R² 就很高。</p><p>平均 R²：NAIVE 0.952；論文模式 LSTM-GA 0.774、LSTM1D 0.737、LSTM2D 0.722、LSTM-ARO 0.697；驗證集模式 LSTM-GA 0.871、LSTM-ARO 0.842。</p>' },
   } },
 
-// 21 結論
+// 22 結論
 { dark: true, title: '重現得到的五個發現', cat: '結論', source: 'djia_results.md',
   html: `<p class="impl-dark-eyebrow">結論</p><h1 class="impl-dark-title" data-lesson="page">重現得到的五個發現</h1>
   <div class="impl-body dark-cards" style="top:132px"><div class="grid2" style="height:330px;grid-template-rows:1fr 1fr">
     ${card('c1', '1 · 固定架構可以重現', '<p>LSTM1D／2D、ANN 的 MSE 約為論文的 0.9–1.2 倍。</p>')}
     ${card('c2', '2 · 論文的 GA／ARO 數字偏樂觀', '<p>搜尋時的分數和論文只差 4–18%，換 seed 重訓後差約 2 倍。</p>')}
     ${card('c3', '3 · 自動搜尋確實優於固定架構', '<p>驗證集模式下 28 / 29 檔勝過全部固定模型。</p>')}
-    ${card('c4', '4 · ARO 並沒有比 GA 好', '<p>兩種模式都只有 15 / 29 檔勝出，差異不顯著。</p>')}
+    ${card('c4', '4 · ARO 與 GA 表現相當', '<p>兩者互有勝負（15 / 29），加大到 15 × 15 後為 10 / 29，差異都不顯著。</p>')}
   </div><div style="height:16px"></div>
   ${card('c5', '5 · 沒有模型贏過 NAIVE', '<p>「明天 = 今天」在 29 檔、四個指標全部第一。要說模型能預測股價，至少要先贏過這個基準。</p>', {style: 'border-color:#7bdbd3'})}
-  <p style="margin:16px 0 0;color:#8a9bb5;font-size:var(--fs-footnote)">限制：搜尋預算約為論文的 1/23（10 × 10 vs 50 × 50）；論文未寫明的 epochs、GA 設定、Dense 激活由我們決定；WBA 無資料。</p></div>`,
+  <p style="margin:16px 0 0;color:#8a9bb5;font-size:var(--fs-footnote)">限制：主要結果的搜尋預算約為論文的 1/23（10 × 10 vs 50 × 50），另以 15 × 15 驗證，結論不變；論文未寫明的 epochs、GA 設定、Dense 激活由我們決定；WBA 無資料。</p></div>`,
   lesson: { explain: '<p>報告建議：以驗證集模式作為主要結果；論文模式（含 <code>best_fitness</code>）用來和論文對照。結論以「ARO ≈ GA ＞ 固定架構」陳述，並說明所有模型都未勝過 NAIVE。</p>', source: SRC.results + SRC.nb + SRC.paper },
   items: {
     c1: { title: '固定架構可以重現', explain: '<p>論文模式：LSTM1D 0.93、LSTM2D 0.92、ANN 1.10；驗證集模式：0.87、1.17、1.18（我們 ÷ 論文，幾何平均）。LSTM3D 約 1.5 倍。</p>' },
     c2: { title: '選擇偏誤', explain: '<p>用測試集挑超參數，挑出的是「測試集上碰巧最好的那一次」。報告時應同時列出論文式的 best_fitness 與 5-seed 重訓平均，兩者的落差就是這個偏誤。</p>' },
     c3: { title: '搜尋的價值', explain: '<p>即使預算只有論文的 1/23，搜尋出的架構仍明顯優於固定的 10 神經元架構。主要差別在學習率：搜尋多半選 0.01，固定架構用 0.001。</p>' },
-    c4: { title: 'ARO vs GA', explain: '<p>在相同初始族群、相同評估次數下，兩者找到的架構品質沒有顯著差別。若要比較最佳化演算法本身，需要更大的預算與多次獨立重複。</p>' },
+    c4: { title: 'ARO vs GA', explain: '<p>在相同初始族群、相同評估次數下，兩者找到的架構品質沒有顯著差別。加大到 15 × 15 後，ARO 和 GA 的勝出者有 17 檔改變，表示單一檔的勝負受搜尋的隨機性影響很大。若要比較最佳化演算法本身，需要更大的預算與多次獨立重複。</p>' },
     c5: { title: 'NAIVE 基準', explain: '<p>預測隔天價格的研究應該把「明天 = 今天」列為必要的比較基準；也可以改預測報酬率或漲跌方向，這時 NAIVE 不再有優勢。</p>' },
   } },
 ];
