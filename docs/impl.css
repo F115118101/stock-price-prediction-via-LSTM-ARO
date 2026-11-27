@@ -14,8 +14,8 @@
 .row>.col>.native-card{flex:1}
 .row>.col>.native-card,.row>.native-card{display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
 .f1{flex:1}.f2{flex:2}.f13{flex:1.3}.f15{flex:1.5}
-.native-card.interactive,.seq.interactive,.code-panel.interactive,.impl-table.interactive,.impl-chart.interactive,.impl-strip.interactive{cursor:pointer}
-.native-card.interactive:hover,.seq.interactive:hover,.code-panel.interactive:hover,.impl-table.interactive:hover,.impl-chart.interactive:hover,.impl-strip.interactive:hover{box-shadow:0 0 0 2px #0b9d9812}
+.native-card.interactive,.seq.interactive,.impl-steps.interactive,.impl-table.interactive,.impl-chart.interactive,.impl-strip.interactive{cursor:pointer}
+.native-card.interactive:hover,.seq.interactive:hover,.impl-steps.interactive:hover,.impl-table.interactive:hover,.impl-chart.interactive:hover,.impl-strip.interactive:hover{box-shadow:0 0 0 2px #0b9d9812}
 .interactive *:hover{box-shadow:none}
 .interactive:focus-visible{outline:3px solid #f39a42;outline-offset:2px}
 .native-card .tag{display:inline-block;font-size:16px;font-weight:750;padding:2px 10px;border-radius:20px;background:#e9f7f5;color:#087e79;margin-bottom:8px}
@@ -30,14 +30,17 @@
 .impl-strip.gold{background:#fff5dc;color:#8a6610}.impl-strip.red{background:#fdeeee;color:#b23a40}
 .impl-strip.left{text-align:left;font-weight:500;color:#20314e}
 
-/* 程式碼面板 */
-.code-panel{background:#101a30;border-radius:14px;padding:14px 18px 12px;color:#dbe5f3;min-width:0;overflow:hidden;position:relative}
-.code-panel .code-name{display:flex;justify-content:space-between;align-items:center;font-size:17px;color:#7bdbd3;font-weight:750;margin-bottom:8px;letter-spacing:.02em}
-.code-panel .code-name small{color:#8a9bb5;font-weight:500;font-size:15px}
-.code-panel pre,.drawer-code pre{margin:0;font-family:Consolas,"Cascadia Mono","SFMono-Regular",Menlo,monospace;font-size:13.5px;line-height:1.5;white-space:pre;tab-size:4}
-.code-panel pre{overflow:hidden}
+/* 步驟面板（投影片上取代程式碼） */
+.impl-steps{background:#fff;border:1.5px solid #dfe6f0;border-radius:14px;padding:18px 24px;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.impl-steps .steps-head{font-size:var(--fs-body);font-weight:800;color:#20314e;margin-bottom:14px}
+.impl-steps ol{list-style:none;margin:0;padding:0;counter-reset:st;display:flex;flex-direction:column;gap:16px}
+.impl-steps li{counter-increment:st;position:relative;padding-left:44px;font-size:var(--fs-body);line-height:1.4;color:#20314e}
+.impl-steps li::before{content:counter(st);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:#e9f7f5;color:#087e79;font-weight:800;font-size:16px;display:grid;place-items:center}
+
+/* 程式碼語法上色（抽屜） */
+.drawer-code pre{margin:0;font-family:Consolas,"Cascadia Mono","SFMono-Regular",Menlo,monospace;font-size:13.5px;line-height:1.5;white-space:pre;tab-size:4}
 .tok-k{color:#ff9fb8}.tok-s{color:#a5e3a0}.tok-c{color:#8a9bb5;font-style:italic}.tok-n{color:#f8c57a}.tok-f{color:#8ecbff}.tok-b{color:#c7b0ff}
-.code-panel mark,.drawer-code mark{background:#0b9d9840;color:inherit;border-radius:3px;padding:0 2px}
+.drawer-code mark{background:#0b9d9840;color:inherit;border-radius:3px;padding:0 2px}
 
 /* 抽屜內的完整程式碼 */
 .drawer-code{background:#101a30;color:#dbe5f3;border-radius:10px;padding:14px 16px;overflow:auto;margin:0 0 16px;max-height:none}
@@ -87,7 +90,7 @@
 
 /* 長條圖 */
 .impl-chart{background:#fff;border:1.5px solid #dfe6f0;border-radius:14px;padding:16px 22px}
-.legend{display:flex;gap:20px;font-size:17px;color:#52637c;margin-bottom:10px}
+.legend{display:flex;gap:20px;font-size:17px;color:#52637c;margin-bottom:14px}
 .legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px}
 .hbars{display:grid;gap:14px}
 .hbar{display:grid;grid-template-columns:112px 1fr;gap:12px;align-items:center}
@@ -129,7 +132,7 @@
 
 /* 縮寫對照 */
 abbr.gl{text-decoration:none;border-bottom:1px dotted #7b8ba5;cursor:help}
-.code-panel abbr.gl{border-bottom-color:#56657f}
+.drawer-code abbr.gl{border-bottom-color:#56657f}
 .gl-table{margin:0 0 10px;background:#fff;border:1px solid #dfe6f0;border-radius:10px;padding:8px 12px}
 .gl-table summary{cursor:pointer;font-size:13px;font-weight:800;color:#087e79}
 .gl-table table{margin:8px 0 2px}
@@ -145,3 +148,26 @@ abbr.gl{text-decoration:none;border-bottom:1px dotted #7b8ba5;cursor:help}
 .mini-col i{display:block;width:100%;border-radius:3px 3px 0 0}
 .mini-col em{font-style:normal;font-size:10.5px;font-weight:700;color:#20314e;white-space:nowrap;margin-bottom:2px;font-variant-numeric:tabular-nums}
 .mini b{text-align:center;font-size:13px;color:#20314e;margin-top:4px}
+
+/* 步驟面板：GA 用金色編號 */
+.impl-steps.gold li::before{background:#fff5dc;color:#8a6610}
+
+/* 資料切分時間軸（第 4 頁） */
+.impl-timeline{background:#fff;border:1.5px solid #dfe6f0;border-radius:14px;padding:20px 24px;display:flex;flex-direction:column;justify-content:center;gap:14px;min-width:0}
+.tl-head{font-size:var(--fs-body);font-weight:800;color:#20314e}
+.tl-row{display:flex;align-items:center;gap:12px}
+.tl-name{width:96px;flex:none;font-size:16px;font-weight:750;color:#20314e}
+.tl-bar{flex:1;display:flex;gap:3px;height:52px}
+.tl-bar i{display:grid;place-items:center;font-style:normal;font-size:15px;font-weight:750;border-radius:8px;text-align:center;line-height:1.2;padding:0 4px}
+.tl-fit{background:#eaf0fb;color:#2f5fb5;border:1.5px solid #9db6e3}
+.tl-val{background:#e9f7f5;color:#087e79;border:1.5px solid #0b9d98}
+.tl-test{background:#fdeeee;color:#b23a40;border:1.5px solid #e0898d}
+.tl-final{background:#20314e;color:#fff;border:1.5px solid #20314e}
+.tl-scale{flex:1;display:flex;gap:3px;font-size:14px;color:#60708a;margin-top:-6px}
+.tl-scale span{border-top:1.5px solid #cbd7e6;padding-top:4px;text-align:center}
+.tl-notes{margin:4px 0 0;padding-left:1.15em;font-size:var(--fs-secondary);line-height:1.5;color:#20314e}
+
+/* 模型總覽頁：列高壓縮，騰出底部說明列 */
+.seq-compact .seq{padding:8px 16px}
+.seq-compact .layer{padding:5px 10px}
+.seq-compact .impl-strip{font-size:17px;padding:10px 14px}

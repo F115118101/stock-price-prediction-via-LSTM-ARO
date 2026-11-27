@@ -1,6 +1,6 @@
 // 實作簡報：控制器 + 投影片內容 + Learning Lab。
 // 外框、工具列、進度條、全部頁面、抽屜的 DOM 與 CSS 和 index.html 相同；切換頁面不做動畫。
-// 程式碼一律從 impl-code.js（由 notebook 逐字擷取）讀取；投影片上的程式碼是節錄，抽屜「程式碼」分頁顯示完整函式。
+// 投影片版面不放程式碼；抽屜「程式碼」分頁從 impl-code.js（由 notebook 逐字擷取）顯示完整函式。
 (() => {
 const $ = s => document.querySelector(s);
 const CODE = window.IMPL_CODE || {};
@@ -60,8 +60,9 @@ function glossTable(code, name) {
 // ---------------------------------------------------------------- 投影片元件
 const card = (key, title, body, opt = {}) =>
   `<article class="native-card ${opt.tone || ''}" data-lesson="${key}"${opt.style ? ` style="${opt.style}"` : ''}>${opt.tag ? `<span class="tag ${opt.tagTone || ''}">${opt.tag}</span>` : ''}${opt.stat ? `<span class="stat ${opt.statTone || ''}">${opt.stat}</span>` : ''}${title ? `<h2>${title}</h2>` : ''}${body}</article>`;
-const code = (key, name, note, src, opt = {}) =>
-  `<div class="code-panel" data-lesson="${key}"${opt.style ? ` style="${opt.style}"` : ''}><div class="code-name"><span>${name}</span><small>${note}</small></div><pre${opt.lh ? ` style="line-height:${opt.lh}"` : ''}>${hl(src)}</pre></div>`;
+// 投影片上不放程式碼：以白話步驟說明流程，完整程式碼只在抽屜「程式碼」分頁
+const steps = (key, title, items, opt = {}) =>
+  `<div class="impl-steps ${opt.cls || ''}" data-lesson="${key}"${opt.style ? ` style="${opt.style}"` : ''}><div class="steps-head">${title}</div><ol>${items.map(s => `<li>${s}</li>`).join('')}</ol></div>`;
 const L = (cls, name, shape) => `<div class="layer ${cls}">${name}${shape ? `<small>${shape}</small>` : ''}</div>`;
 const A = '<span class="arr">→</span>';
 const seq = (key, name, sub, layers, params, extra = '') =>
@@ -115,7 +116,7 @@ const SLIDES = [
   <a class="impl-cover-colab" href="${COLAB}" target="_blank" rel="noopener">▶ 在 Colab 開啟 notebook ↗</a>
   <div class="impl-cover-stats"><div><b>29</b>檔股票</div><div><b>7</b>種模型</div><div><b>2</b>種評估模式</div><div><b>406</b>組實驗</div></div>
   <div class="impl-cover-team"><small>指導教授</small><b>歐陽振森 教授</b><small>報告成員</small>F115119104　楊晟楷<br>F115118101　李郅陞<br>F115119131　葉日杰</div>`,
-  lesson: { explain: `<p>這份簡報介紹我們如何在程式中重現 Gülmez (2023) 的 LSTM-ARO 方法，以及跑完 29 檔 × 7 種模型 × 2 種評估模式之後的結果。</p><p>點選投影片上的卡片、程式碼或圖表，可在這裡看到說明；有程式碼的項目可切到「程式碼」分頁看 notebook 裡的完整函式。</p>`, source: SRC.nb + SRC.results + SRC.paper } },
+  lesson: { explain: `<p>這份簡報介紹我們如何在程式中重現 Gülmez (2023) 的 LSTM-ARO 方法，以及跑完 29 檔 × 7 種模型 × 2 種評估模式之後的結果。</p><p>點選投影片上的卡片、步驟或圖表，可在這裡看到說明；有程式碼的項目可切到「程式碼」分頁看 notebook 裡的完整函式。</p>`, source: SRC.nb + SRC.results + SRC.paper } },
 
 // 2 問題
 { section: S1, phase: 'one', title: '這次實作要回答三個問題', source: 'reproduction_plan.md §6',
@@ -132,32 +133,24 @@ const SLIDES = [
     plan: { title: '實驗規模', explain: '<p>29 檔（WBA 已下市）× 7 種模型（NAIVE、ANN、LSTM1D、LSTM2D、LSTM3D、LSTM-GA、LSTM-ARO）× 2 種評估模式 = 406 組。每組的 ANN／LSTM 都用 5 個 seed 重訓取平均。</p>' },
   } },
 
-// 3 程式架構
-{ section: S1, phase: 'one', title: 'Notebook 的程式架構', source: 'djia_reproduction.ipynb · run_job()',
-  html: `<div class="impl-body tall"><div class="pipe" style="height:124px">
+// 3 程式架構與分工
+{ section: S1, phase: 'one', title: 'Notebook 的程式架構與三人分工', source: 'djia_reproduction.ipynb · run_job() / shard_tickers() / compatible()',
+  html: `<div class="impl-body tall" style="gap:16px"><div class="pipe" style="height:118px">
     ${card('cfg', '① 實驗設定', '<p>Config、SHARD 分工</p>')}<span class="flow-arrow">→</span>
     ${card('data', '② 凍結資料', '<p>GitHub CSV＋md5 指紋</p>')}<span class="flow-arrow">→</span>
     ${card('bench', '③ 時間估算', '<p>CPU / GPU 選較快者</p>')}<span class="flow-arrow">→</span>
     ${card('jobs', '④ run_jobs', '<p>股票 × 模型平行執行</p>')}<span class="flow-arrow">→</span>
     ${card('merge', '⑤ 匯出／合併', '<p>zip，設定不同即拒收</p>')}<span class="flow-arrow">→</span>
     ${card('collect', '⑥ 彙整', '<p>Table 7–11、Wilcoxon</p>')}
-  </div><div style="height:14px"></div>
-  ${code('runjob', 'run_job()：一檔股票 × 一種模型', '節錄', `def run_job(cfg_dict: dict, ticker: str, model: str) -> dict:
-    # …（略：已有 done.json 就直接讀回結果）
-    data = prepare(load_prices(cfg, ticker), cfg)
-    if model == "NAIVE":
-        pred = data.prev_test
-    elif model in BASELINES:
-        rows, pred = final_eval(cfg, data, lambda: build_baseline(cfg, model))
-    elif model in SEARCHERS:
-        ss = search_seed(cfg, ticker)
-        X0 = np.random.default_rng(ss).uniform(0, 1, (cfg.pop_size, DIM))  # GA 與 ARO 共用初始族群
-        fobj = Fitness(cfg, data, os.path.join(out, "candidates.jsonl"), ss)
-        algo, rng = (aro, np.random.default_rng(ss + 1)) if model == "LSTM-ARO" else (ga, np.random.default_rng(ss + 2))
-        best_x, best_f, history = algo(fobj, X0, cfg.iterations, rng)
-        arch = hp_to_arch(decode(best_x))
-        rows, pred = final_eval(cfg, data, lambda: build_lstm(cfg, **arch))`)}</div>`,
-  lesson: { explain: '<p>所有核心程式寫在 notebook 的一格，以 <code>%%writefile djia_lib.py</code> 存成模組，讓平行的 worker process 可以 import（Colab 與 Windows 都用 spawn 啟動）。</p><p>最小的工作單位是「一檔股票 × 一種模型」，由 <code>run_job()</code> 完成；完成後寫一個 <code>done.json</code>，重跑時直接讀回。</p>', code: fullCode('run_job'), source: SRC.nb },
+  </div>
+  <div class="grid3" style="height:200px">
+    ${card('runjob', '一組實驗 = 一檔 × 一種模型', '<ul><li><b>NAIVE</b>：取前一天價格</li><li><b>固定架構</b>：直接最終評估</li><li><b>GA／ARO</b>：同一個初始族群先搜尋</li></ul>', {tone: 'tone-blue'})}
+    ${card('shard', '三人分工', '<p>29 檔輪流分 3 份（10／10／9），每人只改 SHARD。合併時逐欄比對設定與資料指紋，不一致就拒收。</p>', {tone: 'tone-purple'})}
+    ${card('drive', '斷線可續跑', '<p>結果存在 Google Drive，重新執行會從中斷處接著跑。每人約 3.4 小時（Colab T4）。</p>', {tone: 'tone-green'})}
+  </div>
+  ${table('time', ['搜尋時間（29 檔合計）', '>論文模式', '>驗證集模式', '>每檔實際訓練架構數'], [['LSTM-ARO', '10.5 h', '8.7 h', '81'], ['LSTM-GA', '9.7 h', '6.7 h', '62']])}
+  </div>`,
+  lesson: { explain: '<p>所有核心程式寫在 notebook 的一格，以 <code>%%writefile djia_lib.py</code> 存成模組，讓平行的 worker process 可以 import（Colab 與 Windows 都用 spawn 啟動）。</p><p>最小的工作單位是「一檔股票 × 一種模型」，由 <code>run_job()</code> 完成；完成後寫一個 <code>done.json</code>，重跑時直接讀回。</p><p>29 檔輪流分成 3 份，每人在自己的 Colab 上跑同一份 notebook，只改 <code>SHARD</code>。每個結果都附上完整設定與資料指紋，合併時逐欄比對。</p>', code: fullCode('run_job', 'shard_tickers', 'compatible'), source: SRC.nb + SRC.plan },
   items: {
     cfg: { title: '① 實驗設定', explain: '<p>協作者只改 <code>SHARD</code>，其他設定所有人必須一致，否則結果無法合併。</p>', code: fullCode('settings', 'Config') },
     data: { title: '② 凍結資料', explain: '<p>負責人先用 yfinance 下載一次，存成長格式 CSV 放上 GitHub。每個人都從同一個網址下載，並計算 md5 前 8 碼（<code>22650beb</code>）放進設定，合併時用來確認大家用的是同一份資料。</p><p>計算 md5 前會先把 CRLF 換成 LF，避免 Windows／git 換行設定造成指紋不同。</p>' },
@@ -165,28 +158,22 @@ const SLIDES = [
     jobs: { title: '④ run_jobs：平行執行', explain: '<p>以「股票 × 模型」為單位丟進 <code>ProcessPoolExecutor</code>。已有 <code>done.json</code> 且設定一致的直接跳過；設定不同的舊結果會移到 <code>.stale-時間</code> 再重跑。</p>', code: fullCode('run_jobs') },
     merge: { title: '⑤ 匯出與合併', explain: '<p>協作者把自己完成的結果打包成 zip；負責人把 zip 放進 <code>incoming/</code> 後合併。<code>compatible()</code> 會逐欄比對設定與資料指紋，不一致的拒收，已存在的不覆蓋。</p>', code: fullCode('compatible', 'merge_results') },
     collect: { title: '⑥ 彙整', explain: '<p>讀回所有 <code>done.json</code>，整理成論文 Table 7–10 的格式（列為股票、欄為模型），並計算各模型拿第一的檔數、平均名次、Wilcoxon 配對檢定與訓練時間（Table 11）。</p>' },
-    runjob: { title: 'run_job()', explain: '<p>三種模型走三條路：</p><ul><li><b>NAIVE</b>：直接用前一天價格。</li><li><b>固定架構</b>：<code>final_eval</code> 用 5 個 seed 訓練。</li><li><b>GA／ARO</b>：先搜尋，再把最佳架構交給 <code>final_eval</code>。</li></ul><p>GA 與 ARO 使用<b>同一個初始族群 X0</b>，差別只在搜尋演算法。</p>', code: fullCode('run_job', 'search_seed') },
+    runjob: { title: 'run_job()：一檔股票 × 一種模型', explain: '<p>已經跑完（有 <code>done.json</code>）就直接讀回結果；否則讀入收盤價、切好視窗後，三種模型走三條路：</p><ul><li><b>NAIVE</b>：直接用前一天價格。</li><li><b>固定架構</b>：<code>final_eval</code> 用 5 個 seed 訓練。</li><li><b>GA／ARO</b>：先搜尋，再把最佳架構交給 <code>final_eval</code>。</li></ul><p>GA 與 ARO 使用<b>同一個初始族群 X0</b>，差別只在搜尋演算法。</p>', code: fullCode('run_job', 'search_seed') },
+    shard: { title: '分工與相容性檢查', explain: '<p>輪流分配（第 k 份取第 k、k+3、k+6… 檔）讓每份的股票數接近，資料較短的 DOW 也不會集中在同一份。</p><p><code>FP_FIELDS</code> 包含所有會影響結果的設定（epochs、seed、評估模式、Dense 激活、資料指紋等）；執行緒數、是否用 GPU 不影響結果，不列入。</p>', code: fullCode('shard_tickers', 'compatible') },
+    drive: { title: '斷線續跑', explain: '<p>每個「股票 × 模型」完成時寫 <code>done.json</code>；搜尋中的候選寫在 <code>candidates.jsonl</code>。重新執行時已完成的跳過、搜尋中的從快取接著跑，最多損失正在訓練的那一個模型。</p>' },
+    time: { title: '執行時間', explain: '<p>驗證集模式的搜尋比較快，因為 early stopping 讓候選模型提早停止。每檔實際訓練的架構數兩種模式幾乎相同。</p>' },
   } },
 
 // 4 資料前處理
 { section: S1, phase: 'one', title: '資料前處理：20 天視窗、只用訓練段正規化', source: 'djia_reproduction.ipynb · prepare()',
   html: `<div class="impl-body"><div class="row">
-    <div style="display:flex;width:750px;flex:none">${code('prepare', 'prepare()', '節錄', `def prepare(prices: pd.Series, cfg: Config) -> Data:
-    raw = prices.values.astype(float)
-    n = len(raw) - cfg.window
-    n_train = int(n * cfg.train_ratio)
-    lo, hi = raw[: n_train + cfg.window].min(), raw[: n_train + cfg.window].max()  # 只看訓練段
-    z = (raw - lo) / (hi - lo)
-    X = np.lib.stride_tricks.sliding_window_view(z[:-1], cfg.window).copy()
-    X = X[:, :, None] if cfg.input_layout == "timesteps" else X[:, None, :]
-    y = z[cfg.window:].copy()
-    X_train, y_train, X_test, y_test = X[:n_train], y[:n_train], X[n_train:], y[n_train:]
-    if cfg.use_validation:
-        n_val = int(n_train * cfg.val_ratio)
-        X_fit, y_fit = X_train[:-n_val], y_train[:-n_val]
-        X_eval, y_eval = X_train[-n_val:], y_train[-n_val:]
-    else:
-        X_fit, y_fit, X_eval, y_eval = X_train, y_train, X_test, y_test`, {style: 'flex:1'})}</div>
+    <div class="impl-timeline" data-lesson="prepare" style="width:750px;flex:none">
+      <div class="tl-head">每檔股票的資料怎麼切（2018-01 → 2022-12）</div>
+      <div class="tl-row"><span class="tl-name">論文模式</span><div class="tl-bar"><i class="tl-fit" style="flex:80">訓練候選架構</i><i class="tl-test" style="flex:20">測試集＝fitness</i></div></div>
+      <div class="tl-row"><span class="tl-name">驗證集模式</span><div class="tl-bar"><i class="tl-fit" style="flex:64">訓練候選架構</i><i class="tl-val" style="flex:16">驗證集＝fitness</i><i class="tl-final" style="flex:20">測試集</i></div></div>
+      <div class="tl-row"><span class="tl-name"></span><div class="tl-scale"><span style="flex:80">訓練段 80%（約 991 筆）</span><span style="flex:20">測試 20%</span></div></div>
+      <ul class="tl-notes"><li>每筆輸入 = 連續 20 天收盤價，目標 = 第 21 天</li><li>依時間切，不打亂；測試集約 248 筆（≈ 2022 年）</li><li>驗證集模式的測試集只在最後評估一次</li><li>算指標前換回原始價格，MSE 單位是美元²</li></ul>
+    </div>
     <div class="col f1">
       ${card('window', '20 天 → 隔天', '<p>輸入形狀 (20, 1)：20 個時間步，每步 1 個特徵（收盤價）。</p>', {tone: 'tone-blue'})}
       ${card('split', '80% / 20% 依時間切', '<p>訓練約 991 筆、測試 248 筆（≈ 2022 年）。</p>', {tone: 'tone-green'})}
@@ -195,15 +182,15 @@ const SLIDES = [
     </div></div></div>`,
   lesson: { explain: '<p>每檔股票各自處理、各自訓練。資料期間 2018-01-01 ～ 2022-12-31，使用收盤價（只做分割調整，和論文較接近）。</p><p>評估指標都先用 <code>data.inverse()</code> 換回原始價格再計算，所以 MSE 的單位是「美元²」，可直接和論文表格比較。</p>', code: fullCode('prepare', 'metrics'), source: SRC.nb + SRC.plan },
   items: {
-    prepare: { title: 'prepare()', explain: '<p>用 <code>sliding_window_view</code> 一次切出所有視窗：第 k 筆輸入是第 k～k+19 天，目標是第 k+20 天。</p><p><code>X_fit / X_eval</code> 是搜尋時用的資料：論文模式 eval = 測試集；驗證集模式從訓練集尾端切 20% 當 eval。</p>', code: fullCode('prepare') },
+    prepare: { title: '兩種模式的資料切法', explain: '<p>用 <code>sliding_window_view</code> 一次切出所有視窗：第 k 筆輸入是第 k～k+19 天，目標是第 k+20 天。</p><p>搜尋時用的 eval 集：<b>論文模式</b>直接用測試集；<b>驗證集模式</b>從訓練段尾端切 20% 當驗證集，候選模型只用前 80% 訓練，測試集留到最後評估一次。</p>', code: fullCode('prepare') },
     window: { title: '20 天視窗', explain: '<p>論文只寫「Input 20」。我們預設解讀為 20 個時間步 × 1 個特徵，這也是 LSTM 能利用時間順序的形狀；另一種解讀（1 步 × 20 特徵）保留成設定 <code>INPUT_LAYOUT = "features"</code>。</p>' },
     split: { title: '依時間切分', explain: '<p>股價是時間序列，不能隨機打亂後切分，否則訓練集會包含測試期之後的資訊。<code>n_train = int(n × 0.8)</code>，前面是訓練、後面是測試。</p><p>DOW 上市較晚，訓練筆數較少。</p>' },
     minmax: { title: 'Min-Max 正規化', explain: '<p>z = (x − lo) / (hi − lo)。lo、hi 若用整段資料計算，模型就間接知道測試期的最高價與最低價，屬於資料洩漏。測試期價格可能超出 [0, 1]，這是正常的。</p>' },
     tickers: { title: '股票清單', explain: '<p>論文 Table 7 的 30 檔中，WBA（Walgreens）已從 Yahoo Finance 下市，拿不到 2018–2022 的資料，因此只有 29 檔。</p><p>DOW 2019-03-20 才上市。WMT 在 2024 年 1 拆 3，我們的價格約為論文當時的 1/3，比較 MSE 時要 × 9。</p>' },
   } },
 
-// 5 實驗設定
-{ section: S1, phase: 'one', title: '實驗設定：預算縮小，兩種評估模式', source: 'djia_reproduction.ipynb §1 實驗設定 · Config',
+// 5 實驗設定與最終評估
+{ section: S1, phase: 'one', title: '實驗設定：預算縮小、兩種評估模式、5 個 seed 取平均', source: 'djia_reproduction.ipynb §1 實驗設定 · Config / final_eval()',
   html: `<div class="impl-body"><div class="row">
     ${table('budget', ['項目', '>論文', '>我們'], [
       ['族群 × 迭代', '50 × 50', '10 × 10'],
@@ -214,299 +201,87 @@ const SLIDES = [
       ['batch size', '未寫明', '32'],
       ['隱藏 Dense 激活', '未寫明', 'linear'],
     ], {cls: 'fill', style: 'flex:1'})}
-    <div class="col" style="width:560px;flex:none">
+    <div class="col" style="width:580px;flex:none">
       ${card('paper', '論文模式 USE_VALIDATION = False', '<ul><li>fitness = 候選架構在<b>測試集</b>的 MSE（論文 Fig. 2）</li><li>固定 epochs，不做 early stopping</li><li>用測試集挑超參數 → 結果偏樂觀</li></ul>', {tone: 'tone-red', tag: '照論文', tagTone: 'red'})}
       ${card('val', '驗證集模式 USE_VALIDATION = True', '<ul><li>fitness = 訓練集尾端 20% <b>驗證集</b>的 MSE</li><li>early stopping：搜尋 patience 5、最終 patience 10</li><li>測試集只在最後用一次</li></ul>', {tone: 'tone-green', tag: '嚴謹版'})}
-      ${strip('final', '兩種模式都把最終架構用 5 個 seed 重訓 50 epochs，取測試集平均', 'left')}
+      ${card('final', '最終評估：所有模型同一套流程', '<p>用全部訓練集重訓 5 次（seed 42–46），在測試集算 MSE、MAE、MAPE、R²，取 5 次平均。</p>', {tone: 'tone-blue'})}
     </div></div></div>`,
   lesson: { explain: '<p>論文每檔股票最多要訓練 2,550 個候選模型，30 檔約 8.7 天。我們把族群與迭代都縮成 10，每檔最多 110 次評估（相同架構只訓練一次，實際約 60–80 個）。</p><p>評估模式以 <code>USE_VALIDATION</code> 切換，兩種結果存在不同資料夾（<code>paper_…</code>、<code>val_…</code>），不會互相覆蓋。</p>', code: fullCode('settings', 'Config'), source: SRC.nb + SRC.plan },
   items: {
     budget: { title: '運算預算', explain: '<p>論文沒寫的訓練細節（epochs、batch、Dense 激活）由我們決定。Dense 激活先用 10 檔股票比較 linear 與 ReLU：linear 的 MSE 為論文的 1.14 倍，ReLU 為 3.71 倍，因此採用 Keras 預設的 linear。</p>', source: SRC.relu },
-    paper: { title: '論文模式', explain: '<p>論文 Fig. 2 的流程：每個候選架構訓練後，直接用測試集的誤差當 fitness。這等於用測試集挑超參數，挑出的分數是「在測試集上看起來最好的那一次」。</p>' },
-    val: { title: '驗證集模式', explain: '<p>從訓練集最後 20% 切出驗證集，搜尋時只看驗證集。最終模型以 <code>validation_split=0.1</code> 做 early stopping，<code>restore_best_weights=True</code>。測試集完全不參與挑選。</p>', code: fullCode('fit_model') },
-    final: { title: '最終評估', explain: '<p>每個模型（含 ANN、LSTM1D/2D/3D）都用 seed 42–46 訓練 5 次，取 5 次測試指標的平均，並記錄標準差。只訓練一次的話，結果會受隨機初始化影響很大。</p>', code: fullCode('final_eval') },
+    paper: { title: '論文模式', explain: '<p>論文 Fig. 2 的流程：每個候選架構訓練後，直接用測試集的誤差當 fitness。這等於用測試集挑超參數，挑出的分數是「在測試集上看起來最好的那一次」。</p><p>最終模型固定跑滿 50 epochs，不看驗證集。</p>', code: fullCode('fit_model') },
+    val: { title: '驗證集模式', explain: '<p>從訓練集最後 20% 切出驗證集，搜尋時只看驗證集。最終模型從訓練資料最後 10% 切出驗證資料做 early stopping（patience 10），並還原 val_loss 最低時的權重，實際平均訓練 33–41 epochs。測試集完全不參與挑選。</p>', code: fullCode('fit_model') },
+    final: { title: '最終評估', explain: '<p>所有模型（ANN、LSTM1D/2D/3D 與搜尋出的架構）都走同一個 <code>final_eval()</code>：用全部訓練集重訓 5 次（seed 42–46），在測試集上評估，指標取平均並記錄標準差。這是我們報告的主要數字（<code>MSE</code>）；搜尋時那一次的 MSE 另外記為 <code>best_fitness</code>。</p><h3>為什麼要 5 個 seed？</h3><p>小型 LSTM 對初始權重很敏感。同一架構換 seed 的 MSE 標準差約為平均的 15–44%，只跑一次的結果可能剛好很好或很差。</p><h3>評估指標（Eq. 21–24）</h3><p>MSE、MAE、MAPE、R²，都在原始價格尺度計算。MAPE 以比例回報（0.02 = 2%），和論文表格格式一致；R² = 1 − SSE / SST。預測圖用 5 個 seed 的平均預測值。</p>', code: fullCode('final_eval', 'fit_model', 'metrics') },
   } },
 
 // 6 模型總覽
 { section: S2, phase: 'two', title: '七種模型的層序列', source: '論文 Table 1–5 · build_baseline() / build_lstm()',
-  html: `<div class="impl-body" style="gap:7px">
+  html: `<div class="impl-body tall seq-compact" style="gap:7px">
     ${seq('naive', 'NAIVE', '基準', [L('in', 'Input', '20 天'), L('naive', '取最後一天', 'x[t-1]')], '<b>0</b>參數')}
     ${seq('ann', 'ANN', 'Table 1', [L('in', 'Input', '(20, 1)'), L('flat', 'Flatten', '20'), L('dense', 'Dense 10'), L('dense', 'Dense 10'), L('drop', 'Dropout 0.5'), L('out', 'Dense 1')], '<b>331</b>參數')}
-    ${seq('l1', 'LSTM1D', 'Table 2', [L('in', 'Input', '(20, 1)'), L('lstm', 'LSTM 10'), L('dense', 'Dense 10'), L('drop', 'Dropout 0.5'), L('out', 'Dense 1')], '<b>601</b>參數')}
-    ${seq('l2', 'LSTM2D', 'Table 3', [L('in', 'Input', '(20, 1)'), L('lstm', 'LSTM 10'), L('lstm', 'LSTM 10'), L('dense', 'Dense 10'), L('drop', 'Dropout 0.5'), L('out', 'Dense 1')], '<b>1,441</b>參數')}
-    ${seq('l3', 'LSTM3D', 'Table 4', [L('in', 'Input', '(20, 1)'), L('lstm', 'LSTM 10'), L('lstm', 'LSTM 10'), L('lstm', 'LSTM 10'), L('dense', 'Dense 10'), L('drop', 'Dropout 0.5'), L('out', 'Dense 1')], '<b>2,281</b>參數')}
+    ${seq('l1', 'LSTM1D', 'Table 2', [L('in', 'Input', '(20, 1)'), L('lstm', 'LSTM 10', '(10)'), L('dense', 'Dense 10'), L('drop', 'Dropout 0.5'), L('out', 'Dense 1')], '<b>601</b>參數')}
+    ${seq('l2', 'LSTM2D', 'Table 3', [L('in', 'Input', '(20, 1)'), L('lstm', 'LSTM 10', '(20, 10) 序列'), L('lstm', 'LSTM 10', '(10)'), L('dense', 'Dense 10'), L('drop', 'Dropout 0.5'), L('out', 'Dense 1')], '<b>1,441</b>參數')}
+    ${seq('l3', 'LSTM3D', 'Table 4', [L('in', 'Input', '(20, 1)'), L('lstm', 'LSTM 10', '(20, 10) 序列'), L('lstm', 'LSTM 10', '(20, 10) 序列'), L('lstm', 'LSTM 10', '(10)'), L('dense', 'Dense 10'), L('drop', 'Dropout 0.5'), L('out', 'Dense 1')], '<b>2,281</b>參數')}
     ${seq('search', 'GA / ARO', 'Table 5', [L('in', 'Input', '(20, 1)'), L('lstm', 'LSTM x₀'), L('lstm', 'LSTM x₂', 'x₁=1 才有'), L('lstm', 'LSTM x₄', 'x₃=1 才有'), L('dense', 'Dense x₅'), L('drop', 'Dropout x₆'), L('out', 'Dense 1')], '<b>依搜尋</b>x₇ optimizer、x₈ lr', 'search')}
+    <div class="grid3" style="margin-top:7px">
+      ${strip('retseq', '<b>疊 LSTM</b>：除了最後一層，都把整段 20 步序列交給下一層', 'left')}
+      ${strip('linear', '<b>Dense 不加激活</b>：論文沒寫，採 Keras 預設 linear', 'left')}
+      ${strip('dropout', '<b>固定架構</b>：Dropout 0.5、Adam、學習率 0.001', 'left')}
+    </div>
   </div>`,
-  lesson: { explain: '<p>所有模型都輸出一個數字（正規化後的隔天價格），損失函數為 MSE。固定架構一律用 Adam、學習率 0.001；GA／ARO 的 optimizer 與學習率也是搜尋對象。</p><h3>計算公式（Keras）</h3><ul><li><b>LSTM(u)</b>，輸入 d 維：4 個閘門（輸入、遺忘、輸出、候選）各有 W（d·u）、U（u·u）、b（u），共 <b>4·((d+u)·u + u)</b>。</li><li><b>Dense(n)</b>，輸入 d 維：權重 d·n ＋ 偏差 n = <b>d·n + n</b>。</li><li><b>Flatten、Dropout</b>：只改形狀或隨機遮蔽，<b>0</b> 個參數。</li><li>LSTM 的 d 是<b>每個時間步</b>的特徵數（這裡是 1），與序列長度 20 無關；ANN 先 Flatten 成 20 維，所以 Dense 的 d = 20。</li></ul><h3>NAIVE</h3><p>直接取前一天收盤價，沒有可學參數：<b>0</b>。</p><h3>ANN（Table 1）</h3><table><tr><th>層</th><th>計算</th><th>參數</th></tr><tr><td>Flatten</td><td>(20, 1) → 20</td><td>0</td></tr><tr><td>Dense 10（輸入 20 維）</td><td>20·10 + 10</td><td>210</td></tr><tr><td>Dense 10（輸入 10 維）</td><td>10·10 + 10</td><td>110</td></tr><tr><td>Dropout 0.5</td><td>無權重</td><td>0</td></tr><tr><td>Dense 1（輸入 10 維）</td><td>10·1 + 1</td><td>11</td></tr><tr><td><b>合計</b></td><td>210 + 110 + 11</td><td><b>331</b></td></tr></table><h3>LSTM1D（Table 2）</h3><table><tr><th>層</th><th>計算</th><th>參數</th></tr><tr><td>LSTM 10（輸入 1 維）</td><td>4·((1+10)·10 + 10)</td><td>480</td></tr><tr><td>Dense 10（輸入 10 維）</td><td>10·10 + 10</td><td>110</td></tr><tr><td>Dropout 0.5</td><td>無權重</td><td>0</td></tr><tr><td>Dense 1（輸入 10 維）</td><td>10·1 + 1</td><td>11</td></tr><tr><td><b>合計</b></td><td>480 + 110 + 11</td><td><b>601</b></td></tr></table><h3>LSTM2D（Table 3）</h3><table><tr><th>層</th><th>計算</th><th>參數</th></tr><tr><td>LSTM 10（輸入 1 維）</td><td>4·((1+10)·10 + 10)</td><td>480</td></tr><tr><td>LSTM 10（輸入 10 維）</td><td>4·((10+10)·10 + 10)</td><td>840</td></tr><tr><td>Dense 10（輸入 10 維）</td><td>10·10 + 10</td><td>110</td></tr><tr><td>Dropout 0.5</td><td>無權重</td><td>0</td></tr><tr><td>Dense 1（輸入 10 維）</td><td>10·1 + 1</td><td>11</td></tr><tr><td><b>合計</b></td><td>480 + 840 + 110 + 11</td><td><b>1,441</b></td></tr></table><h3>LSTM3D（Table 4）</h3><table><tr><th>層</th><th>計算</th><th>參數</th></tr><tr><td>LSTM 10（輸入 1 維）</td><td>4·((1+10)·10 + 10)</td><td>480</td></tr><tr><td>LSTM 10（輸入 10 維）</td><td>4·((10+10)·10 + 10)</td><td>840</td></tr><tr><td>LSTM 10（輸入 10 維）</td><td>4·((10+10)·10 + 10)</td><td>840</td></tr><tr><td>Dense 10（輸入 10 維）</td><td>10·10 + 10</td><td>110</td></tr><tr><td>Dropout 0.5</td><td>無權重</td><td>0</td></tr><tr><td>Dense 1（輸入 10 維）</td><td>10·1 + 1</td><td>11</td></tr><tr><td><b>合計</b></td><td>480 + 840 + 840 + 110 + 11</td><td><b>2,281</b></td></tr></table><h3>LSTM-GA / LSTM-ARO（Table 5）</h3><p>設各層 LSTM 神經元為 u₁、u₂、u₃（沒有的層略過），Dense 為 k，最後一層 LSTM 的神經元為 u_last：</p><ul><li>第 1 層 LSTM：4·((1+u₁)·u₁ + u₁)</li><li>第 2 層（x₁=1）：4·((u₁+u₂)·u₂ + u₂)</li><li>第 3 層（x₃=1）：4·((u₂+u₃)·u₃ + u₃)</li><li>Dense k：u_last·k + k</li><li>輸出 Dense 1：k + 1</li></ul><p>例：LSTM 13 → LSTM 7 → Dense 10 → Dense 1 = 4·(14·13+13) + 4·(20·7+7) + (7·10+10) + 11 = 780 + 588 + 80 + 11 = <b>1,459</b>。可到 GA／ARO 卡片的「動態演算」自己組合試算。</p>', code: fullCode('build_baseline', 'build_lstm'), source: SRC.nb + SRC.paper },
+  lesson: { explain: '<p>所有模型都輸出一個數字（正規化後的隔天價格），損失函數為 MSE。固定架構一律用 Adam、學習率 0.001；GA／ARO 的 optimizer 與學習率也是搜尋對象。三個固定 LSTM 模型與 GA／ARO 共用同一個 <code>build_lstm()</code>：傳入每層的神經元數清單即可（<code>[10]</code>、<code>[10, 10]</code>、<code>[10, 10, 10]</code>）。</p><h3>計算公式（Keras）</h3><ul><li><b>LSTM(u)</b>，輸入 d 維：4 個閘門（輸入、遺忘、輸出、候選）各有 W（d·u）、U（u·u）、b（u），共 <b>4·((d+u)·u + u)</b>。</li><li><b>Dense(n)</b>，輸入 d 維：權重 d·n ＋ 偏差 n = <b>d·n + n</b>。</li><li><b>Flatten、Dropout</b>：只改形狀或隨機遮蔽，<b>0</b> 個參數。</li><li>LSTM 的 d 是<b>每個時間步</b>的特徵數（這裡是 1），與序列長度 20 無關；ANN 先 Flatten 成 20 維，所以 Dense 的 d = 20。</li></ul><h3>NAIVE</h3><p>直接取前一天收盤價，沒有可學參數：<b>0</b>。</p><h3>ANN（Table 1）</h3><table><tr><th>層</th><th>計算</th><th>參數</th></tr><tr><td>Flatten</td><td>(20, 1) → 20</td><td>0</td></tr><tr><td>Dense 10（輸入 20 維）</td><td>20·10 + 10</td><td>210</td></tr><tr><td>Dense 10（輸入 10 維）</td><td>10·10 + 10</td><td>110</td></tr><tr><td>Dropout 0.5</td><td>無權重</td><td>0</td></tr><tr><td>Dense 1（輸入 10 維）</td><td>10·1 + 1</td><td>11</td></tr><tr><td><b>合計</b></td><td>210 + 110 + 11</td><td><b>331</b></td></tr></table><h3>LSTM1D（Table 2）</h3><table><tr><th>層</th><th>計算</th><th>參數</th></tr><tr><td>LSTM 10（輸入 1 維）</td><td>4·((1+10)·10 + 10)</td><td>480</td></tr><tr><td>Dense 10（輸入 10 維）</td><td>10·10 + 10</td><td>110</td></tr><tr><td>Dropout 0.5</td><td>無權重</td><td>0</td></tr><tr><td>Dense 1（輸入 10 維）</td><td>10·1 + 1</td><td>11</td></tr><tr><td><b>合計</b></td><td>480 + 110 + 11</td><td><b>601</b></td></tr></table><h3>LSTM2D（Table 3）</h3><table><tr><th>層</th><th>計算</th><th>參數</th></tr><tr><td>LSTM 10（輸入 1 維）</td><td>4·((1+10)·10 + 10)</td><td>480</td></tr><tr><td>LSTM 10（輸入 10 維）</td><td>4·((10+10)·10 + 10)</td><td>840</td></tr><tr><td>Dense 10（輸入 10 維）</td><td>10·10 + 10</td><td>110</td></tr><tr><td>Dropout 0.5</td><td>無權重</td><td>0</td></tr><tr><td>Dense 1（輸入 10 維）</td><td>10·1 + 1</td><td>11</td></tr><tr><td><b>合計</b></td><td>480 + 840 + 110 + 11</td><td><b>1,441</b></td></tr></table><h3>LSTM3D（Table 4）</h3><table><tr><th>層</th><th>計算</th><th>參數</th></tr><tr><td>LSTM 10（輸入 1 維）</td><td>4·((1+10)·10 + 10)</td><td>480</td></tr><tr><td>LSTM 10（輸入 10 維）</td><td>4·((10+10)·10 + 10)</td><td>840</td></tr><tr><td>LSTM 10（輸入 10 維）</td><td>4·((10+10)·10 + 10)</td><td>840</td></tr><tr><td>Dense 10（輸入 10 維）</td><td>10·10 + 10</td><td>110</td></tr><tr><td>Dropout 0.5</td><td>無權重</td><td>0</td></tr><tr><td>Dense 1（輸入 10 維）</td><td>10·1 + 1</td><td>11</td></tr><tr><td><b>合計</b></td><td>480 + 840 + 840 + 110 + 11</td><td><b>2,281</b></td></tr></table><h3>LSTM-GA / LSTM-ARO（Table 5）</h3><p>設各層 LSTM 神經元為 u₁、u₂、u₃（沒有的層略過），Dense 為 k，最後一層 LSTM 的神經元為 u_last：</p><ul><li>第 1 層 LSTM：4·((1+u₁)·u₁ + u₁)</li><li>第 2 層（x₁=1）：4·((u₁+u₂)·u₂ + u₂)</li><li>第 3 層（x₃=1）：4·((u₂+u₃)·u₃ + u₃)</li><li>Dense k：u_last·k + k</li><li>輸出 Dense 1：k + 1</li></ul><p>例：LSTM 13 → LSTM 7 → Dense 10 → Dense 1 = 4·(14·13+13) + 4·(20·7+7) + (7·10+10) + 11 = 780 + 588 + 80 + 11 = <b>1,459</b>。可到 GA／ARO 卡片的「動態演算」自己組合試算。</p>', code: fullCode('build_baseline', 'build_lstm'), source: SRC.nb + SRC.paper },
   items: {
     naive: { title: 'NAIVE', explain: '<p>預測值 = 前一天的實際收盤價（<code>data.prev_test</code>），不需要訓練。</p>' },
-    ann: { title: 'ANN（Table 1）', explain: '<p>Flatten 把 (20, 1) 攤平成 20 維，接兩層 Dense 10。參數：20·10+10 = 210、10·10+10 = 110、10+1 = 11，共 331。</p>', code: fullCode('build_baseline') },
-    l1: { title: 'LSTM1D（Table 2）', explain: '<p>LSTM 10（480）＋ Dense 10（110）＋ Dense 1（11）= 601 個參數。</p>', code: fullCode('build_lstm', 'build_baseline') },
-    l2: { title: 'LSTM2D（Table 3）', explain: '<p>第二層 LSTM 的輸入是第一層的 10 維輸出：4·(20·10 + 10) = 840。總計 480 + 840 + 110 + 11 = 1,441。</p>', code: fullCode('build_lstm', 'build_baseline') },
-    l3: { title: 'LSTM3D（Table 4）', explain: '<p>再多一層 LSTM 10（840）：480 + 840 + 840 + 110 + 11 = 2,281 個參數。層數最多，但在我們的實驗中表現最差。</p>', code: fullCode('build_lstm', 'build_baseline') },
+    ann: { title: 'ANN（Table 1）', explain: '<p>Flatten 把 (20, 1) 攤平成 20 維，接兩層 Dense 10。參數：20·10+10 = 210、10·10+10 = 110、10+1 = 11，共 331。</p><p>ANN 不看時間順序：LSTM 依序讀 20 天，並把前面的資訊存在 cell state；ANN 則把 20 天同時丟進全連接層。因為隱藏層沒有激活函數，整個網路在預測時等同 20 天價格的<b>線性組合</b>。</p>', code: fullCode('build_baseline') },
+    l1: { title: 'LSTM1D（Table 2）', explain: '<p>單層 LSTM 讀完 20 天後，輸出最後一步的 hidden state（10 維）。LSTM 10（480）＋ Dense 10（110）＋ Dense 1（11）= 601 個參數。</p>', code: fullCode('build_lstm', 'build_baseline') },
+    l2: { title: 'LSTM2D（Table 3）', explain: '<p>第一層輸出 (20, 10) 的序列；第二層讀這 20 步，只輸出最後一步 (10)。第二層 LSTM 的輸入是 10 維：4·(20·10 + 10) = 840。總計 480 + 840 + 110 + 11 = 1,441。</p>', code: fullCode('build_lstm', 'build_baseline') },
+    l3: { title: 'LSTM3D（Table 4）', explain: '<p>前兩層都輸出序列，再多一層 LSTM 10（840）：480 + 840 + 840 + 110 + 11 = 2,281 個參數。每檔只有約 990 筆訓練資料，3 層反而最差：平均名次 5.8（6 個模型中）。</p>', code: fullCode('build_lstm', 'build_baseline') },
     search: { title: 'LSTM-GA / LSTM-ARO（Table 5）', explain: '<p>架構與固定 LSTM 相同，只是每一層有沒有、幾個神經元、Dropout、optimizer、學習率都由 9 維向量 x₀…x₈ 決定。可切到「動態演算」自己組一個。</p>', code: fullCode('SEARCH_SPACE', 'decode', 'hp_to_arch', 'build_lstm'), widget: 'decode' },
+    retseq: { title: 'return_sequences', explain: '<p>LSTM 疊層時，下一層需要一個序列當輸入。<code>return_sequences=True</code> 讓 LSTM 每個時間步都輸出 hidden state，形狀 (20, 10)；False 時只輸出最後一步，形狀 (10)。<code>build_lstm()</code> 只把最後一層設為 False。</p>', code: fullCode('build_lstm') },
+    linear: { title: '為什麼用 linear？', explain: '<p>論文沒寫 Dense 層的激活函數。我們用 10 檔股票測試：linear 的 MSE 中位數為論文的 1.14 倍，ReLU 為 3.71 倍。linear 和論文同一量級，因此推論論文使用 Keras 預設值（無激活）。</p>', source: SRC.relu },
+    dropout: { title: 'Dropout 與 optimizer', explain: '<p>Dropout 放在最後一層 Dense 1 之前。訓練時每個神經元有 50% 機率輸出 0（其餘放大 2 倍），可降低過擬合；預測時不會丟棄。</p><p>固定架構一律 Adam、學習率 0.001；GA／ARO 的 Dropout、optimizer、學習率都由搜尋決定。</p>' },
   } },
 
-// 7 ANN
-{ section: S2, phase: 'two', title: 'ANN：Flatten 後接兩層 Dense', source: 'djia_reproduction.ipynb · build_baseline()',
-  html: `<div class="impl-body" style="display:flex;flex-direction:column;gap:16px">
-    ${seq('annseq', 'ANN', '331 參數', [L('in', 'Input', '(None, 20, 1)'), L('flat', 'Flatten', '(None, 20)'), L('dense', 'Dense 10', '(None, 10)'), L('dense', 'Dense 10', '(None, 10)'), L('drop', 'Dropout 0.5', '(None, 10)'), L('out', 'Dense 1', '(None, 1)')], '')}
-    <div class="row">
-      ${code('anncode', 'build_baseline("ANN")', '節錄', `def build_baseline(cfg: Config, name: str):
-    if name == "ANN":
-        k = _tf(cfg).keras
-        m = k.Sequential([
-            k.Input(shape=input_shape(cfg)),
-            k.layers.Flatten(),
-            k.layers.Dense(10, activation=_act(cfg)),
-            k.layers.Dense(10, activation=_act(cfg)),
-            k.layers.Dropout(0.5),
-            k.layers.Dense(1),
-        ])
-        m.compile(optimizer=k.optimizers.Adam(learning_rate=1e-3), loss="mse")
-        return m`, {style: 'width:640px;flex:none'})}
-      <div class="col f1">
-        ${card('flatten', 'Flatten', '<p>ANN 不看時間順序，20 天價格就是 20 個獨立輸入。</p>', {tone: 'tone-blue'})}
-        ${card('linear', 'activation = linear', '<p>論文沒寫激活函數，用 Keras 預設（無激活）。</p>', {tone: 'tone-gold'})}
-        ${card('dropout', 'Dropout 0.5', '<p>訓練時隨機關掉一半神經元，預測時不作用。</p>', {tone: 'tone-purple'})}
-      </div></div></div>`,
-  lesson: { explain: '<p>ANN 是論文中唯一不是 LSTM 的比較模型。因為隱藏層沒有激活函數，整個網路在預測時等同一個 20 天價格的<b>線性組合</b>，只是用三層矩陣表示。</p>', code: fullCode('build_baseline'), source: SRC.nb + SRC.relu },
-  items: {
-    annseq: { title: 'ANN 的形狀變化', explain: '<p>None 是 batch 維度。Flatten 把 (20, 1) 變成 20 維向量，之後每層 Dense 都輸出 10 維，最後 Dense 1 輸出一個價格。</p>' },
-    anncode: { title: 'build_baseline("ANN")', explain: '<p><code>_act(cfg)</code> 在 <code>DENSE_ACTIVATION = "linear"</code> 時回傳 None，也就是 Keras 的預設值。</p>', code: fullCode('build_baseline') },
-    flatten: { title: 'Flatten', explain: '<p>LSTM 依序讀 20 天，並把前面的資訊存在 cell state；ANN 則把 20 天同時丟進全連接層，沒有「先後」的概念。</p>' },
-    linear: { title: '為什麼用 linear？', explain: '<p>我們用 10 檔股票測試：linear 的 MSE 中位數為論文的 1.14 倍，ReLU 為 3.71 倍。linear 和論文同一量級，因此推論論文使用 Keras 預設值。</p>', source: SRC.relu },
-    dropout: { title: 'Dropout 0.5', explain: '<p>Dropout 放在最後一層 Dense 1 之前。訓練時每個神經元有 50% 機率輸出 0（其餘放大 2 倍），可降低過擬合；<code>predict()</code> 時不會丟棄。</p>' },
-  } },
-
-// 8 LSTM1D/2D/3D
-{ section: S2, phase: 'two', title: 'LSTM1D / 2D / 3D：同一個函式疊不同層數', source: 'djia_reproduction.ipynb · build_lstm() / build_baseline()',
-  html: `<div class="impl-body tall" style="display:flex;flex-direction:column;gap:9px">
-    ${seq('s1', 'LSTM1D', '', [L('in', 'Input', '(20, 1)'), L('lstm', 'LSTM 10', '(10)'), L('dense', 'Dense 10', '(10)'), L('drop', 'Dropout', '(10)'), L('out', 'Dense 1', '(1)')], '<b>601</b>')}
-    ${seq('s2', 'LSTM2D', '', [L('in', 'Input', '(20, 1)'), L('lstm', 'LSTM 10', '(20, 10) 序列'), L('lstm', 'LSTM 10', '(10)'), L('dense', 'Dense 10', '(10)'), L('drop', 'Dropout', '(10)'), L('out', 'Dense 1', '(1)')], '<b>1,441</b>')}
-    ${seq('s3', 'LSTM3D', '', [L('in', 'Input', '(20, 1)'), L('lstm', 'LSTM 10', '(20, 10) 序列'), L('lstm', 'LSTM 10', '(20, 10) 序列'), L('lstm', 'LSTM 10', '(10)'), L('dense', 'Dense 10', '(10)'), L('drop', 'Dropout', '(10)'), L('out', 'Dense 1', '(1)')], '<b>2,281</b>')}
-    <div class="row" style="height:270px">
-      ${code('lstmcode', 'build_lstm()', '完整', `def build_lstm(cfg: Config, lstm_units, dense_units, dropout, optimizer="Adam", lr=1e-3):
-    k = _tf(cfg).keras
-    m = k.Sequential([k.Input(shape=input_shape(cfg))])
-    for i, u in enumerate(lstm_units):
-        m.add(k.layers.LSTM(u, return_sequences=i < len(lstm_units) - 1))
-    m.add(k.layers.Dense(dense_units, activation=_act(cfg)))
-    m.add(k.layers.Dropout(dropout))
-    m.add(k.layers.Dense(1))
-    m.compile(optimizer=getattr(k.optimizers, optimizer)(learning_rate=lr), loss="mse")
-    return m`, {style: 'width:710px;flex:none'})}
-      ${card('retseq', 'return_sequences', '<p>除了最後一層，LSTM 都輸出整段 20 步的序列，下一層才有 20 步可讀。</p><p>固定模型：<span class="mono">build_lstm(cfg, [10] * depth, 10, 0.5)</span>，depth = 1、2、3。</p>', {tone: 'tone-blue', style: 'flex:1'})}
-    </div></div>`,
-  lesson: { explain: '<p>三個固定 LSTM 模型與 GA／ARO 共用同一個 <code>build_lstm()</code>：傳入每層的神經元數清單即可。固定模型是 <code>[10]</code>、<code>[10, 10]</code>、<code>[10, 10, 10]</code>，Dense 10、Dropout 0.5、Adam 0.001。</p>', code: fullCode('build_lstm', 'build_baseline'), source: SRC.nb + SRC.paper },
-  items: {
-    s1: { title: 'LSTM1D', explain: '<p>單層 LSTM 讀完 20 天後，輸出最後一步的 hidden state（10 維）。</p>' },
-    s2: { title: 'LSTM2D', explain: '<p>第一層 <code>return_sequences=True</code>，輸出 (20, 10)；第二層讀這 20 步，只輸出最後一步 (10)。</p>' },
-    s3: { title: 'LSTM3D', explain: '<p>前兩層都輸出序列。層數加深後參數變多，但每檔只有約 990 筆訓練資料，3 層反而最差：平均名次 5.8（6 個模型中）。</p>' },
-    lstmcode: { title: 'build_lstm()', explain: '<p><code>return_sequences=i &lt; len(lstm_units) - 1</code>：只有最後一層是 False。optimizer 以字串取得，例如 <code>getattr(k.optimizers, "RMSprop")</code>，讓搜尋結果可以直接套用。</p>', code: fullCode('build_lstm', 'build_baseline') },
-    retseq: { title: 'return_sequences', explain: '<p>LSTM 疊層時，下一層需要一個序列當輸入。<code>return_sequences=True</code> 讓 LSTM 每個時間步都輸出 hidden state，形狀 (20, 10)；False 時只輸出最後一步，形狀 (10)。</p>' },
-  } },
-
-// 9 編碼
-{ section: S2, phase: 'two', title: '搜尋空間：[0, 1]⁹ 的向量 → 一個 LSTM 架構', source: '論文 Table 6 · SEARCH_SPACE / decode() / hp_to_arch()',
+// 7 搜尋空間與 Fitness
+{ section: S2, phase: 'two', title: '搜尋空間與 fitness：x → 架構 → 訓練 → MSE', source: '論文 Table 6 · SEARCH_SPACE / decode() / class Fitness',
   html: `<div class="impl-body"><div class="row">
     ${table('space', ['維度', '選項'], [
       ['x₀ LSTM 1 神經元', '1–20'], ['x₁ 有無 LSTM 2', '0、1'], ['x₂ LSTM 2 神經元', '1–20'], ['x₃ 有無 LSTM 3', '0、1'], ['x₄ LSTM 3 神經元', '1–20'],
       ['x₅ Dense 神經元', '1–20'], ['x₆ Dropout', '0.3–0.7（5 種）'], ['x₇ Optimizer', 'Adagrad、Adam、Adamax、RMSprop、SGD'], ['x₈ Learning rate', '10⁻²～10⁻⁶（5 種）'],
-    ], {cls: 'compact fill', style: 'width:552px;flex:none'})}
+    ], {cls: 'compact fill', style: 'width:540px;flex:none'})}
     <div class="col f1">
-      ${code('decode', 'decode() / hp_to_arch()', '節錄', `def decode(x: np.ndarray) -> dict:
-    return {name: ch[min(max(int(float(v) * len(ch)), 0), len(ch) - 1)]
-            for v, (name, ch) in zip(x, SEARCH_SPACE)}
-
-def hp_to_arch(hp: dict) -> dict:
-    units = [hp["x0_lstm1_units"]]
-    if hp["x1_lstm2_exists"]:
-        units.append(hp["x2_lstm2_units"])
-    if hp["x3_lstm3_exists"]:
-        units.append(hp["x4_lstm3_units"])
-    return dict(lstm_units=units, dense_units=hp["x5_dense_units"], ...)`, {style: 'flex:none'})}
-      ${card('example', '例：x = [0.62, 0.71, 0.33, 0.12, 0.90, 0.48, 0.25, 0.30, 0.05]', '<p>→ LSTM 13 → LSTM 7 → Dense 10 → Dropout 0.4，Adam，lr 0.01</p><p style="color:#60708a">0.62 × 20 = 12.4 → 第 12 個選項（13）；x₃ = 0.12 → 0，沒有第 3 層</p>', {tone: 'tone-green', style: 'flex:1'})}
+      ${card('example', '① 解碼：每一維等分成「選項數」格', '<p>x = [0.62, 0.71, 0.33, 0.12, 0.90, 0.48, 0.25, 0.30, 0.05]</p><p>→ LSTM 13 → LSTM 7 → Dense 10 → Dropout 0.4，Adam，lr 0.01</p>', {tone: 'tone-green'})}
+      ${card('fitness', '② Fitness = eval 集的 MSE', '<p>訓練 20 epochs 後算 MSE，越小越好。<br>論文模式用測試集；驗證集模式用驗證集。</p>', {tone: 'tone-blue'})}
+      <div class="grid2" style="flex:1">
+        ${card('cache', '相同架構只訓練一次', '<p>每檔 110 次呼叫：ARO 實際訓練 81 個、GA 62 個</p>', {tone: 'tone-gold'})}
+        ${card('seed', 'seed 由架構決定', '<p>GA 與 ARO 遇到同一架構，MSE 完全相同</p>', {tone: 'tone-purple'})}
+      </div>
     </div></div></div>`,
-  lesson: { explain: '<p>GA 與 ARO 都在連續空間 [0, 1]⁹ 中移動。<code>decode()</code> 把每一維等分成「選項數」個區間，落在第幾個區間就取第幾個選項。這樣兩種演算法可以共用同一套編碼與 fitness。</p><p>不存在的 LSTM 層，其神經元數（x₂ 或 x₄）不影響架構，所以不同的 x 可能對應到同一個架構。</p>', code: fullCode('SEARCH_SPACE', 'decode', 'hp_to_arch', 'arch_key'), widget: 'decode', source: SRC.nb + SRC.paper },
+  lesson: { explain: '<p>GA 與 ARO 都在連續空間 [0, 1]⁹ 中移動。<code>decode()</code> 把每一維等分成「選項數」個區間，落在第幾個區間就取第幾個選項。這樣兩種演算法可以共用同一套編碼與 fitness。</p><p>兩種演算法都把 <code>Fitness</code> 當成黑盒函式：給一個 x，回傳 MSE（越小越好）。這裡的 MSE 就是之後結果中的 <code>best_fitness</code>。</p>', code: fullCode('SEARCH_SPACE', 'decode', 'hp_to_arch', 'Fitness'), widget: 'decode', source: SRC.nb + SRC.paper },
   items: {
-    space: { title: '9 維搜尋空間（Table 6）', explain: '<p>每一維都是離散選項。總組合數約 20 × (1 + 20) × (1 + 20) × 20 × 5 × 5 × 5 ≈ 2,200 萬種（不計重複）。我們每檔只評估約 60–80 個。</p>', code: fullCode('SEARCH_SPACE'), widget: 'decode' },
-    decode: { title: 'decode() 與 hp_to_arch()', explain: '<p><code>int(v × len(ch))</code> 把 [0, 1) 映射到 0 … len−1；v = 1.0 時用 <code>min(…, len−1)</code> 夾住。</p>', code: fullCode('decode', 'hp_to_arch', 'arch_key'), widget: 'decode' },
-    example: { title: '解碼範例', explain: '<p>逐維計算：</p><table><tr><th>維度</th><th>計算</th><th>結果</th></tr><tr><td>x₀</td><td>int(0.62×20)=12</td><td>13 個神經元</td></tr><tr><td>x₁</td><td>int(0.71×2)=1</td><td>有第 2 層</td></tr><tr><td>x₂</td><td>int(0.33×20)=6</td><td>7 個神經元</td></tr><tr><td>x₃</td><td>int(0.12×2)=0</td><td>沒有第 3 層</td></tr><tr><td>x₅</td><td>int(0.48×20)=9</td><td>Dense 10</td></tr><tr><td>x₆</td><td>int(0.25×5)=1</td><td>Dropout 0.4</td></tr><tr><td>x₇</td><td>int(0.30×5)=1</td><td>Adam</td></tr><tr><td>x₈</td><td>int(0.05×5)=0</td><td>lr 0.01</td></tr></table>', widget: 'decode' },
-  } },
-
-// 10 Fitness
-{ section: S2, phase: 'two', title: 'Fitness：訓練候選架構、回傳 MSE', source: 'djia_reproduction.ipynb · class Fitness',
-  html: `<div class="impl-body"><div class="row">
-    ${code('fitcode', 'Fitness.__call__()', '節錄', `    def __call__(self, x: np.ndarray) -> float:
-        self.n_calls += 1
-        arch = hp_to_arch(decode(x))
-        key = arch_key(arch)
-        if key in self.cache:
-            return self.cache[key]
-        cfg, d = self.cfg, self.data
-        _tf(cfg).keras.backend.clear_session()
-        set_seed(cfg, self.base_seed + zlib.crc32(key.encode()) % 100_000)
-        model = build_lstm(cfg, **arch)
-        t = time.time()
-        if cfg.use_validation:
-            ep = fit_model(cfg, model, d.X_fit, d.y_fit, cfg.search_epochs,
-                           patience=cfg.search_patience, val=(d.X_eval, d.y_eval))
-        else:
-            ep = fit_model(cfg, model, d.X_fit, d.y_fit, cfg.search_epochs)
-        mse = float(np.mean((d.inverse(d.y_eval) - d.inverse(predict(cfg, model, d.X_eval))) ** 2))
-        # …（略：寫入快取與 candidates.jsonl）`, {style: 'width:790px;flex:none'})}
-    <div class="col f1">
-      ${card('cache', '相同架構只訓練一次', '<p>ARO 平均每檔 110 次呼叫只需訓練 81 個，GA 62 個。</p>', {tone: 'tone-green'})}
-      ${card('seed', 'seed 由架構決定', '<p>同一架構不論何時被評估，結果都相同。</p>', {tone: 'tone-blue'})}
-      ${card('resume', '可續跑', '<p>每次評估寫入 candidates.jsonl，斷線後讀回當快取。</p>', {tone: 'tone-gold'})}
-      ${card('evalset', 'eval 集', '<p>論文模式：測試集<br>驗證集模式：驗證集</p>', {tone: 'tone-red'})}
-    </div></div></div>`,
-  lesson: { explain: '<p>GA 與 ARO 都把 <code>Fitness</code> 當成黑盒函式：給一個 x，回傳 MSE（越小越好）。每次呼叫會解碼成架構、訓練 20 epochs，再算 eval 集在原始價格尺度上的 MSE。</p><p>這裡的 MSE 就是之後結果中的 <code>best_fitness</code>。</p>', code: fullCode('Fitness', 'fit_model'), source: SRC.nb },
-  items: {
-    fitcode: { title: 'Fitness.__call__()', explain: '<p>每次訓練前先 <code>clear_session()</code> 清掉前一個模型，避免記憶體越用越多。fitness 不是 NaN 或 inf 才寫入快取，發散的模型直接得到 inf。</p>', code: fullCode('Fitness') },
+    space: { title: '9 維搜尋空間（Table 6）', explain: '<p>每一維都是離散選項。總組合數約 20 × (1 + 20) × (1 + 20) × 20 × 5 × 5 × 5 ≈ 2,200 萬種（不計重複）。我們每檔只評估約 60–80 個。</p><p>不存在的 LSTM 層，其神經元數（x₂ 或 x₄）不影響架構，所以不同的 x 可能對應到同一個架構。</p>', code: fullCode('SEARCH_SPACE'), widget: 'decode' },
+    example: { title: '解碼範例', explain: '<p><code>int(v × 選項數)</code> 把 [0, 1) 映射到第 0 … 選項數−1 個選項；v = 1.0 時夾回最後一個。逐維計算：</p><table><tr><th>維度</th><th>計算</th><th>結果</th></tr><tr><td>x₀</td><td>int(0.62×20)=12</td><td>13 個神經元</td></tr><tr><td>x₁</td><td>int(0.71×2)=1</td><td>有第 2 層</td></tr><tr><td>x₂</td><td>int(0.33×20)=6</td><td>7 個神經元</td></tr><tr><td>x₃</td><td>int(0.12×2)=0</td><td>沒有第 3 層</td></tr><tr><td>x₅</td><td>int(0.48×20)=9</td><td>Dense 10</td></tr><tr><td>x₆</td><td>int(0.25×5)=1</td><td>Dropout 0.4</td></tr><tr><td>x₇</td><td>int(0.30×5)=1</td><td>Adam</td></tr><tr><td>x₈</td><td>int(0.05×5)=0</td><td>lr 0.01</td></tr></table>', code: fullCode('decode', 'hp_to_arch'), widget: 'decode' },
+    fitness: { title: 'Fitness：每評估一個候選 x', explain: '<ol><li>解碼成架構；同樣的架構評估過就直接回傳上次的 MSE。</li><li>清掉前一個模型（<code>clear_session()</code>），用由架構決定的 seed 固定亂數。</li><li>建立 LSTM，訓練 20 epochs（驗證集模式另加 early stopping，patience 5）。</li><li>預測 eval 集，換回原始價格後算 MSE。</li><li>寫入快取與 <code>candidates.jsonl</code>；斷線重跑時讀回，最多損失正在訓練的那一個模型。</li></ol><p>eval 集由 <code>prepare()</code> 決定：論文模式 = 測試集；驗證集模式 = 訓練集最後 20%，此時候選模型只用前 80% 訓練。</p>', code: fullCode('Fitness', 'fit_model') },
     cache: { title: '快取', explain: '<p>族群收斂後，很多兔子／染色體會解碼成同一個架構。用 <code>arch_key()</code>（架構的 JSON 字串）當 key，直接回傳舊的 MSE。</p><p>GA 收斂得比較快，重複較多，所以實際訓練數比 ARO 少。</p>', code: fullCode('arch_key') },
     seed: { title: '架構決定 seed', explain: '<p>seed = 股票的搜尋 seed + crc32(架構 key) mod 100,000。這讓 GA 和 ARO 若評估到同一個架構，得到完全相同的 MSE，比較才公平；也讓中斷續跑的結果和一次跑完相同。</p>' },
-    resume: { title: '續跑', explain: '<p>Colab 免費版會斷線。重跑時 <code>Fitness</code> 會先讀回 <code>candidates.jsonl</code>，搜尋演算法用同一個亂數 seed 重新走一遍，已訓練的架構直接命中快取，所以最多損失正在訓練的那一個模型。</p>' },
-    evalset: { title: 'eval 集', explain: '<p>由 <code>prepare()</code> 決定：論文模式 <code>X_eval = X_test</code>；驗證集模式 <code>X_eval</code> 是訓練集最後 20%，此時候選模型只用前 80% 訓練。</p>', code: fullCode('prepare') },
   } },
 
-// 11 ARO
-{ section: S2, phase: 'two', title: 'ARO：論文 Eq. 6–20 的實作', source: 'djia_reproduction.ipynb · aro()',
-  html: `<div class="impl-body tall" style="display:flex;flex-direction:column;gap:12px">
-    ${code('arocode', 'aro()', '節錄：主迴圈', `    for t in range(1, T + 1):
-        for i in range(n):
-            L = (math.e - math.exp(((t - 1) / T) ** 2)) * math.sin(2 * math.pi * rng.random())  # Eq. 8
-            c = np.zeros(d)
-            c[rng.permutation(d)[: math.ceil(rng.random() * d)]] = 1                             # Eq. 9–10
-            R = L * c                                                                            # Eq. 7
-            A = 4 * (1 - t / T) * math.log(1 / max(rng.random(), 1e-12))                        # Eq. 20
-            if A > 1:   # 迂迴覓食（探索）Eq. 6
-                j = rng.choice([k for k in range(n) if k != i])
-                v = X[j] + R * (X[i] - X[j]) + round(0.5 * (0.05 + rng.random())) * rng.standard_normal()
-            else:       # 隨機躲藏（開發）Eq. 13, 16–18
-                H = (T - t + 1) / T * rng.standard_normal()
-                g = np.zeros(d)
-                g[math.ceil(rng.random() * d) - 1] = 1
-                b = X[i] + H * g * X[i]
-                v = X[i] + R * (rng.random() * b - X[i])
-            v = np.clip(v, lb, ub)
-            fv = fobj(v)
-            if fv < fit[i]:  # Eq. 19
-                X[i], fit[i] = v, fv
-                if fv < best_f:
-                    best_x, best_f = v.copy(), float(fv)`, {lh: '1.42'})}
-    <div class="grid3" style="flex:none;height:44px">
-      ${strip('energy', 'A &gt; 1 → 繞路覓食（探索）', '')}
-      ${strip('hide', 'A ≤ 1 → 隨機躲藏（開發）', 'gold')}
-      ${strip('greedy', '變好才取代（貪婪選擇）', 'red')}
+// 8 ARO 與 GA
+{ section: S2, phase: 'two', title: 'ARO 與 GA：同一個起點，不同的更新方式', source: 'djia_reproduction.ipynb · aro() / ga()',
+  html: `<div class="impl-body" style="gap:16px">
+    ${strip('same', '兩者共用：同一個初始族群 X0、族群 10 × 迭代 10、同一個 fitness 與快取 — 差別只在「怎麼產生新候選」')}
+    <div class="grid2">
+      ${steps('arocode', 'ARO（論文 Eq. 6–20）：每隻兔子各自更新', ['能量 A 隨迭代遞減（Eq. 20）', '<b>A &gt; 1 繞路覓食</b>：往另一隻兔子附近移動，探索新區域（Eq. 6）', '<b>A ≤ 1 隨機躲藏</b>：在自己附近小範圍搜尋（Eq. 13–18）', '<b>變好才取代</b>，否則留在原位（Eq. 19）'], {style: 'justify-content:flex-start'})}
+      ${steps('gacode', 'GA（論文未給細節，採常見設定）：整代替換', ['<b>菁英保留</b>：上一代最好的 1 個直接留下', '<b>選擇</b>：tournament，隨機抽 3 個取最好的', '<b>交配</b>：80% 機率逐維從兩個父母隨機取值', '<b>突變</b>：每一維 1/9 機率重設為亂數，再整代重新評估'], {cls: 'gold', style: 'justify-content:flex-start'})}
     </div></div>`,
-  lesson: { explain: '<p>每一代、每一隻兔子都先算能量 A：前期 A 多半大於 1，偏向參考其他兔子的位置（探索）；後期 A 變小，偏向在自己附近搜尋（開發）。新位置經 Fitness 評估後，只有比原本好才取代。</p><p>每一代評估 n 次，加上初始族群，共 n × (T + 1) = 110 次呼叫。</p>', code: fullCode('aro'), widget: 'energy', source: SRC.nb + SRC.paper },
+  lesson: { explain: '<p>論文只說用 GA 當比較對象，沒有給選擇、交配、突變的設定，我們採用常見的組合。GA 與 ARO 使用<b>相同的初始族群、族群大小與迭代數</b>，fitness 也共用同一個快取機制。</p><p>ARO 是每隻兔子各自「變好才換」；GA 每代整批換掉（只保留 1 個菁英）。每一代評估 n 次，加上初始族群，共 n × (T + 1) = 110 次呼叫。</p>', code: fullCode('aro', 'ga'), widget: 'energy', source: SRC.nb + SRC.paper },
   items: {
-    arocode: { title: 'aro()', explain: '<p>對照論文：</p><ul><li><b>L</b>（Eq. 8）：奔跑長度，隨迭代遞減。</li><li><b>c</b>（Eq. 9–10）：隨機選幾個維度設為 1，只在這些維度移動。</li><li><b>R = L·c</b>（Eq. 7）。</li><li><b>A</b>（Eq. 20）：能量因子。</li></ul><p>最後用 <code>np.clip</code> 夾回 [0, 1]，避免解碼越界。</p>', code: fullCode('aro'), widget: 'energy' },
-    energy: { title: '繞路覓食（Eq. 6）', explain: '<p>v = X<sub>j</sub> + R·(X<sub>i</sub> − X<sub>j</sub>) + round(0.5·(0.05 + r))·N(0, 1)。隨機挑另一隻兔子 j，往牠附近移動，並偶爾加上常態擾動。</p>', widget: 'energy' },
-    hide: { title: '隨機躲藏（Eq. 13–18）', explain: '<p>在自己的位置上隨機挑一個維度產生「洞穴」b = X<sub>i</sub> + H·g·X<sub>i</sub>，H 隨迭代遞減，再往洞穴移動。這是在目前解附近的小範圍搜尋。</p>', widget: 'energy' },
-    greedy: { title: '貪婪選擇（Eq. 19）', explain: '<p>新位置的 fitness 比原本小才取代，否則保留原位置。所以每隻兔子的 fitness 只會變好或不變，全域最佳 best_f 也單調下降。</p>' },
+    same: { title: '公平比較', explain: '<p>每檔股票由 <code>search_seed()</code> 產生同一個初始族群 X0，GA 與 ARO 都從這裡出發。fitness 的 seed 由架構決定、快取共用，所以兩者若評估到同一個架構，MSE 完全相同。</p>', code: fullCode('search_seed') },
+    arocode: { title: 'ARO：每一代、每一隻兔子', explain: '<ul><li><b>L</b>（Eq. 8）：奔跑長度，隨迭代遞減。</li><li><b>c</b>（Eq. 9–10）：隨機選幾個維度設為 1，只在這些維度移動；<b>R = L·c</b>（Eq. 7）。</li><li><b>A</b>（Eq. 20）：能量因子。前期 A 多半大於 1（探索），後期變小（開發）。</li></ul><h3>繞路覓食（Eq. 6）</h3><p>v = X<sub>j</sub> + R·(X<sub>i</sub> − X<sub>j</sub>) + round(0.5·(0.05 + r))·N(0, 1)。隨機挑另一隻兔子 j，往牠附近移動，並偶爾加上常態擾動。</p><h3>隨機躲藏（Eq. 13–18）</h3><p>在自己的位置上隨機挑一個維度產生「洞穴」b = X<sub>i</sub> + H·g·X<sub>i</sub>，H 隨迭代遞減，再往洞穴移動。</p><h3>貪婪選擇（Eq. 19）</h3><p>新位置的 fitness 比原本小才取代，所以每隻兔子的 fitness 只會變好或不變。新位置會先夾回 [0, 1] 再解碼。</p>', code: fullCode('aro'), widget: 'energy' },
+    gacode: { title: 'GA：每一代', explain: '<p>保留最好的 1 個，其餘 9 個由「選擇 → 交配 → 突變」產生，然後整代重新評估。已評估過的架構會命中快取，不會重新訓練。</p><ul><li><b>Tournament selection</b>：從族群隨機抽 3 個（不重複），取 fitness 最小的。差的個體仍有機會，避免太快收斂。</li><li><b>Uniform crossover</b>：以 0.8 的機率交配，每一維擲硬幣決定從 p1 或 p2 取值；否則直接複製 p1。</li><li><b>突變</b>：pm = 1 / 維度數 = 1/9，平均每個子代有一維被重設為均勻亂數，用來跳出局部最佳。</li><li><b>菁英保留</b>：保留 1 個讓每代的最佳 fitness 不會變差。</li></ul>', code: fullCode('ga') },
   } },
 
-// 12 GA
-{ section: S2, phase: 'two', title: 'GA：論文未給細節，採常見設定', source: 'djia_reproduction.ipynb · ga()',
-  html: `<div class="impl-body"><div class="row">
-    ${code('gacode', 'ga()', '節錄', `    def select():
-        idx = rng.choice(n, size=min(tournament, n), replace=False)
-        return P[idx[np.argmin(fit[idx])]]
-
-    for _ in range(max_iter):
-        children = [P[np.argmin(fit)].copy()]  # 菁英保留 1
-        while len(children) < n:
-            p1, p2 = select(), select()
-            child = np.where(rng.random(d) < 0.5, p1, p2) if rng.random() < pc else p1.copy()
-            mask = rng.random(d) < pm
-            child[mask] = rng.uniform(lb, ub, mask.sum())
-            children.append(child)
-        P = np.array(children)
-        fit = np.array([fobj(x) for x in P])
-        history.append(float(fit.min()))`, {style: 'width:740px;flex:none'})}
-    <div class="col f1">
-      ${card('tour', '選擇：tournament 3', '<p>隨機抽 3 個，取最好的當父母。</p>', {tone: 'tone-blue'})}
-      ${card('cross', '交配：uniform 0.8', '<p>80% 機率逐維隨機從兩個父母取值。</p>', {tone: 'tone-green'})}
-      ${card('mut', '突變：1/9', '<p>每一維有 1/9 機率重設為 [0, 1] 的亂數。</p>', {tone: 'tone-gold'})}
-      ${card('elite', '菁英保留 1', '<p>上一代最好的個體直接進入下一代。</p>', {tone: 'tone-purple'})}
-    </div></div></div>`,
-  lesson: { explain: '<p>論文只說用 GA 當比較對象，沒有給選擇、交配、突變的設定，我們採用常見的組合。GA 與 ARO 使用<b>相同的初始族群、族群大小與迭代數</b>，fitness 也共用同一個快取機制，差別只在產生新候選的方式。</p><p>GA 每代整批換掉（只保留 1 個菁英）；ARO 是每隻兔子各自「變好才換」。</p>', code: fullCode('ga'), source: SRC.nb + SRC.paper },
-  items: {
-    gacode: { title: 'ga()', explain: '<p>每一代：保留最好的 1 個，其餘 9 個由「選擇 → 交配 → 突變」產生，然後整代重新評估。已評估過的架構會命中快取，不會重新訓練。</p>', code: fullCode('ga') },
-    tour: { title: 'Tournament selection', explain: '<p>從族群隨機抽 3 個（不重複），取 fitness 最小的。抽到好個體的機率較高，但差的個體仍有機會，避免太快收斂。</p>' },
-    cross: { title: 'Uniform crossover', explain: '<p>以 0.8 的機率交配：每一維擲硬幣，決定從 p1 或 p2 取值；否則直接複製 p1。</p>' },
-    mut: { title: '突變', explain: '<p>pm = 1 / 維度數 = 1/9，平均每個子代有一維被重設為均勻亂數，用來跳出局部最佳。</p>' },
-    elite: { title: '菁英保留', explain: '<p>沒有菁英保留的話，最好的解可能在下一代消失。保留 1 個讓每代的最佳 fitness 不會變差。</p>' },
-  } },
-
-// 13 final_eval
-{ section: S2, phase: 'two', title: '最終評估：5 個 seed 重訓取平均', source: 'djia_reproduction.ipynb · final_eval() / fit_model()',
-  html: `<div class="impl-body"><div class="row">
-    ${code('finalcode', 'final_eval()', '節錄', `def final_eval(cfg: Config, data: Data, build_fn):
-    rows, preds = [], []
-    y_true = data.inverse(data.y_test)
-    for s in range(cfg.final_seeds):
-        _tf(cfg).keras.backend.clear_session()
-        set_seed(cfg, cfg.seed + s)
-        model = build_fn()
-        t = time.time()
-        if cfg.use_validation:
-            ep = fit_model(cfg, model, data.X_train, data.y_train, cfg.final_epochs,
-                           patience=cfg.final_patience, val_split=0.1)
-        else:
-            ep = fit_model(cfg, model, data.X_train, data.y_train, cfg.final_epochs)
-        p = data.inverse(predict(cfg, model, data.X_test))
-        rows.append(dict(seed=cfg.seed + s, **metrics(y_true, p), epochs=ep,
-                         train_s=round(time.time() - t, 2)))
-        preds.append(p)
-    return rows, np.mean(preds, axis=0)`, {style: 'width:680px;flex:none'})}
-    <div class="col f1">
-      ${card('seeds', '5 個 seed', '<p>seed 42–46，指標取平均並記錄標準差。</p>', {tone: 'tone-blue'})}
-      ${card('modepaper', '論文模式', '<p>固定 50 epochs。</p>', {tone: 'tone-red'})}
-      ${card('modeval', '驗證集模式', '<p>early stopping patience 10，還原最佳權重。</p>', {tone: 'tone-green'})}
-      ${card('metrics', '四個指標', '<p>MSE、MAE、MAPE、R²，原始價格尺度。</p>', {tone: 'tone-gold'})}
-    </div></div></div>`,
-  lesson: { explain: '<p>所有模型（固定架構與搜尋出的架構）都走同一個 <code>final_eval()</code>，用全部訓練集重新訓練 50 epochs，再在測試集上評估。這是我們報告的主要數字（<code>MSE</code>）；搜尋時那一次的 MSE 另外記為 <code>best_fitness</code>。</p>', code: fullCode('final_eval', 'fit_model', 'metrics'), source: SRC.nb },
-  items: {
-    finalcode: { title: 'final_eval()', explain: '<p><code>build_fn</code> 是一個建立模型的函式，所以同一段程式可以評估 ANN、LSTM1D/2D/3D 或搜尋出的架構。預測圖用的是 5 個 seed 的平均預測值。</p>', code: fullCode('final_eval') },
-    seeds: { title: '為什麼要 5 個 seed？', explain: '<p>小型 LSTM 對初始權重很敏感。我們的結果中，同一架構換 seed 的 MSE 標準差約為平均的 15–44%。只跑一次的結果可能剛好很好或很差。</p>' },
-    modepaper: { title: '論文模式：固定 epochs', explain: '<p><code>fit_model(..., patience=None)</code> 直接跑滿 50 epochs，不看驗證集。</p>', code: fullCode('fit_model') },
-    modeval: { title: '驗證集模式：early stopping', explain: '<p>從訓練集最後 10% 切出驗證資料，監看 val_loss；連續 10 個 epoch 沒有改善就停止，並還原 val_loss 最低時的權重。實際平均訓練 33–41 epochs。</p>', code: fullCode('fit_model') },
-    metrics: { title: '評估指標（Eq. 21–24）', explain: '<p>MAPE 以比例回報（0.02 = 2%），和論文表格的數值格式一致。R² = 1 − SSE / SST。</p>', code: fullCode('metrics') },
-  } },
-
-// 14 分工
-{ section: S2, phase: 'two', title: '三人分工：Colab 平行跑、可續跑、可合併', source: 'djia_reproduction.ipynb · shard_tickers() / compatible()',
-  html: `<div class="impl-body tall" style="gap:16px"><div class="row">
-      ${code('shard', 'shard_tickers() / compatible()', '完整', `def shard_tickers(tickers: List[str], shard: Optional[str]) -> List[str]:
-    """shard = "k/n"：輪流分配（第 k 份取 tickers[k-1::n]），各份的股票數與長短都較平均。"""
-    if not shard:
-        return list(tickers)
-    k, n = (int(v) for v in shard.split("/"))
-    if not 1 <= k <= n:
-        raise ValueError(f"SHARD 應為 k/n 且 1 ≤ k ≤ n，收到 {shard!r}")
-    return list(tickers)[k - 1::n]
-
-def compatible(cfg: Config, info: dict) -> List[str]:
-    """回傳與目前設定不一致的欄位（空 list = 可合併）。"""
-    c = info.get("config", {})
-    keys = list(FP_FIELDS) + (["pop_size", "iterations"] if info.get("model") in SEARCHERS else [])
-    return [k for k in keys if c.get(k) != getattr(cfg, k)]`, {style: 'width:790px;flex:none'})}
-      ${card('drive', '斷線可續跑', '<p>結果存在 Google Drive；重新「全部執行」會從中斷處接著跑。</p><p>三人分工後每人約 3.4 小時（論文模式，Colab T4）。</p>', {tone: 'tone-green', style: 'flex:1'})}
-    </div>
-    ${table('time', ['搜尋時間（29 檔合計）', '>論文模式', '>驗證集', '>每檔訓練架構數'], [['LSTM-ARO', '10.5 h', '8.7 h', '81'], ['LSTM-GA', '9.7 h', '6.7 h', '62']])}
-    </div>`,
-  lesson: { explain: '<p>29 檔輪流分成 3 份（10 / 10 / 9 檔），每人在自己的 Colab 上跑同一份 notebook，只改 <code>SHARD</code>。每個結果都附上完整設定與資料指紋，合併時逐欄比對。</p>', code: fullCode('shard_tickers', 'compatible', 'merge_results'), source: SRC.nb + SRC.plan },
-  items: {
-    shard: { title: '分工與相容性檢查', explain: '<p>輪流分配（第 k 份取 <code>tickers[k-1::n]</code>）讓每份的股票數接近，資料較短的 DOW 也不會集中在同一份。</p><p><code>FP_FIELDS</code> 包含所有會影響結果的設定（epochs、seed、評估模式、Dense 激活、資料指紋等）；執行緒數、是否用 GPU 不影響結果，不列入。</p>', code: fullCode('shard_tickers', 'compatible') },
-    drive: { title: '斷線續跑', explain: '<p>每個「股票 × 模型」完成時寫 <code>done.json</code>；搜尋中的候選寫在 <code>candidates.jsonl</code>。重新執行時已完成的跳過、搜尋中的從快取接著跑。</p>' },
-    time: { title: '執行時間', explain: '<p>驗證集模式的搜尋比較快，因為 early stopping 讓候選模型提早停止。每檔實際訓練的架構數兩種模式幾乎相同。</p>' },
-  } },
-
-// 15 Q1：我們 ÷ 論文（兩種模式並列）
+// 9 Q1：我們 ÷ 論文（兩種模式並列）
 { section: S3, phase: 'three', title: '固定架構和論文一致，GA / ARO 差 1.5–2 倍', source: 'djia_results.md §2、§8.1',
   html: `<div class="impl-body" style="gap:14px">
     <p class="impl-lead" style="margin:0">我們的 MSE ÷ 論文 Table 7 的 MSE（29 檔幾何平均；虛線 = 1.00，完全一致）</p>
@@ -519,7 +294,7 @@ def compatible(cfg: Config, info: dict) -> List[str]:
     fitness: { title: 'best_fitness', explain: '<p><code>best_fitness</code> 是 Fitness 在搜尋過程中回傳的最小 MSE。論文模式下 eval 集就是測試集，所以它是「用測試集挑出來的那一次訓練」在測試集上的成績，和論文的流程完全相同。</p><p>驗證集模式的 best_fitness 是驗證集（2021 年前後）的 MSE，價格水準和測試集不同，不能和論文直接比，所以不列。</p>' },
   } },
 
-// 16 論文模式的選擇偏誤
+// 10 論文模式的選擇偏誤
 { section: S3, phase: 'three', title: '論文模式用測試集挑架構，挑到的是「碰巧好的那一次」', source: 'djia_results.md §4',
   html: `<div class="impl-body"><div class="row" style="height:290px">
     <div class="col f1" style="gap:10px">
@@ -546,7 +321,7 @@ def compatible(cfg: Config, info: dict) -> List[str]:
     worst: { title: '落差最大的例子', explain: '<p>共同點：神經元很少（1 個）、SGD 或 Adagrad 這類在 20 epochs 內不一定收斂的設定。這些架構在某個 seed 下碰巧很好，就被選中。</p>' },
   } },
 
-// 17 驗證集模式
+// 11 驗證集模式
 { section: S3, phase: 'three', title: '改用驗證集挑架構，GA / ARO 反而更好', source: 'djia_results.md §8.1、§8.3',
   html: `<div class="impl-body"><div class="grid4" style="height:190px">
     ${card('aro', 'ARO 最終 MSE', '<p>21 / 29 檔變好</p>', {stat: '−28%'})}
@@ -571,7 +346,7 @@ def compatible(cfg: Config, info: dict) -> List[str]:
     why2: { title: 'early stopping 的效果', explain: '<p>學習率 0.01 的模型在後期容易震盪，固定跑滿 50 epochs 可能停在一個較差的位置。<code>restore_best_weights=True</code> 會回到驗證 loss 最低的那個 epoch。</p>', code: fullCode('fit_model') },
   } },
 
-// 18 Q2：排名（三方）
+// 12 Q2：排名（三方）
 { section: S4, phase: 'three', title: '排名：自動搜尋 ＞ 固定架構，ARO 與 GA 相當', source: 'djia_results.md §3、§8.2',
   html: `<div class="impl-body">
     ${table('rank', ['6 個論文模型，最終 MSE', '論文報告', '我們 · 論文模式', '我們 · 驗證集'], [
@@ -593,7 +368,7 @@ def compatible(cfg: Config, info: dict) -> List[str]:
     no: { title: 'ARO vs GA', explain: '<p>兩種模式都是 15 / 29 檔，p = 0.80 與 0.55。在相同的初始族群與評估次數下，ARO 和 GA 找到的架構品質沒有顯著差別。用論文 Table 7 的數字做同樣的檢定，ARO 對 GA 為 17 / 29（p = 0.27），也不顯著。</p>' },
   } },
 
-// 19 Q2：加大搜尋 15 × 15
+// 13 Q2：加大搜尋 15 × 15
 { section: S4, phase: 'three', title: '加大搜尋到 15 × 15：GA 改善較多，結論不變', source: 'djia_results.md §9 · results/djia_val_p15/all_results.csv',
   html: `<div class="impl-body"><p class="impl-lead" style="margin:0 0 12px">驗證集模式，族群 × 迭代從 10 × 10 加到 15 × 15（每檔評估 110 → 240 次）；固定架構與 NAIVE 沿用原結果</p>
   <div class="grid4" style="height:170px">
@@ -625,7 +400,7 @@ def compatible(cfg: Config, info: dict) -> List[str]:
     same: { title: '結論不變', explain: '<p>加大搜尋讓數字更接近論文，但沒有改變任何結論。考量每多一級預算的時間成本（15 × 15 約為 10 × 10 的 2 倍，25 × 25 估計再 2.5 倍），報告以 10 × 10 為主要結果，15 × 15 作為補充驗證。</p>' },
   } },
 
-// 20 Q3：NAIVE 圖
+// 14 Q3：NAIVE 圖
 { section: S5, phase: 'three', title: '所有神經網路都輸給「明天 = 今天」', source: 'djia_results.md §5 · MSFT predictions.csv（論文模式）',
   html: `<div class="impl-body"><div class="row" style="height:520px">
     <div class="impl-chart f1" data-lesson="chart" style="display:flex;flex-direction:column">
@@ -646,7 +421,7 @@ def compatible(cfg: Config, info: dict) -> List[str]:
     paperaro: { title: '和論文數字比較', explain: '<p>我們把論文 Table 7 的 LSTM-ARO MSE 逐格抄錄（<code>data/paper_tables.csv</code>），NAIVE 的 MSE 在 29 檔都比它低。所以即使接受論文偏樂觀的數字，LSTM-ARO 也沒有贏過 NAIVE。</p>' },
   } },
 
-// 21 Q3：MSE ÷ NAIVE（兩種模式並列）
+// 15 Q3：MSE ÷ NAIVE（兩種模式並列）
 { section: S5, phase: 'three', title: '和 NAIVE 比：最好的模型誤差仍是 NAIVE 的約 3 倍', source: 'djia_results.md §5、§8',
   html: `<div class="impl-body" style="gap:14px">
     <p class="impl-lead" style="margin:0">各模型 MSE ÷ NAIVE MSE（29 檔幾何平均；虛線 = 1，和 NAIVE 一樣好）</p>
@@ -659,7 +434,7 @@ def compatible(cfg: Config, info: dict) -> List[str]:
     r2: { title: '為什麼 R² 很高還是輸？', explain: '<p>R² 是和「預測整段測試期的平均價格」比。股價在測試期內波動很大，所以只要預測值大致跟著走，R² 就很高。</p><p>平均 R²：NAIVE 0.952；論文模式 LSTM-GA 0.774、LSTM1D 0.737、LSTM2D 0.722、LSTM-ARO 0.697；驗證集模式 LSTM-GA 0.871、LSTM-ARO 0.842。</p>' },
   } },
 
-// 22 結論
+// 16 結論
 { dark: true, title: '重現得到的五個發現', cat: '結論', source: 'djia_results.md',
   html: `<p class="impl-dark-eyebrow">結論</p><h1 class="impl-dark-title" data-lesson="page">重現得到的五個發現</h1>
   <div class="impl-body dark-cards" style="top:132px"><div class="grid2" style="height:330px;grid-template-rows:1fr 1fr">
@@ -834,7 +609,7 @@ function renderDrawer() {
   $('#drawerTitle').textContent = l.title;
   body.replaceChildren(); body.scrollTop = 0;
   if (tab === 'explain') {
-    body.insertAdjacentHTML('beforeend', l.explain || '<p>點投影片上的卡片、程式碼或圖表，可查看對應說明。</p>');
+    body.insertAdjacentHTML('beforeend', l.explain || '<p>點投影片上的卡片、步驟或圖表，可查看對應說明。</p>');
     const go = [];
     if (has.code) go.push(['code', '看完整程式碼 →']);
     if (has.widget) go.push(['widget', '動手試試 →']);
@@ -843,7 +618,7 @@ function renderDrawer() {
       go.forEach(([t, txt]) => { const b = document.createElement('button'); b.className = 'try-formula'; b.textContent = txt; b.onclick = () => { tab = t; renderDrawer(); }; row.append(b); });
       body.append(row);
     }
-    if (l.page && SLIDES[index].items) body.insertAdjacentHTML('beforeend', '<p style="margin-top:16px;color:#60708a">點投影片中的各個卡片、程式碼或圖表，可查看該項目的說明。</p>');
+    if (l.page && SLIDES[index].items) body.insertAdjacentHTML('beforeend', '<p style="margin-top:16px;color:#60708a">點投影片中的各個卡片、步驟或圖表，可查看該項目的說明。</p>');
   } else if (tab === 'code') {
     l.code.forEach(c => body.insertAdjacentHTML('beforeend', `<div class="drawer-code-title"><span>${esc(c.name)}</span><small>djia_lib.py · ${c.text.split('\n').length} 行</small></div>${glossTable(c.text, c.name)}<div class="drawer-code"><pre>${hl(c.text, c.name)}</pre></div>`));
     body.insertAdjacentHTML('beforeend', '<p style="color:#60708a;font-size:13px">程式碼中有虛線底線的名稱，滑鼠移上去也會顯示展開。</p>');
